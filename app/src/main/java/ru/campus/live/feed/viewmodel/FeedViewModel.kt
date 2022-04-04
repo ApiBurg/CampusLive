@@ -1,6 +1,5 @@
 package ru.campus.live.feed.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -50,8 +49,8 @@ class FeedViewModel @Inject constructor(
                     val response = interactor.setHeader(model)
                     withContext(Dispatchers.Main) {
                         _liveData.value = response
+                        insertCache()
                     }
-                    //insertCache()
                 }
                 is ResponseObject.Failure -> {
 
