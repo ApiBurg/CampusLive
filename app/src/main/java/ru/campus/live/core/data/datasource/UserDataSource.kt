@@ -1,0 +1,65 @@
+package ru.campus.live.core.data.datasource
+
+import android.content.Context
+import android.content.SharedPreferences
+import ru.campus.live.core.data.datasource.interfaces.IUserDataSource
+import ru.campus.live.location.data.model.LocationDataObject
+import ru.campus.live.start.data.model.RegistrationDataObject
+import javax.inject.Inject
+
+class UserDataSource @Inject constructor(context: Context) : IUserDataSource {
+
+    private val sPref: SharedPreferences =
+        context.getSharedPreferences("AppDB", Context.MODE_PRIVATE)
+
+    override fun login(data: RegistrationDataObject): Boolean {
+        try {
+            val dateReg = System.currentTimeMillis() / 1000
+            with(sPref.edit()) {
+                putInt("UID", data.uid)
+                putString("TOKEN", data.token)
+                putInt("RATING", data.rating)
+                putLong("DATE_REG", dateReg)
+                apply()
+            }
+            return true
+        } catch (e: Exception) {
+            return false
+        }
+    }
+
+    override fun isAuth(): Boolean {
+        val token = sPref.getString("TOKEN", "").toString()
+        val locationId = sPref.getInt("LOCATION_ID", 0)
+        if (token.isEmpty()) return false
+        if (locationId == 0) return false
+        return true
+    }
+
+    override fun token(): String {
+        return sPref.getString("TOKEN", "").toString()
+    }
+
+    override fun uid(): Int {
+        return sPref.getInt("UID", 0)
+    }
+
+    override fun locationSave(dataObject: LocationDataObject) {
+        with(sPref.edit()) {
+            putInt("LOCATION_ID", dataObject.id)
+            putString("LOCATION_NAME", dataObject.name)
+            putString("LOCATION_ADDRESS", dataObject.address)
+            putInt("LOCATION_TYPE", dataObject.type)
+            apply()
+        }
+    }
+
+    override fun location(): LocationDataObject {
+        val id = sPref.getInt("LOCATION_ID", 0)
+        val name = sPref.getString("LOCATION_NAME", "")
+        val address = sPref.getString("LOCATION_ADDRESS", "")
+        val type = sPref.getInt("LOCATION_TYPE", 1)
+        return LocationDataObject(id = id, name = name!!, address = address!!, type = type)
+    }
+
+}
