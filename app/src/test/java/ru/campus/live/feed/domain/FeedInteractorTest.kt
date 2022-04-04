@@ -17,7 +17,7 @@ class FeedInteractorTest {
     @Test
     fun `the first in the list should be the heading (type 0)`() {
         val model = ArrayList<FeedObject>()
-        model.add(FeedObject(type = 1))
+        model.add(FeedObject(viewType = 1))
 
         val locationDataObject = LocationDataObject(1, "name", "address", 1)
         Mockito.`when`(userDataSource.location()).thenReturn(locationDataObject)
@@ -26,7 +26,7 @@ class FeedInteractorTest {
         val actualModel = interactor.setHeader(model)
 
         val expected = 0
-        val actual = actualModel[0].type
+        val actual = actualModel[0].viewType
         Assert.assertEquals(expected, actual)
     }
 

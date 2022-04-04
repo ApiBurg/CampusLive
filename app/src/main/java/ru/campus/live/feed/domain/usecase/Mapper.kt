@@ -2,6 +2,7 @@ package ru.campus.live.feed.domain.usecase
 
 import ru.campus.live.core.data.model.AttachmentModel
 import ru.campus.live.feed.data.model.FeedObject
+import ru.campus.live.feed.data.model.FeedViewType
 import ru.campus.live.feed.db.Publication
 import ru.campus.live.location.data.model.LocationDataObject
 
@@ -12,7 +13,7 @@ class Mapper {
         params.forEach { item ->
             model.add(
                 FeedObject(
-                    type = item.type,
+                    viewType = FeedViewType.values()[item.type],
                     location = LocationDataObject(
                         id = item.locationId ?: 0,
                         name = item.locationName ?: "",
@@ -48,7 +49,7 @@ class Mapper {
             model.add(
                 Publication(
                     publicationId = item.id,
-                    type = item.type,
+                    type = item.viewType.ordinal,
                     locationId = item.location?.id,
                     locationName = item.location?.name,
                     locationAddress = item.location?.address,

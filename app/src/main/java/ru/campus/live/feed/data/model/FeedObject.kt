@@ -8,7 +8,7 @@ import ru.campus.live.location.data.model.LocationDataObject
 
 @Parcelize
 data class FeedObject(
-    val type: Int = 1,
+    val viewType: FeedViewType = FeedViewType.PUBLICATION,
     val location: LocationDataObject? = null,
     val id: Int = 0,
     val message: String = "",

@@ -18,7 +18,7 @@ class FeedVoteUseCase {
 
         val item = model[index]
         val newItem = item.copy(
-            type = item.type,
+            viewType = item.viewType,
             location = item.location,
             id = item.id,
             message = item.message,

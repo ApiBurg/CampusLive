@@ -1,5 +1,6 @@
 package ru.campus.live.feed.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,6 +19,7 @@ class FeedViewModel @Inject constructor(
     private val interactor: FeedInteractor
 ) : ViewModel() {
 
+    private var isLazyLoad = false
     private val _liveData = MutableLiveData<ArrayList<FeedObject>>()
     private val _onCommentStartViewEvent = SingleLiveEvent<FeedObject>()
     private val _complaintEvent = SingleLiveEvent<FeedObject>()
@@ -37,21 +39,25 @@ class FeedViewModel @Inject constructor(
     }
 
     fun get() {
+        if (isLazyLoad) return
         viewModelScope.launch(Dispatchers.IO) {
+            isLazyLoad = true
             val model = ArrayList<FeedObject>()
             _liveData.value?.let { model.addAll(it) }
             when (val result = interactor.get(model)) {
                 is ResponseObject.Success -> {
-                    val response = interactor.setHeader(result.data)
+                    model.addAll(result.data)
+                    val response = interactor.setHeader(model)
                     withContext(Dispatchers.Main) {
                         _liveData.value = response
                     }
-                    insertCache()
+                    //insertCache()
                 }
                 is ResponseObject.Failure -> {
 
                 }
             }
+            isLazyLoad = false
         }
     }
 

@@ -1,12 +1,12 @@
 package ru.campus.live.feed.domain
 
 import ru.campus.live.core.data.datasource.interfaces.IUserDataSource
-import ru.campus.live.core.data.model.AttachmentModel
 import ru.campus.live.core.data.model.ResponseObject
 import ru.campus.live.core.data.model.UploadResultObject
 import ru.campus.live.core.data.model.VoteObject
 import ru.campus.live.core.data.repository.IUploadMediaRepository
 import ru.campus.live.feed.data.model.FeedObject
+import ru.campus.live.feed.data.model.FeedViewType
 import ru.campus.live.feed.data.model.PublicationPostObject
 import ru.campus.live.feed.data.repository.IWallRepository
 import ru.campus.live.feed.domain.usecase.FeedOffsetUseCase
@@ -38,13 +38,15 @@ class FeedInteractor(
     }
 
     fun setHeader(model: ArrayList<FeedObject>): ArrayList<FeedObject> {
-        val location = LocationDataObject(
-            id = userDataSource.location().id,
-            name = userDataSource.location().name,
-            address = userDataSource.location().name,
-            type = userDataSource.location().type
-        )
-        model.add(0, FeedObject(type = 0, location = location))
+        if (model.size != 0 && model[0].viewType != FeedViewType.HEADING) {
+            val location = LocationDataObject(
+                id = userDataSource.location().id,
+                name = userDataSource.location().name,
+                address = userDataSource.location().name,
+                type = userDataSource.location().type
+            )
+            model.add(0, FeedObject(viewType = FeedViewType.HEADING, location = location))
+        }
         return model
     }
 
@@ -71,11 +73,6 @@ class FeedInteractor(
 
     fun post(params: PublicationPostObject): ResponseObject<FeedObject> {
         return repository.post(params)
-    }
-
-    fun merge(params: FeedObject, model: ArrayList<FeedObject>): ArrayList<FeedObject> {
-        model.add(params)
-        return model
     }
 
     fun upload(params: GalleryDataObject): UploadMediaObject {

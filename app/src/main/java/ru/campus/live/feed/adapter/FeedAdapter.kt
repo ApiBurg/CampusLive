@@ -4,15 +4,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import ru.campus.live.feed.data.model.FeedObject
+import ru.campus.live.core.ui.MyOnClick
 import ru.campus.live.databinding.ItemFeedInviteBinding
 import ru.campus.live.databinding.ItemFeedLocationBinding
 import ru.campus.live.databinding.ItemPublicationBinding
-import ru.campus.live.core.ui.MyOnClick
 import ru.campus.live.feed.adapter.diff.FeedDiffUtilCallBack
 import ru.campus.live.feed.adapter.holders.FeedInviteViewHolder
 import ru.campus.live.feed.adapter.holders.FeedLocationViewHolder
 import ru.campus.live.feed.adapter.holders.FeedPublicationViewHolder
+import ru.campus.live.feed.data.model.FeedObject
+import ru.campus.live.feed.data.model.FeedViewType
 
 class FeedAdapter(private val myOnClick: MyOnClick<FeedObject>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -20,12 +21,12 @@ class FeedAdapter(private val myOnClick: MyOnClick<FeedObject>) :
     private val model = ArrayList<FeedObject>()
 
     override fun getItemViewType(position: Int): Int {
-        return model[position].type
+        return model[position].viewType.ordinal
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when (viewType) {
-            0 -> {
+        return when (FeedViewType.values()[viewType]) {
+            FeedViewType.HEADING -> {
                 val itemBinding =
                     ItemFeedLocationBinding.inflate(
                         LayoutInflater.from(parent.context),
@@ -33,7 +34,7 @@ class FeedAdapter(private val myOnClick: MyOnClick<FeedObject>) :
                     )
                 FeedLocationViewHolder(itemBinding)
             }
-            1 -> {
+            FeedViewType.PUBLICATION -> {
                 val itemBinding =
                     ItemPublicationBinding.inflate(
                         LayoutInflater.from(parent.context),
@@ -52,9 +53,9 @@ class FeedAdapter(private val myOnClick: MyOnClick<FeedObject>) :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (model[position].type) {
-            0 -> (holder as FeedLocationViewHolder).bind(model[position])
-            1 -> (holder as FeedPublicationViewHolder).bind(model[position])
+        when (model[position].viewType) {
+            FeedViewType.HEADING -> (holder as FeedLocationViewHolder).bind(model[position])
+            FeedViewType.PUBLICATION -> (holder as FeedPublicationViewHolder).bind(model[position])
             else -> (holder as FeedInviteViewHolder).bind()
         }
     }

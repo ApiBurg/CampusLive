@@ -28,6 +28,7 @@ class FeedFragment : BaseFragment<FragmentFeedBinding>() {
 
     private lateinit var feedComponent: FeedComponent
     private val adapter by lazy { FeedAdapter(myOnClick) }
+    private var linearLayoutManager: LinearLayoutManager? = null
     private val viewModel: FeedViewModel by navGraphViewModels(R.id.feedFragment) {
         feedComponent.viewModelsFactory()
     }
@@ -68,9 +69,10 @@ class FeedFragment : BaseFragment<FragmentFeedBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        linearLayoutManager = LinearLayoutManager(context)
         liveDataObserve()
         binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.layoutManager = linearLayoutManager
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.action_feedFragment_to_createPublicationFragment)
         }
@@ -124,6 +126,11 @@ class FeedFragment : BaseFragment<FragmentFeedBinding>() {
     private fun onScrollEvent() {
         binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val visibleItemCount = linearLayoutManager?.childCount ?: 0
+                val totalItemCount = linearLayoutManager?.itemCount ?: 0
+                val firstVisibleItem = linearLayoutManager?.findFirstVisibleItemPosition() ?: 0
+                if (visibleItemCount + firstVisibleItem >= totalItemCount) viewModel.get()
+
                 if (dy < 0 && !binding.fab.isShown) {
                     binding.fab.show()
                 } else if (dy > 0 && binding.fab.isShown) {
