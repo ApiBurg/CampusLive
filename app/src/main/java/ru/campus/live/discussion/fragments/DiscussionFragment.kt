@@ -10,6 +10,7 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import ru.campus.live.R
 import ru.campus.live.core.app.App
@@ -75,6 +76,7 @@ class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
         liveDataObserve()
         onEventTitle()
         onComplaintEvent()
+        onScrollEvent()
     }
 
     private fun initToolBar() {
@@ -159,6 +161,18 @@ class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
             if (!binding.toolbar.menu.hasVisibleItems())
                 binding.toolbar.inflateMenu(R.menu.discussion_menu)
         }
+    }
+
+    private fun onScrollEvent() {
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy < 0 && !binding.fab.isShown) {
+                    binding.fab.show()
+                } else if (dy > 0 && binding.fab.isShown) {
+                    binding.fab.hide()
+                }
+            }
+        })
     }
 
 }
