@@ -14,7 +14,7 @@ import ru.campus.live.discussion.adapter.holder.ChildCommentViewHolder
 import ru.campus.live.discussion.adapter.holder.DiscussionPublicationViewHolder
 import ru.campus.live.discussion.adapter.holder.ParentCommentViewHolder
 import ru.campus.live.discussion.data.model.DiscussionObject
-import ru.campus.live.feed.adapter.diff.FeedDiffUtilCallBack
+import ru.campus.live.discussion.data.model.DiscussionViewType
 
 class DiscussionAdapter(
     private val myOnClick: MyOnClick<DiscussionObject>
@@ -23,12 +23,12 @@ class DiscussionAdapter(
     private val model = ArrayList<DiscussionObject>()
 
     override fun getItemViewType(position: Int): Int {
-        return model[position].type
+        return model[position].type.ordinal
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        when (viewType) {
-            1 -> {
+        when (DiscussionViewType.values()[viewType]) {
+            DiscussionViewType.PARENT -> {
                 val itemBinding =
                     ItemParentCommetBinding.inflate(
                         LayoutInflater.from(parent.context),
@@ -36,7 +36,7 @@ class DiscussionAdapter(
                     )
                 return ParentCommentViewHolder(itemBinding, myOnClick)
             }
-            2 -> {
+            DiscussionViewType.CHILD -> {
                 val itemBinding =
                     ItemChildCommentBinding.inflate(
                         LayoutInflater.from(parent.context),
@@ -57,8 +57,8 @@ class DiscussionAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (model[position].type) {
-            1 -> (holder as ParentCommentViewHolder).bind(model[position])
-            2 -> (holder as ChildCommentViewHolder).bind(model[position])
+            DiscussionViewType.PARENT -> (holder as ParentCommentViewHolder).bind(model[position])
+            DiscussionViewType.CHILD -> (holder as ChildCommentViewHolder).bind(model[position])
             else -> (holder as DiscussionPublicationViewHolder).bind(model[position])
         }
     }

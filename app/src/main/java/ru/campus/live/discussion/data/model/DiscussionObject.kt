@@ -6,7 +6,7 @@ import ru.campus.live.core.data.model.AttachmentModel
 
 @Parcelize
 data class DiscussionObject(
-    var type: Int = 0,
+    var type: DiscussionViewType,
     val id: Int,
     val hidden: Int,
     val author: Int,

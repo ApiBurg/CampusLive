@@ -3,6 +3,7 @@ package ru.campus.live.discussion.domain
 import ru.campus.live.core.data.model.ResponseObject
 import ru.campus.live.core.data.model.VoteObject
 import ru.campus.live.discussion.data.model.DiscussionObject
+import ru.campus.live.discussion.data.model.DiscussionViewType
 import ru.campus.live.discussion.data.repository.IDiscussionRepository
 import ru.campus.live.discussion.domain.usecase.DiscussionTitleUseCase
 import ru.campus.live.feed.data.model.FeedObject
@@ -29,7 +30,10 @@ class DiscussionInteractor @Inject constructor(
         repository.complaint(id)
     }
 
-    fun remove(item: DiscussionObject, model: ArrayList<DiscussionObject>): ArrayList<DiscussionObject> {
+    fun remove(
+        item: DiscussionObject,
+        model: ArrayList<DiscussionObject>
+    ): ArrayList<DiscussionObject> {
         val index = model.indexOfLast { it.id == item.id }
         model.removeAt(index)
         return model
@@ -41,7 +45,7 @@ class DiscussionInteractor @Inject constructor(
     ): ArrayList<DiscussionObject> {
         if (model.size == 0) {
             return mapper(model, publication)
-        } else if (model[0].type != 3) {
+        } else if (model[0].type != DiscussionViewType.PUBLICATION) {
             return mapper(model, publication)
         }
         return model
@@ -50,15 +54,15 @@ class DiscussionInteractor @Inject constructor(
     fun setTypeObject(model: ArrayList<DiscussionObject>): ArrayList<DiscussionObject> {
         val response = ArrayList<DiscussionObject>()
         model.forEach { item ->
-            if(item.type != 3) {
+            if (item.type != DiscussionViewType.PUBLICATION) {
                 if (item.parent == 0) {
-                    item.type = 1
+                    item.type = DiscussionViewType.PARENT
                     response.add(item)
                 }
 
                 model.forEach { child ->
                     if (child.parent == item.id) {
-                        child.type = 2
+                        child.type = DiscussionViewType.CHILD
                         response.add(child)
                     }
                 }
@@ -73,7 +77,7 @@ class DiscussionInteractor @Inject constructor(
     ): ArrayList<DiscussionObject> {
         model.add(
             0, DiscussionObject(
-                type = 3,
+                type = DiscussionViewType.PUBLICATION,
                 id = publication.id,
                 hidden = 1,
                 author = 0,
