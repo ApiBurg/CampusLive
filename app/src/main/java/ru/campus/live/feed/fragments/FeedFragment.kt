@@ -9,6 +9,7 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import ru.campus.live.R
 import ru.campus.live.core.app.App
@@ -75,6 +76,7 @@ class FeedFragment : BaseFragment<FragmentFeedBinding>() {
         }
         onCommentEvent()
         onComplaintEvent()
+        onScrollEvent()
     }
 
     private fun liveDataObserve() {
@@ -117,6 +119,18 @@ class FeedFragment : BaseFragment<FragmentFeedBinding>() {
             })
             snack.show()
         }
+    }
+
+    private fun onScrollEvent() {
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy < 0 && !binding.fab.isShown) {
+                    binding.fab.show()
+                } else if (dy > 0 && binding.fab.isShown) {
+                    binding.fab.hide()
+                }
+            }
+        })
     }
 
 }
