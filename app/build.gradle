@@ -40,6 +40,11 @@ android {
 dependencies {
     def dagger_version = "2.41"
     def nav_version = "2.4.1"
+    def roomVersion = "2.4.2"
+
+    implementation("androidx.room:room-runtime:$roomVersion")
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
 
     //Данная библиотека используется из-за другой библиотеки
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
