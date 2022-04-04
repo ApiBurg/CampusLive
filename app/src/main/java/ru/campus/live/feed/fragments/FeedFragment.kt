@@ -2,7 +2,6 @@ package ru.campus.live.feed.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.core.graphics.toColorInt
@@ -50,6 +49,7 @@ class FeedFragment : BaseFragment<FragmentFeedBinding>() {
         feedComponent = DaggerFeedComponent.builder()
             .context((activity?.applicationContext as App).appComponent.context())
             .apiService((activity?.applicationContext as App).appComponent.apiService())
+            .appDatabase((activity?.applicationContext as App).appComponent.appDatabase())
             .build()
     }
 
@@ -58,10 +58,11 @@ class FeedFragment : BaseFragment<FragmentFeedBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         parentFragment?.setFragmentResultListener("new_publication") { _, bundle ->
-            Log.d("MyLog", "Полученна новая публикация!")
             val params: FeedObject? = bundle.getParcelable("publication")
             if (params != null) viewModel.insert(params)
         }
+        viewModel.getCache()
+        viewModel.get()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -1,7 +1,8 @@
 package ru.campus.live.feed.data.model
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
+
 import ru.campus.live.core.data.model.AttachmentModel
 import ru.campus.live.location.data.model.LocationDataObject
 

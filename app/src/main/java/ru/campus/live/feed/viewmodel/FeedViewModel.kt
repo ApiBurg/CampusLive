@@ -21,16 +21,22 @@ class FeedViewModel @Inject constructor(
     private val _liveData = MutableLiveData<ArrayList<FeedObject>>()
     private val _onCommentStartViewEvent = SingleLiveEvent<FeedObject>()
     private val _complaintEvent = SingleLiveEvent<FeedObject>()
-
     fun liveData(): LiveData<ArrayList<FeedObject>> = _liveData
     fun complaintEvent() = _complaintEvent
     fun onCommentStartViewEvent() = _onCommentStartViewEvent
 
-    init {
-        get()
+    fun getCache() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = interactor.getCache()
+            if (result.size != 0) {
+                withContext(Dispatchers.Main) {
+                    _liveData.value = result
+                }
+            }
+        }
     }
 
-    private fun get() {
+    fun get() {
         viewModelScope.launch(Dispatchers.IO) {
             val model = ArrayList<FeedObject>()
             _liveData.value?.let { model.addAll(it) }
@@ -40,8 +46,20 @@ class FeedViewModel @Inject constructor(
                     withContext(Dispatchers.Main) {
                         _liveData.value = response
                     }
+                    insertCache()
+                }
+                is ResponseObject.Failure -> {
+
                 }
             }
+        }
+    }
+
+    private fun insertCache() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val model = ArrayList<FeedObject>()
+            _liveData.value?.let { model.addAll(it) }
+            if (model.size < 27) interactor.insertCache(model)
         }
     }
 

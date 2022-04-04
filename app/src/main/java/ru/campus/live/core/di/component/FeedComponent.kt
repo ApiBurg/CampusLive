@@ -7,6 +7,7 @@ import ru.campus.live.core.data.APIService
 import ru.campus.live.core.di.module.FeedModule
 import ru.campus.live.core.di.module.viewmodel.FeedVModule
 import ru.campus.live.core.di.module.viewmodel.base.ViewModelFactory
+import ru.campus.live.feed.db.AppDatabase
 
 @Component(modules = [FeedModule::class, FeedVModule::class])
 interface FeedComponent {
@@ -17,6 +18,9 @@ interface FeedComponent {
     interface Builder {
         @BindsInstance
         fun context(context: Context): Builder
+
+        @BindsInstance
+        fun appDatabase(appDatabase: AppDatabase): Builder
 
         @BindsInstance
         fun apiService(apiService: APIService): Builder

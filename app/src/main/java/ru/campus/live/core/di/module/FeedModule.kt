@@ -11,6 +11,7 @@ import ru.campus.live.core.data.repository.UploadMediaRepository
 import ru.campus.live.core.domain.PreparationMediaUseCase
 import ru.campus.live.feed.data.repository.IWallRepository
 import ru.campus.live.feed.data.repository.WallRepository
+import ru.campus.live.feed.db.AppDatabase
 import ru.campus.live.feed.domain.FeedInteractor
 
 @Module
@@ -20,9 +21,10 @@ class FeedModule {
     fun provideWallRepository(
         apiService: APIService,
         errorDataSource: ErrorDataSource,
-        userDataSource: UserDataSource
+        userDataSource: UserDataSource,
+        appDatabase: AppDatabase
     ): WallRepository {
-        return WallRepository(apiService, errorDataSource, userDataSource)
+        return WallRepository(apiService, errorDataSource, userDataSource, appDatabase)
     }
 
     @Provides

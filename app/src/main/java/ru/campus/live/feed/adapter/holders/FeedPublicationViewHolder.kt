@@ -37,7 +37,7 @@ class FeedPublicationViewHolder(
     }
 
     private fun renderMediaView(model: FeedObject) {
-        if (model.attachment != null) {
+        if (model.attachment != null && model.attachment.id != 0) {
             itemBinding.media.isVisible = true
             val displayMetrics = context.resources.displayMetrics
             val pxAndDp = (80 * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()

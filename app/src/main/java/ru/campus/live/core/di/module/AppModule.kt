@@ -1,15 +1,17 @@
 package ru.campus.live.core.di.module
 
 import android.content.Context
+import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import ru.campus.live.core.data.APIService
 import ru.campus.live.core.data.datasource.ErrorDataSource
 import ru.campus.live.core.data.datasource.HostDataSource
 import ru.campus.live.core.data.datasource.StringProvider
 import ru.campus.live.core.data.datasource.UserDataSource
-import ru.campus.live.core.data.APIService
+import ru.campus.live.feed.db.AppDatabase
 
 @Module
 class AppModule {
@@ -36,6 +38,15 @@ class AppModule {
     @Provides
     fun provideErrorDataSource(stringProvider: StringProvider): ErrorDataSource {
         return ErrorDataSource(stringProvider = stringProvider)
+    }
+
+    @Provides
+    fun provideAppDatabase(context: Context): AppDatabase {
+        return Room.databaseBuilder(
+            context,
+            AppDatabase::class.java,
+            "publication_db"
+        ).build()
     }
 
 }

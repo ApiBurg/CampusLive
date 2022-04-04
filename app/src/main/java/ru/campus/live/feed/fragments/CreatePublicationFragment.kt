@@ -46,6 +46,7 @@ class CreatePublicationFragment : BaseFragment<FragmentCreatePublicationBinding>
         feedComponent = DaggerFeedComponent.builder()
             .context((activity?.applicationContext as App).appComponent.context())
             .apiService((activity?.applicationContext as App).appComponent.apiService())
+            .appDatabase((activity?.applicationContext as App).appComponent.appDatabase())
             .build()
     }
 
