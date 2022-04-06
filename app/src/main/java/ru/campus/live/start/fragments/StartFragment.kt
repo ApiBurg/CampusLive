@@ -12,13 +12,13 @@ import ru.campus.live.core.app.App
 import ru.campus.live.core.di.component.DaggerStartComponent
 import ru.campus.live.core.di.component.StartComponent
 import ru.campus.live.core.ui.BaseFragment
-import ru.campus.live.databinding.FragmentOnboarBinding
+import ru.campus.live.databinding.FragmentStartBinding
 import ru.campus.live.dialog.ErrorDialog
 import ru.campus.live.start.adapter.StartAdapter
 import ru.campus.live.start.viewmodel.StartViewModel
 
 
-class StartFragment : BaseFragment<FragmentOnboarBinding>() {
+class StartFragment : BaseFragment<FragmentStartBinding>() {
 
     private lateinit var startComponent: StartComponent
     private val adapter = StartAdapter()
@@ -26,7 +26,7 @@ class StartFragment : BaseFragment<FragmentOnboarBinding>() {
         startComponent.viewModelsFactory()
     }
 
-    override fun getViewBinding() = FragmentOnboarBinding.inflate(layoutInflater)
+    override fun getViewBinding() = FragmentStartBinding.inflate(layoutInflater)
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
