@@ -43,13 +43,13 @@ class StartFragment : BaseFragment<FragmentStartBinding>() {
         liveDataObserve()
         binding.viewPager.adapter = adapter
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { _, _ -> }.attach()
+        onLoginEvent()
+        onErrorEvent()
         binding.start.setOnClickListener {
             binding.start.isVisible = false
             binding.progressBar.isVisible = true
             viewModel.login()
         }
-        onLoginEvent()
-        onErrorEvent()
     }
 
     private fun liveDataObserve() {
