@@ -12,10 +12,14 @@
         tools:layout="@layout/fragment_onboar" >
         <action
             android:id="@+id/action_onBoarFragment_to_locationFragment"
-            app:destination="@id/locationFragment" />
+            app:destination="@id/locationFragment"
+            app:popUpTo="@id/main_navigation"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_onBoarFragment_to_feedFragment"
-            app:destination="@id/feedFragment" />
+            app:destination="@id/feedFragment"
+            app:popUpTo="@id/main_navigation"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/locationFragment"
@@ -24,7 +28,9 @@
         tools:layout="@layout/fragment_location" >
         <action
             android:id="@+id/action_locationFragment_to_feedFragment"
-            app:destination="@id/feedFragment" />
+            app:destination="@id/feedFragment"
+            app:popUpTo="@id/main_navigation"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/feedFragment"
