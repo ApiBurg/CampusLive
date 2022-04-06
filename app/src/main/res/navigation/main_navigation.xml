@@ -9,7 +9,7 @@
         android:id="@+id/onBoarFragment"
         android:name="ru.campus.live.start.fragments.StartFragment"
         android:label="fragment_on_boar"
-        tools:layout="@layout/fragment_onboar" >
+        tools:layout="@layout/fragment_start" >
         <action
             android:id="@+id/action_onBoarFragment_to_locationFragment"
             app:destination="@id/locationFragment"
