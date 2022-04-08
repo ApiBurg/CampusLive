@@ -7,15 +7,15 @@ import ru.campus.live.core.di.component.DaggerAppComponent
 
 class App : Application() {
 
-    lateinit var appComponent: AppComponent
+    private val appComponent: AppComponent by lazy {
+        DaggerAppComponent.builder()
+            .context(context = this)
+            .build()
+    }
 
     override fun onCreate() {
         super.onCreate()
-        appComponent = DaggerAppComponent.builder()
-            .context(context = this)
-            .build()
         AppDepsStore.deps = appComponent
     }
-
 
 }

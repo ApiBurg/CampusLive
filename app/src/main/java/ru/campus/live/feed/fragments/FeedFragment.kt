@@ -28,7 +28,12 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 class FeedFragment : BaseFragment<FragmentFeedBinding>() {
 
-    private lateinit var feedComponent: FeedComponent
+    private val feedComponent: FeedComponent by lazy {
+        DaggerFeedComponent.builder()
+            .deps(AppDepsProvider.deps)
+            .build()
+    }
+
     private val adapter by lazy { FeedAdapter(myOnClick) }
     private var linearLayoutManager: LinearLayoutManager? = null
     private val viewModel: FeedViewModel by navGraphViewModels(R.id.feedFragment) {
@@ -46,13 +51,6 @@ class FeedFragment : BaseFragment<FragmentFeedBinding>() {
                 "FeedBottomSheetDialog"
             )
         }
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        feedComponent = DaggerFeedComponent.builder()
-            .deps(AppDepsProvider.deps)
-            .build()
     }
 
     override fun getViewBinding() = FragmentFeedBinding.inflate(layoutInflater)

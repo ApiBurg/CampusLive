@@ -21,17 +21,14 @@ class DiscussionBottomSheetFragment :
     BaseBottomSheetDialogFragment<FragmentDiscussionBottomSheetBinding>(), View.OnClickListener {
 
     private var item: DiscussionObject? = null
-    private lateinit var discussionComponent: DiscussionComponent
+    private val discussionComponent: DiscussionComponent by lazy {
+        DaggerDiscussionComponent.builder()
+            .deps(AppDepsProvider.deps)
+            .build()
+    }
     override fun getViewBinding() = FragmentDiscussionBottomSheetBinding.inflate(layoutInflater)
     private val viewModel: DiscussionViewModel by navGraphViewModels(R.id.discussionFragment) {
         discussionComponent.viewModelsFactory()
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        discussionComponent = DaggerDiscussionComponent.builder()
-            .deps(AppDepsProvider.deps)
-            .build()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,6 +1,5 @@
 package ru.campus.live.start.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
@@ -20,18 +19,16 @@ import ru.campus.live.start.viewmodel.StartViewModel
 
 class StartFragment : BaseFragment<FragmentStartBinding>() {
 
-    private lateinit var startComponent: StartComponent
-    private val adapter = StartAdapter()
+    private val startComponent: StartComponent by lazy {
+       DaggerStartComponent.builder()
+           .deps(AppDepsProvider.deps)
+           .build()
+    }
+
     private val viewModel by viewModels<StartViewModel> { startComponent.viewModelsFactory() }
+    private val adapter = StartAdapter()
 
     override fun getViewBinding() = FragmentStartBinding.inflate(layoutInflater)
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        startComponent = DaggerStartComponent.builder()
-            .deps(AppDepsProvider.deps)
-            .build()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

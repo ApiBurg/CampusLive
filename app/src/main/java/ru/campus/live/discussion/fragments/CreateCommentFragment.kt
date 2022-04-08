@@ -27,7 +27,12 @@ import ru.campus.live.gallery.fragments.GalleryBottomSheetDialog
 
 class CreateCommentFragment : BaseFragment<FragmentCreateCommentBinding>() {
 
-    private lateinit var discussionComponent: DiscussionComponent
+    private val discussionComponent: DiscussionComponent by lazy {
+        DaggerDiscussionComponent.builder()
+            .deps(AppDepsProvider.deps)
+            .build()
+    }
+
     private var publication: Int = 0
     private var parent: Int = 0
     private var answered: Int = 0
@@ -42,14 +47,6 @@ class CreateCommentFragment : BaseFragment<FragmentCreateCommentBinding>() {
     }
 
     private val uploadMediaAdapter = UploadMediaAdapter(uploadOnClick)
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        discussionComponent = DaggerDiscussionComponent.builder()
-            .deps(AppDepsProvider.deps)
-            .build()
-    }
-
     override fun getViewBinding() = FragmentCreateCommentBinding.inflate(layoutInflater)
 
     override fun onCreate(savedInstanceState: Bundle?) {

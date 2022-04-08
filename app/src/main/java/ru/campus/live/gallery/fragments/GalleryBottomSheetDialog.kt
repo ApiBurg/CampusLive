@@ -28,9 +28,13 @@ import ru.campus.live.gallery.views.ItemOffsetDecorationGallery
 class GalleryBottomSheetDialog :
     BaseBottomSheetDialogFragment<FragmentGalleryBottomSheetBinding>() {
 
-    private lateinit var galleryComponent: GalleryComponent
-    private val viewModel by viewModels<GalleryViewModel> { galleryComponent.viewModelsFactory() }
+    private val galleryComponent: GalleryComponent by lazy {
+        DaggerGalleryComponent.builder()
+            .deps(AppDepsProvider.deps)
+            .build()
+    }
 
+    private val viewModel by viewModels<GalleryViewModel> { galleryComponent.viewModelsFactory() }
     private val myOnClick = object : MyOnClick<GalleryDataObject> {
         override fun item(view: View, item: GalleryDataObject) {
             val bundle = Bundle()
@@ -52,15 +56,7 @@ class GalleryBottomSheetDialog :
             }
         }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        galleryComponent = DaggerGalleryComponent.builder()
-            .deps(AppDepsProvider.deps)
-            .build()
-    }
-
     override fun getViewBinding() = FragmentGalleryBottomSheetBinding.inflate(layoutInflater)
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

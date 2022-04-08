@@ -1,6 +1,5 @@
 package ru.campus.live.location.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
@@ -9,7 +8,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.campus.live.R
-import ru.campus.live.core.app.App
 import ru.campus.live.core.di.AppDepsProvider
 import ru.campus.live.core.di.component.DaggerLocationComponent
 import ru.campus.live.core.di.component.LocationComponent
@@ -23,7 +21,12 @@ import ru.campus.live.location.viewmodel.LocationViewModel
 
 class LocationFragment : BaseFragment<FragmentLocationBinding>() {
 
-    private lateinit var locationComponent: LocationComponent
+    private val locationComponent: LocationComponent by lazy {
+        DaggerLocationComponent.builder()
+            .deps(AppDepsProvider.deps)
+            .build()
+    }
+
     private val adapter by lazy { LocationAdapter(myOnClick) }
     private val viewModel by viewModels<LocationViewModel> {
         locationComponent.viewModelsFactory()
@@ -36,12 +39,6 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
         }
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        locationComponent = DaggerLocationComponent.builder()
-            .deps(AppDepsProvider.deps)
-            .build()
-    }
 
     override fun getViewBinding() = FragmentLocationBinding.inflate(layoutInflater)
 

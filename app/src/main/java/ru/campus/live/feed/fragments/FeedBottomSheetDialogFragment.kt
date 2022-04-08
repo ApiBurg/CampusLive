@@ -23,19 +23,17 @@ import ru.campus.live.feed.viewmodel.FeedViewModel
 
 class FeedBottomSheetDialogFragment : BottomSheetDialogFragment(), View.OnClickListener {
 
-    private lateinit var feedComponent: FeedComponent
+    private val feedComponent: FeedComponent by lazy {
+        DaggerFeedComponent.builder()
+            .deps(AppDepsProvider.deps)
+            .build()
+    }
+
     private var _binding: FragmentFeedBottomSheetBinding? = null
     private val binding get() = _binding!!
     private var model: FeedObject? = null
     private val viewModel: FeedViewModel by navGraphViewModels(R.id.feedFragment) {
         feedComponent.viewModelsFactory()
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        feedComponent = DaggerFeedComponent.builder()
-            .deps(AppDepsProvider.deps)
-            .build()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

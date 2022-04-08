@@ -1,6 +1,5 @@
 package ru.campus.live.feed.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
@@ -10,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.campus.live.R
-import ru.campus.live.core.app.App
 import ru.campus.live.core.di.AppDepsProvider
 import ru.campus.live.core.di.component.DaggerFeedComponent
 import ru.campus.live.core.di.component.FeedComponent
@@ -28,7 +26,12 @@ import ru.campus.live.gallery.fragments.GalleryBottomSheetDialog
 
 class CreatePublicationFragment : BaseFragment<FragmentCreatePublicationBinding>() {
 
-    private lateinit var feedComponent: FeedComponent
+    private val feedComponent: FeedComponent by lazy {
+        DaggerFeedComponent.builder()
+            .deps(AppDepsProvider.deps)
+            .build()
+    }
+
     private val viewModel: CreatePublicationViewModel by viewModels {
         feedComponent.viewModelsFactory()
     }
@@ -42,12 +45,6 @@ class CreatePublicationFragment : BaseFragment<FragmentCreatePublicationBinding>
     private val uploadMediaAdapter = UploadMediaAdapter(deleteCallBack)
     override fun getViewBinding() = FragmentCreatePublicationBinding.inflate(layoutInflater)
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        feedComponent = DaggerFeedComponent.builder()
-            .deps(AppDepsProvider.deps)
-            .build()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

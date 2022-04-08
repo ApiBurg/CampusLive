@@ -28,7 +28,12 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
 
-    private lateinit var discussionComponent: DiscussionComponent
+    private val discussionComponent: DiscussionComponent by lazy {
+        DaggerDiscussionComponent.builder()
+            .deps(AppDepsProvider.deps)
+            .build()
+    }
+
     private var publication: FeedObject? = null
     private val viewModel: DiscussionViewModel by navGraphViewModels(R.id.discussionFragment) {
         discussionComponent.viewModelsFactory()
@@ -44,13 +49,6 @@ class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
         }
     }
     private val adapter = DiscussionAdapter(myOnClick)
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        discussionComponent = DaggerDiscussionComponent.builder()
-            .deps(AppDepsProvider.deps)
-            .build()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
