@@ -7,18 +7,20 @@ import ru.campus.live.core.data.APIService
 import ru.campus.live.core.data.datasource.ErrorDataSource
 import ru.campus.live.core.data.datasource.StringProvider
 import ru.campus.live.core.data.datasource.UserDataSource
+import ru.campus.live.core.di.AppDependencies
 import ru.campus.live.core.di.module.AppModule
 import ru.campus.live.feed.db.AppDatabase
 
 @Component(modules = [AppModule::class])
-interface AppComponent {
+interface AppComponent : AppDependencies {
 
-    fun apiService(): APIService
+    override val context: Context
+    override val apiService: APIService
+    override val appDatabase: AppDatabase
+
     fun stringProvider(): StringProvider
     fun userDataSource(): UserDataSource
-    fun context(): Context
     fun errorDataSource(): ErrorDataSource
-    fun appDatabase(): AppDatabase
 
     @Component.Builder
     interface Builder {
