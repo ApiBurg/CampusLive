@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import ru.campus.live.R
 import ru.campus.live.core.app.App
+import ru.campus.live.core.di.AppDepsProvider
+import ru.campus.live.core.di.AppDepsStore
 import ru.campus.live.core.di.component.DaggerFeedComponent
 import ru.campus.live.core.di.component.FeedComponent
 import ru.campus.live.core.ui.BaseFragment
@@ -48,7 +50,9 @@ class FeedFragment : BaseFragment<FragmentFeedBinding>() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        feedComponent = DaggerFeedComponent.builder().build()
+        feedComponent = DaggerFeedComponent.builder()
+            .deps(AppDepsProvider.deps)
+            .build()
     }
 
     override fun getViewBinding() = FragmentFeedBinding.inflate(layoutInflater)
