@@ -9,7 +9,7 @@ import ru.campus.live.core.di.module.viewmodel.base.ViewModelKey
 import ru.campus.live.start.viewmodel.StartViewModel
 
 @Module
-abstract class OnBoardVModule : BaseViewModelModule() {
+abstract class StartVModule : BaseViewModelModule() {
 
     @Binds
     @IntoMap

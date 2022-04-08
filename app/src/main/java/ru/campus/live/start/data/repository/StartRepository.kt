@@ -9,8 +9,9 @@ import ru.campus.live.core.data.model.ResponseObject
 import ru.campus.live.start.data.model.OSType
 import ru.campus.live.start.data.model.RegistrationDataObject
 import ru.campus.live.start.data.model.StartDataObject
+import javax.inject.Inject
 
-class StartRepository(
+class StartRepository @Inject constructor(
     private val apiService: APIService,
     private val errorDataSource: ErrorDataSource,
     private val userDataSource: UserDataSource,
