@@ -3,10 +3,9 @@ package ru.campus.live.core.di.component
 import dagger.Component
 import ru.campus.live.core.di.deps.AppDeps
 import ru.campus.live.core.di.module.MainModule
-import ru.campus.live.core.di.module.viewmodel.MainVModule
 import ru.campus.live.core.di.module.viewmodel.base.ViewModelFactory
 
-@Component(modules = [MainModule::class, MainVModule::class], dependencies = [AppDeps::class])
+@Component(modules = [MainModule::class], dependencies = [AppDeps::class])
 interface MainComponent {
 
     fun viewModelsFactory(): ViewModelFactory
