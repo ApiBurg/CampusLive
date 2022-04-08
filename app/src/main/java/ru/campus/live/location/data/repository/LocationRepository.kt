@@ -3,12 +3,13 @@ package ru.campus.live.location.data.repository
 import okhttp3.ResponseBody
 import ru.campus.live.core.data.APIService
 import ru.campus.live.core.data.datasource.CloudDataSource
-import ru.campus.live.core.data.model.ResponseObject
 import ru.campus.live.core.data.datasource.ErrorDataSource
 import ru.campus.live.core.data.datasource.UserDataSource
+import ru.campus.live.core.data.model.ResponseObject
 import ru.campus.live.location.data.model.LocationDataObject
+import javax.inject.Inject
 
-class LocationRepository(
+class LocationRepository @Inject constructor(
     private val apiService: APIService,
     private val errorDataSource: ErrorDataSource,
     private val user: UserDataSource

@@ -6,10 +6,7 @@ import ru.campus.live.core.di.module.LocationModule
 import ru.campus.live.core.di.module.viewmodel.LocationVModule
 import ru.campus.live.core.di.module.viewmodel.base.ViewModelFactory
 
-@Component(
-    modules = [LocationModule::class, LocationVModule::class],
-    dependencies = [AppDeps::class]
-)
+@Component(modules = [LocationModule::class], dependencies = [AppDeps::class])
 interface LocationComponent {
 
     fun viewModelsFactory(): ViewModelFactory

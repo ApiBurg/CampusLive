@@ -9,6 +9,7 @@ import ru.campus.live.gallery.data.repository.IGalleryRepository
 @Module(includes = [GalleryBindModule::class, GalleryVModule::class])
 class GalleryModule
 
+@Module
 interface GalleryBindModule {
     @Binds
     fun bindGalleryRepository(galleryRepository: GalleryRepository): IGalleryRepository
