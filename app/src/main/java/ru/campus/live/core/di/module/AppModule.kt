@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import ru.campus.live.core.data.APIService
 import ru.campus.live.core.data.datasource.HostDataSource
 import ru.campus.live.core.data.datasource.UserDataSource
-import ru.campus.live.core.data.datasource.interfaces.IUserDataSource
+import ru.campus.live.core.data.datasource.IUserDataSource
 import ru.campus.live.feed.db.AppDatabase
 
 @Module(includes = [AppBindModule::class])

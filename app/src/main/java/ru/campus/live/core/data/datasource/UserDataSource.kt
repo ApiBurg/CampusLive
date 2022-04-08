@@ -2,7 +2,6 @@ package ru.campus.live.core.data.datasource
 
 import android.content.Context
 import android.content.SharedPreferences
-import ru.campus.live.core.data.datasource.interfaces.IUserDataSource
 import ru.campus.live.location.data.model.LocationDataObject
 import ru.campus.live.start.data.model.RegistrationDataObject
 import javax.inject.Inject

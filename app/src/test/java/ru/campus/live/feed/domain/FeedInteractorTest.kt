@@ -4,7 +4,7 @@ import org.junit.Assert
 import org.junit.Test
 import org.mockito.Mockito
 import org.mockito.kotlin.mock
-import ru.campus.live.core.data.datasource.interfaces.IUserDataSource
+import ru.campus.live.core.data.datasource.IUserDataSource
 import ru.campus.live.feed.data.model.FeedObject
 import ru.campus.live.feed.data.repository.IWallRepository
 import ru.campus.live.location.data.model.LocationDataObject

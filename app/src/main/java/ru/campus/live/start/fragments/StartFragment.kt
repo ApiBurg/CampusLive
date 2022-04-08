@@ -2,7 +2,6 @@ package ru.campus.live.start.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -23,9 +22,7 @@ class StartFragment : BaseFragment<FragmentStartBinding>() {
 
     private lateinit var startComponent: StartComponent
     private val adapter = StartAdapter()
-    private val viewModel by viewModels<StartViewModel> {
-        startComponent.viewModelsFactory()
-    }
+    private val viewModel by viewModels<StartViewModel> { startComponent.viewModelsFactory() }
 
     override fun getViewBinding() = FragmentStartBinding.inflate(layoutInflater)
 
@@ -64,7 +61,6 @@ class StartFragment : BaseFragment<FragmentStartBinding>() {
 
     private fun onErrorEvent() {
         viewModel.failureEvent().observe(viewLifecycleOwner) { errorObject ->
-            Log.d("MyLog", "Код ошибки = "+errorObject.code)
             isVisibleProgressBar(false)
             val bundle = Bundle()
             bundle.putParcelable("params", errorObject)

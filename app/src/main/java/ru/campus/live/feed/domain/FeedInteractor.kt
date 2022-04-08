@@ -1,6 +1,6 @@
 package ru.campus.live.feed.domain
 
-import ru.campus.live.core.data.datasource.interfaces.IUserDataSource
+import ru.campus.live.core.data.datasource.IUserDataSource
 import ru.campus.live.core.data.model.ResponseObject
 import ru.campus.live.core.data.model.UploadResultObject
 import ru.campus.live.core.data.model.VoteObject

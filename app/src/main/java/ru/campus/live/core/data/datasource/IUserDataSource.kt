@@ -1,4 +1,4 @@
-package ru.campus.live.core.data.datasource.interfaces
+package ru.campus.live.core.data.datasource
 
 import ru.campus.live.location.data.model.LocationDataObject
 import ru.campus.live.start.data.model.RegistrationDataObject
