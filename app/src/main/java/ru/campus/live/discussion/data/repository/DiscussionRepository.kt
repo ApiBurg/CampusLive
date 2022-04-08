@@ -1,15 +1,16 @@
 package ru.campus.live.discussion.data.repository
 
 import okhttp3.ResponseBody
+import ru.campus.live.core.data.APIService
 import ru.campus.live.core.data.datasource.CloudDataSource
 import ru.campus.live.core.data.datasource.ErrorDataSource
 import ru.campus.live.core.data.datasource.UserDataSource
-import ru.campus.live.core.data.APIService
 import ru.campus.live.core.data.model.ResponseObject
 import ru.campus.live.discussion.data.model.CommentCreateObject
 import ru.campus.live.discussion.data.model.DiscussionObject
+import javax.inject.Inject
 
-class DiscussionRepository(
+class DiscussionRepository @Inject constructor(
     private val apiService: APIService,
     private val errorDataSource: ErrorDataSource,
     private val user: UserDataSource
