@@ -6,8 +6,9 @@ import android.media.ExifInterface
 import android.provider.MediaStore
 import ru.campus.live.gallery.data.model.GalleryDataObject
 import java.io.IOException
+import javax.inject.Inject
 
-class GalleryRepository(private val context: Context) : IGalleryRepository {
+class GalleryRepository @Inject constructor(private val context: Context) : IGalleryRepository {
 
     override fun get(offset: Int): ArrayList<GalleryDataObject> {
         val cursor = cursorCreate(offset)
