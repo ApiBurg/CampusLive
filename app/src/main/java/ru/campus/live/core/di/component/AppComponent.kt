@@ -4,7 +4,7 @@ import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
 import ru.campus.live.core.data.APIService
-import ru.campus.live.core.di.AppDeps
+import ru.campus.live.core.di.deps.AppDeps
 import ru.campus.live.core.di.module.AppModule
 import ru.campus.live.feed.db.AppDatabase
 

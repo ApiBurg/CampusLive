@@ -1,7 +1,7 @@
 package ru.campus.live.core.di.component
 
 import dagger.Component
-import ru.campus.live.core.di.AppDeps
+import ru.campus.live.core.di.deps.AppDeps
 import ru.campus.live.core.di.module.DiscussionModule
 import ru.campus.live.core.di.module.viewmodel.DiscussionVModule
 import ru.campus.live.core.di.module.viewmodel.base.ViewModelFactory

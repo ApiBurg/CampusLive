@@ -1,5 +1,6 @@
 package ru.campus.live.core.di
 
+import ru.campus.live.core.di.deps.AppDeps
 import kotlin.properties.Delegates.notNull
 
 interface AppDepsProvider {

@@ -1,4 +1,4 @@
-package ru.campus.live.core.di
+package ru.campus.live.core.di.deps
 
 import android.content.Context
 import ru.campus.live.core.data.APIService
