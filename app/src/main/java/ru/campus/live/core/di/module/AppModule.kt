@@ -2,15 +2,18 @@ package ru.campus.live.core.di.module
 
 import android.content.Context
 import androidx.room.Room
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.campus.live.core.data.APIService
 import ru.campus.live.core.data.datasource.HostDataSource
+import ru.campus.live.core.data.datasource.UserDataSource
+import ru.campus.live.core.data.datasource.interfaces.IUserDataSource
 import ru.campus.live.feed.db.AppDatabase
 
-@Module
+@Module(includes = [AppBindModule::class])
 class AppModule {
 
     @Provides
@@ -30,5 +33,13 @@ class AppModule {
             "publication_db"
         ).build()
     }
+
+}
+
+@Module
+interface AppBindModule {
+
+    @Binds
+    fun bindUserDataSource(userDataSource: UserDataSource): IUserDataSource
 
 }

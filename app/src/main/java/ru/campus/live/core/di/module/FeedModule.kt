@@ -1,36 +1,18 @@
 package ru.campus.live.core.di.module
 
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import ru.campus.live.core.data.APIService
-import ru.campus.live.core.data.datasource.ErrorDataSource
 import ru.campus.live.core.data.datasource.UserDataSource
-import ru.campus.live.core.data.datasource.interfaces.IUserDataSource
 import ru.campus.live.core.data.repository.IUploadMediaRepository
 import ru.campus.live.core.data.repository.UploadMediaRepository
-import ru.campus.live.core.domain.PreparationMediaUseCase
+import ru.campus.live.core.di.module.viewmodel.FeedVModule
 import ru.campus.live.feed.data.repository.IWallRepository
 import ru.campus.live.feed.data.repository.WallRepository
-import ru.campus.live.feed.db.AppDatabase
 import ru.campus.live.feed.domain.FeedInteractor
 
-@Module
+@Module(includes = [FeedBindModule::class, FeedVModule::class])
 class FeedModule {
-
-    @Provides
-    fun provideWallRepository(
-        apiService: APIService,
-        errorDataSource: ErrorDataSource,
-        userDataSource: UserDataSource,
-        appDatabase: AppDatabase
-    ): WallRepository {
-        return WallRepository(apiService, errorDataSource, userDataSource, appDatabase)
-    }
-
-    @Provides
-    fun provideIWallRepository(wallRepository: WallRepository): IWallRepository {
-        return wallRepository
-    }
 
     @Provides
     fun provideFeedInteractor(
@@ -41,23 +23,13 @@ class FeedModule {
         return FeedInteractor(iWallRepository, userDataSource, uploadMediaRepository)
     }
 
-    @Provides
-    fun provideIUserDataSource(userDataSource: UserDataSource): IUserDataSource {
-        return userDataSource
-    }
+}
 
-    @Provides
-    fun provideUploadMediaRepository(
-        apiService: APIService,
-        errorDataSource: ErrorDataSource,
-        preparationMediaUseCase: PreparationMediaUseCase
-    ): UploadMediaRepository {
-        return UploadMediaRepository(apiService, errorDataSource, preparationMediaUseCase)
-    }
+@Module
+interface FeedBindModule {
+    @Binds
+    fun bindWallRepository(wallRepository: WallRepository): IWallRepository
 
-    @Provides
-    fun provideIUploadMediaRepository(uploadMediaRepository: UploadMediaRepository): IUploadMediaRepository {
-        return uploadMediaRepository
-    }
-
+    @Binds
+    fun bindUploadMediaRepository(uploadMediaRepository: UploadMediaRepository): IUploadMediaRepository
 }
