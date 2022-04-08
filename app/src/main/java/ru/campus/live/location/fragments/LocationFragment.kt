@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.campus.live.R
 import ru.campus.live.core.app.App
+import ru.campus.live.core.di.AppDepsProvider
 import ru.campus.live.core.di.component.DaggerLocationComponent
 import ru.campus.live.core.di.component.LocationComponent
 import ru.campus.live.core.ui.BaseFragment
@@ -38,9 +39,7 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         locationComponent = DaggerLocationComponent.builder()
-            .apiService((activity?.applicationContext as App).appComponent.apiService())
-            .userDataSource((activity?.applicationContext as App).appComponent.userDataSource())
-            .errorDataSource((activity?.applicationContext as App).appComponent.errorDataSource())
+            .deps(AppDepsProvider.deps)
             .build()
     }
 

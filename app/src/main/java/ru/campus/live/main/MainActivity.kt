@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import ru.campus.live.R
-import ru.campus.live.core.app.App
+import ru.campus.live.core.di.AppDepsProvider
 import ru.campus.live.core.di.component.DaggerMainComponent
 import ru.campus.live.core.di.component.MainComponent
 
@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mainComponent = DaggerMainComponent.builder()
-            .context((application as App).appComponent.context())
+            .deps(AppDepsProvider.deps)
             .build()
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.mainNavigationHost) as NavHostFragment

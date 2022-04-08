@@ -13,6 +13,7 @@ import androidx.navigation.navGraphViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ru.campus.live.R
 import ru.campus.live.core.app.App
+import ru.campus.live.core.di.AppDepsProvider
 import ru.campus.live.core.di.component.DaggerFeedComponent
 import ru.campus.live.core.di.component.FeedComponent
 import ru.campus.live.databinding.FragmentFeedBottomSheetBinding
@@ -33,9 +34,7 @@ class FeedBottomSheetDialogFragment : BottomSheetDialogFragment(), View.OnClickL
     override fun onAttach(context: Context) {
         super.onAttach(context)
         feedComponent = DaggerFeedComponent.builder()
-            .context((activity?.applicationContext as App).appComponent.context())
-            .apiService((activity?.applicationContext as App).appComponent.apiService())
-            .appDatabase((activity?.applicationContext as App).appComponent.appDatabase())
+            .deps(AppDepsProvider.deps)
             .build()
     }
 

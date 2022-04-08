@@ -4,23 +4,16 @@ import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
 import ru.campus.live.core.data.APIService
-import ru.campus.live.core.data.datasource.ErrorDataSource
-import ru.campus.live.core.data.datasource.StringProvider
-import ru.campus.live.core.data.datasource.UserDataSource
-import ru.campus.live.core.di.AppDependencies
+import ru.campus.live.core.di.AppDeps
 import ru.campus.live.core.di.module.AppModule
 import ru.campus.live.feed.db.AppDatabase
 
 @Component(modules = [AppModule::class])
-interface AppComponent : AppDependencies {
+interface AppComponent : AppDeps {
 
-    override val context: Context
-    override val apiService: APIService
-    override val appDatabase: AppDatabase
-
-    fun stringProvider(): StringProvider
-    fun userDataSource(): UserDataSource
-    fun errorDataSource(): ErrorDataSource
+    override var apiService: APIService
+    override var appDatabase: AppDatabase
+    override var context: Context
 
     @Component.Builder
     interface Builder {

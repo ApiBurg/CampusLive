@@ -1,18 +1,14 @@
 package ru.campus.live.core.di.component
 
-import android.content.Context
-import dagger.BindsInstance
 import dagger.Component
-import ru.campus.live.core.data.APIService
-import ru.campus.live.core.di.AppDependencies
+import ru.campus.live.core.di.AppDeps
 import ru.campus.live.core.di.module.FeedModule
 import ru.campus.live.core.di.module.viewmodel.FeedVModule
 import ru.campus.live.core.di.module.viewmodel.base.ViewModelFactory
-import ru.campus.live.feed.db.AppDatabase
 
 @Component(
     modules = [FeedModule::class, FeedVModule::class],
-    dependencies = [AppDependencies::class]
+    dependencies = [AppDeps::class]
 )
 interface FeedComponent {
 
@@ -20,14 +16,7 @@ interface FeedComponent {
 
     @Component.Builder
     interface Builder {
-        @BindsInstance
-        fun context(context: Context): Builder
-
-        @BindsInstance
-        fun appDatabase(appDatabase: AppDatabase): Builder
-
-        @BindsInstance
-        fun apiService(apiService: APIService): Builder
+        fun deps(appDeps: AppDeps): Builder
         fun build(): FeedComponent
     }
 

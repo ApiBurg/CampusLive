@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import ru.campus.live.R
-import ru.campus.live.core.app.App
+import ru.campus.live.core.di.AppDepsProvider
 import ru.campus.live.core.di.component.DaggerDiscussionComponent
 import ru.campus.live.core.di.component.DiscussionComponent
 import ru.campus.live.core.ui.BaseFragment
@@ -48,8 +48,7 @@ class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         discussionComponent = DaggerDiscussionComponent.builder()
-            .context((activity?.applicationContext as App).appComponent.context())
-            .apiService((activity?.applicationContext as App).appComponent.apiService())
+            .deps(AppDepsProvider.deps)
             .build()
     }
 

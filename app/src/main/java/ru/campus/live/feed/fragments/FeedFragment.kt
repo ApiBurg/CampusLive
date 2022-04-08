@@ -48,11 +48,7 @@ class FeedFragment : BaseFragment<FragmentFeedBinding>() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        feedComponent = DaggerFeedComponent.builder()
-            .context((activity?.applicationContext as App).appComponent.context())
-            .apiService((activity?.applicationContext as App).appComponent.apiService())
-            .appDatabase((activity?.applicationContext as App).appComponent.appDatabase())
-            .build()
+        feedComponent = DaggerFeedComponent.builder().build()
     }
 
     override fun getViewBinding() = FragmentFeedBinding.inflate(layoutInflater)
