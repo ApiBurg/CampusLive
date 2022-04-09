@@ -3,6 +3,9 @@ package ru.campus.live.discussion.fragments
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import androidx.core.graphics.toColorInt
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResult
 import androidx.navigation.navGraphViewModels
 import ru.campus.live.R
@@ -38,6 +41,8 @@ class DiscussionBottomSheetFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.commentId.text = "id" + item!!.id
+        renderVoteView()
+        renderRatingView()
         binding.complaint.setOnClickListener(this)
         binding.up.setOnClickListener(this)
         binding.down.setOnClickListener(this)
@@ -62,5 +67,42 @@ class DiscussionBottomSheetFragment :
         dismiss()
     }
 
+    private fun renderVoteView() {
+        when (item!!.vote) {
+            0 -> {
+                binding.down.setColorFilter("#eeeeee".toColorInt())
+                binding.up.setColorFilter("#eeeeee".toColorInt())
+            }
+            1 -> {
+                binding.down.setColorFilter("#eeeeee".toColorInt())
+                binding.up.setColorFilter("#2e703c".toColorInt())
+            }
+            else -> {
+                binding.down.setColorFilter("#8a0c0c".toColorInt())
+                binding.up.setColorFilter("#eeeeee".toColorInt())
+            }
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun renderRatingView() {
+        when {
+            item!!.rating == 0 -> {
+                binding.rating.isInvisible = true
+                binding.rating.text = item!!.rating.toString()
+                binding.rating.setTextColor("#eeeeee".toColorInt())
+            }
+            item!!.rating > 0 -> {
+                binding.rating.isVisible = true
+                binding.rating.text = "+" + item!!.rating
+                binding.rating.setTextColor("#2e703c".toColorInt())
+            }
+            else -> {
+                binding.rating.isVisible = true
+                binding.rating.text = item!!.rating.toString()
+                binding.rating.setTextColor("#8a0c0c".toColorInt())
+            }
+        }
+    }
 
 }
