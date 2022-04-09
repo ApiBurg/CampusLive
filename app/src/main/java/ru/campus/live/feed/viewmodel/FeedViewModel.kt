@@ -28,12 +28,14 @@ class FeedViewModel @Inject constructor(
 
     fun getCache() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = interactor.getCache()
+           /* val result = interactor.getCache()
             if (result.size != 0) {
                 withContext(Dispatchers.Main) {
                     _liveData.value = result
                 }
             }
+
+            */
         }
     }
 

@@ -11,6 +11,41 @@ class ItemVoteEditUseCase {
 
     fun execute(item: ItemVoteDataObject, voteObject: VoteObject): ItemVoteDataObject {
         val rating = item.rating
+        when(item.vote) {
+            0 -> {
+                if (voteObject.vote == LIKE) {
+                    item.rating = rating + 1
+                    item.vote = LIKE
+                } else {
+                    item.rating = rating - 1
+                    item.vote = DISLIKE
+                }
+            }
+            1 -> {
+                if (voteObject.vote == LIKE) {
+                    item.rating = rating - 1
+                    item.vote = NOT_VOTE
+                } else {
+                    item.rating = rating - 2
+                    item.vote = DISLIKE
+                }
+            }
+            2 -> {
+                if (voteObject.vote == DISLIKE) {
+                    item.rating = rating + 1
+                    item.vote = NOT_VOTE
+                } else {
+                    item.rating = rating + 2
+                    item.vote = LIKE
+                }
+            }
+        }
+        return item
+    }
+
+
+  /*  fun execute(item: ItemVoteDataObject, voteObject: VoteObject): ItemVoteDataObject {
+        val rating = item.rating
         when (item.vote) {
             NOT_VOTE -> {
                 if (voteObject.vote == LIKE) {
@@ -43,4 +78,6 @@ class ItemVoteEditUseCase {
         return item
     }
 
+
+   */
 }
