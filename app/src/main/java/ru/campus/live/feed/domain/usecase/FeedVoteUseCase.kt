@@ -7,13 +7,11 @@ import ru.campus.live.feed.data.model.FeedObject
 
 class FeedVoteUseCase {
 
-    private var rating = 0
-
     fun execute(model: ArrayList<FeedObject>, voteObject: VoteObject): ArrayList<FeedObject> {
         val index = model.indexOfFirst { it.id == voteObject.id }
-        rating = model[index].rating
+        val rating = model[index].rating
 
-        val itemVoteDataObject = ItemVoteDataObject(rating, voteObject.vote)
+        val itemVoteDataObject = ItemVoteDataObject(rating = rating, vote = model[index].vote)
         val newItemVoteDataObject = ItemVoteEditUseCase().execute(itemVoteDataObject, voteObject)
 
         val item = model[index]

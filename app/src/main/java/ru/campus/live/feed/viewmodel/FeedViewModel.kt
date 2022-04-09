@@ -28,14 +28,14 @@ class FeedViewModel @Inject constructor(
 
     fun getCache() {
         viewModelScope.launch(Dispatchers.IO) {
-           /* val result = interactor.getCache()
-            if (result.size != 0) {
-                withContext(Dispatchers.Main) {
-                    _liveData.value = result
-                }
-            }
+            /* val result = interactor.getCache()
+             if (result.size != 0) {
+                 withContext(Dispatchers.Main) {
+                     _liveData.value = result
+                 }
+             }
 
-            */
+             */
         }
     }
 
@@ -84,6 +84,10 @@ class FeedViewModel @Inject constructor(
         _complaintEvent.value = item
     }
 
+    fun comments(item: FeedObject) {
+        _onCommentStartViewEvent.value = item
+    }
+
     fun complaintSendDataOnServer(item: FeedObject) {
         viewModelScope.launch(Dispatchers.IO) {
             interactor.complaint(item)
@@ -92,17 +96,13 @@ class FeedViewModel @Inject constructor(
 
     fun vote(item: FeedObject, vote: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            val voteObject = VoteObject(item.id, vote)
+            val voteObject = VoteObject(id = item.id, vote = vote)
             val result = interactor.renderVoteView(_liveData.value!!, voteObject)
             withContext(Dispatchers.Main) {
                 _liveData.value = result
             }
             interactor.vote(voteObject)
         }
-    }
-
-    fun comments(item: FeedObject) {
-        _onCommentStartViewEvent.value = item
     }
 
 }
