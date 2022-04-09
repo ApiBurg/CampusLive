@@ -27,6 +27,13 @@ class DiscussionInteractor @Inject constructor(
         repository.vote(params.id, params.vote)
     }
 
+    fun renderVoteView(
+        model: ArrayList<DiscussionObject>,
+        voteObject: VoteObject
+    ): ArrayList<DiscussionObject> {
+        return DiscussionVoteUseCase().execute(model, voteObject)
+    }
+
     fun complaint(id: Int) {
         repository.complaint(id)
     }
@@ -70,13 +77,6 @@ class DiscussionInteractor @Inject constructor(
             }
         }
         return response
-    }
-
-    fun renderVoteView(
-        model: ArrayList<DiscussionObject>,
-        voteObject: VoteObject
-    ): ArrayList<DiscussionObject> {
-        return DiscussionVoteUseCase().execute(model, voteObject)
     }
 
     private fun mapper(
