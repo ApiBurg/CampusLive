@@ -1,13 +1,16 @@
-package ru.campus.live.feed.domain.usecase
+package ru.campus.live.discussion.domain.usecase
 
 import ru.campus.live.core.data.model.ItemVoteDataObject
 import ru.campus.live.core.data.model.VoteObject
 import ru.campus.live.core.domain.ItemVoteEditUseCase
-import ru.campus.live.feed.data.model.FeedObject
+import ru.campus.live.discussion.data.model.DiscussionObject
 
-class FeedVoteUseCase {
+class DiscussionVoteUseCase {
 
-    fun execute(model: ArrayList<FeedObject>, voteObject: VoteObject): ArrayList<FeedObject> {
+    fun execute(
+        model: ArrayList<DiscussionObject>,
+        voteObject: VoteObject
+    ): ArrayList<DiscussionObject> {
         val index = model.indexOfFirst { it.id == voteObject.id }
         val rating = model[index].rating
 
@@ -16,14 +19,17 @@ class FeedVoteUseCase {
 
         val item = model[index]
         val newItem = item.copy(
-            viewType = item.viewType,
-            location = item.location,
+            type = item.type,
             id = item.id,
+            hidden = item.hidden,
+            author = item.author,
+            icon_id = item.icon_id,
             message = item.message,
             attachment = item.attachment,
             rating = newItemVoteDataObject.rating,
-            comments = item.comments,
             vote = newItemVoteDataObject.vote,
+            parent = item.parent,
+            answered = item.answered,
             relativeTime = item.relativeTime
         )
 
@@ -31,5 +37,4 @@ class FeedVoteUseCase {
         model.add(index, newItem)
         return model
     }
-
 }

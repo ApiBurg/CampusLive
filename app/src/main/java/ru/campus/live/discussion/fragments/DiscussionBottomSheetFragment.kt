@@ -1,14 +1,11 @@
 package ru.campus.live.discussion.fragments
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.setFragmentResult
 import androidx.navigation.navGraphViewModels
 import ru.campus.live.R
-import ru.campus.live.core.app.App
-import ru.campus.live.core.data.model.VoteObject
 import ru.campus.live.core.di.AppDepsProvider
 import ru.campus.live.core.di.component.DaggerDiscussionComponent
 import ru.campus.live.core.di.component.DiscussionComponent
@@ -26,6 +23,7 @@ class DiscussionBottomSheetFragment :
             .deps(AppDepsProvider.deps)
             .build()
     }
+
     override fun getViewBinding() = FragmentDiscussionBottomSheetBinding.inflate(layoutInflater)
     private val viewModel: DiscussionViewModel by navGraphViewModels(R.id.discussionFragment) {
         discussionComponent.viewModelsFactory()
@@ -55,12 +53,10 @@ class DiscussionBottomSheetFragment :
                 setFragmentResult("reply", bundle)
             }
             R.id.up -> {
-                val params = VoteObject(item!!.id, vote = 1)
-                viewModel.vote(params)
+                viewModel.vote(item = item!!, vote = 1)
             }
             R.id.down -> {
-                val params = VoteObject(item!!.id, vote = 2)
-                viewModel.vote(params)
+                viewModel.vote(item = item!!, vote = 2)
             }
         }
         dismiss()

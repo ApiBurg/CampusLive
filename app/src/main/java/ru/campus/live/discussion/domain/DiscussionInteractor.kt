@@ -6,6 +6,7 @@ import ru.campus.live.discussion.data.model.DiscussionObject
 import ru.campus.live.discussion.data.model.DiscussionViewType
 import ru.campus.live.discussion.data.repository.IDiscussionRepository
 import ru.campus.live.discussion.domain.usecase.DiscussionTitleUseCase
+import ru.campus.live.discussion.domain.usecase.DiscussionVoteUseCase
 import ru.campus.live.feed.data.model.FeedObject
 import javax.inject.Inject
 
@@ -71,6 +72,13 @@ class DiscussionInteractor @Inject constructor(
         return response
     }
 
+    fun renderVoteView(
+        model: ArrayList<DiscussionObject>,
+        voteObject: VoteObject
+    ): ArrayList<DiscussionObject> {
+        return DiscussionVoteUseCase().execute(model, voteObject)
+    }
+
     private fun mapper(
         model: ArrayList<DiscussionObject>,
         publication: FeedObject
@@ -93,5 +101,6 @@ class DiscussionInteractor @Inject constructor(
         )
         return model
     }
+
 
 }

@@ -1,7 +1,6 @@
 package ru.campus.live.discussion.viewmodel
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -78,9 +77,14 @@ class DiscussionViewModel @Inject constructor(
         }
     }
 
-    fun vote(params: VoteObject) {
+    fun vote(item: DiscussionObject, vote: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            interactor.vote(params)
+            val voteObject = VoteObject(id = item.id, vote = vote)
+            val result = interactor.renderVoteView(_liveData.value!!, voteObject)
+            withContext(Dispatchers.Main) {
+                _liveData.value = result
+            }
+            interactor.vote(voteObject)
         }
     }
 
