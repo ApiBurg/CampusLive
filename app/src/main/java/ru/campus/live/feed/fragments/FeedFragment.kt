@@ -40,14 +40,18 @@ class FeedFragment : BaseFragment<FragmentFeedBinding>() {
 
     private val myOnClick = object : MyOnClick<FeedObject> {
         override fun item(view: View, item: FeedObject) {
-            val bottomSheetDialog = FeedBottomSheetDialogFragment()
-            val bundle = Bundle()
-            bundle.putParcelable("publication_object", item)
-            bottomSheetDialog.arguments = bundle
-            bottomSheetDialog.show(
-                requireActivity().supportFragmentManager,
-                "FeedBottomSheetDialog"
-            )
+            if (view.id == R.id.fab) {
+                findNavController().navigate(R.id.action_feedFragment_to_createPublicationFragment)
+            } else {
+                val bottomSheetDialog = FeedBottomSheetDialogFragment()
+                val bundle = Bundle()
+                bundle.putParcelable("publication_object", item)
+                bottomSheetDialog.arguments = bundle
+                bottomSheetDialog.show(
+                    requireActivity().supportFragmentManager,
+                    "FeedBottomSheetDialog"
+                )
+            }
         }
     }
 
@@ -70,9 +74,6 @@ class FeedFragment : BaseFragment<FragmentFeedBinding>() {
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = linearLayoutManager
         binding.recyclerView.edgeEffectFactory = BounceEdgeEffectFactory()
-        binding.fab.setOnClickListener {
-            findNavController().navigate(R.id.action_feedFragment_to_createPublicationFragment)
-        }
         onCommentEvent()
         onComplaintEvent()
         onScrollEvent()
@@ -107,13 +108,11 @@ class FeedFragment : BaseFragment<FragmentFeedBinding>() {
             snack.addCallback(object : Snackbar.Callback() {
                 override fun onDismissed(snackbar: Snackbar, event: Int) {
                     if (!isCancel.get()) {
-                        binding.fab.show()
                         viewModel.complaintSendDataOnServer(it)
                     }
                 }
 
                 override fun onShown(snackbar: Snackbar) {
-                    binding.fab.hide()
                 }
             })
             snack.show()
@@ -127,12 +126,6 @@ class FeedFragment : BaseFragment<FragmentFeedBinding>() {
                 val totalItemCount = linearLayoutManager?.itemCount ?: 0
                 val firstVisibleItem = linearLayoutManager?.findFirstVisibleItemPosition() ?: 0
                 if (visibleItemCount + firstVisibleItem >= totalItemCount) viewModel.get()
-
-                if (dy < 0 && !binding.fab.isShown) {
-                    binding.fab.show()
-                } else if (dy > 0 && binding.fab.isShown) {
-                    binding.fab.hide()
-                }
             }
         })
     }
