@@ -1,6 +1,5 @@
 package ru.campus.live.feed.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -12,12 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import ru.campus.live.R
-import ru.campus.live.core.app.App
 import ru.campus.live.core.di.AppDepsProvider
-import ru.campus.live.core.di.AppDepsStore
 import ru.campus.live.core.di.component.DaggerFeedComponent
 import ru.campus.live.core.di.component.FeedComponent
 import ru.campus.live.core.ui.BaseFragment
+import ru.campus.live.core.ui.BounceEdgeEffectFactory
 import ru.campus.live.core.ui.MyOnClick
 import ru.campus.live.databinding.FragmentFeedBinding
 import ru.campus.live.feed.adapter.FeedAdapter
@@ -67,10 +65,11 @@ class FeedFragment : BaseFragment<FragmentFeedBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        linearLayoutManager = LinearLayoutManager(context)
+        linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         liveDataObserve()
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = linearLayoutManager
+        binding.recyclerView.edgeEffectFactory = BounceEdgeEffectFactory()
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.action_feedFragment_to_createPublicationFragment)
         }

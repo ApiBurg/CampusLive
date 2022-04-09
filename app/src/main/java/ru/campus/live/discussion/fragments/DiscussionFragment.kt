@@ -17,6 +17,7 @@ import ru.campus.live.core.di.AppDepsProvider
 import ru.campus.live.core.di.component.DaggerDiscussionComponent
 import ru.campus.live.core.di.component.DiscussionComponent
 import ru.campus.live.core.ui.BaseFragment
+import ru.campus.live.core.ui.BounceEdgeEffectFactory
 import ru.campus.live.core.ui.MyOnClick
 import ru.campus.live.databinding.FragmentDiscussionBinding
 import ru.campus.live.discussion.adapter.DiscussionAdapter
@@ -69,6 +70,7 @@ class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.edgeEffectFactory = BounceEdgeEffectFactory()
         initToolBar()
         liveDataObserve()
         onEventTitle()
