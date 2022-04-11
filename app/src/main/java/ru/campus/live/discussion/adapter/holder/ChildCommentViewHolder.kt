@@ -2,7 +2,6 @@ package ru.campus.live.discussion.adapter.holder
 
 import android.annotation.SuppressLint
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.ViewGroup
 import androidx.core.graphics.toColorInt
 import androidx.core.view.isVisible
@@ -25,7 +24,14 @@ class ChildCommentViewHolder(
     private val host = HostDataSource(context).domain()
 
     fun bind(model: DiscussionObject) {
-        itemBinding.message.text = model.message
+        if (model.hidden == 0) {
+            itemBinding.message.text = model.message
+            itemBinding.message.setTextColor("#000000".toColorInt())
+        } else {
+            itemBinding.message.text = context.getString(R.string.comment_hidden)
+            itemBinding.message.setTextColor("#53646e".toColorInt())
+        }
+
         itemBinding.date.text = model.relativeTime
         Glide.with(context).load(userAvatar(model)).into(itemBinding.userPhoto)
         renderMediaView(model)
