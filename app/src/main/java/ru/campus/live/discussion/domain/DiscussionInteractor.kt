@@ -1,5 +1,6 @@
 package ru.campus.live.discussion.domain
 
+import ru.campus.live.core.data.datasource.IUserDataSource
 import ru.campus.live.core.data.model.ResponseObject
 import ru.campus.live.core.data.model.VoteObject
 import ru.campus.live.discussion.data.model.DiscussionObject
@@ -7,19 +8,25 @@ import ru.campus.live.discussion.data.model.DiscussionViewType
 import ru.campus.live.discussion.data.repository.IDiscussionRepository
 import ru.campus.live.discussion.domain.usecase.DiscussionTitleUseCase
 import ru.campus.live.discussion.domain.usecase.DiscussionVoteUseCase
+import ru.campus.live.discussion.domain.usecase.UserAvatarUseCase
 import ru.campus.live.feed.data.model.FeedObject
 import javax.inject.Inject
 
 class DiscussionInteractor @Inject constructor(
     private val repository: IDiscussionRepository,
-    private val titleUseCase: DiscussionTitleUseCase
+    private val titleUseCase: DiscussionTitleUseCase,
+    private val userDataSource: IUserDataSource
 ) {
 
     fun get(publicationId: Int): ResponseObject<ArrayList<DiscussionObject>> {
         return repository.get(publicationId)
     }
 
-    fun title(size: Int): String {
+    fun refreshUserAvatar(model: ArrayList<DiscussionObject>) {
+        userDataSource.saveUserAvatarIcon(UserAvatarUseCase().execute(model, userDataSource.uid()))
+    }
+
+    fun getTitle(size: Int): String {
         return titleUseCase.execute(size)
     }
 
@@ -36,15 +43,6 @@ class DiscussionInteractor @Inject constructor(
 
     fun complaint(id: Int) {
         repository.complaint(id)
-    }
-
-    fun remove(
-        item: DiscussionObject,
-        model: ArrayList<DiscussionObject>
-    ): ArrayList<DiscussionObject> {
-        val index = model.indexOfLast { it.id == item.id }
-        model.removeAt(index)
-        return model
     }
 
     fun header(

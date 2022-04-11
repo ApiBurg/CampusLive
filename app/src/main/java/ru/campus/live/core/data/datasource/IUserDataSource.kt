@@ -10,4 +10,6 @@ interface IUserDataSource {
     fun uid(): Int
     fun locationSave(dataObject: LocationDataObject)
     fun location(): LocationDataObject
+    fun saveUserAvatarIcon(userAvatarIcon: Int)
+    fun getUserAvatarIcon(): Int
 }

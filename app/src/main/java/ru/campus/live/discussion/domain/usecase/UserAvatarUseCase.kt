@@ -2,15 +2,15 @@ package ru.campus.live.discussion.domain.usecase
 
 import ru.campus.live.discussion.data.model.DiscussionObject
 
-class UserAvatarUseCase(private val uid: Int) {
+class UserAvatarUseCase() {
 
-    fun execute(model: ArrayList<DiscussionObject>): Int {
-        val icon = search(model)
+    fun execute(model: ArrayList<DiscussionObject>, uid: Int): Int {
+        val icon = search(model, uid)
         if (icon == 0) return generate(model)
         return icon
     }
 
-    private fun search(model: ArrayList<DiscussionObject>): Int {
+    private fun search(model: ArrayList<DiscussionObject>, uid: Int): Int {
         model.forEach { item -> if (item.author == uid) return item.icon_id }
         return 0
     }

@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ru.campus.live.R
 import ru.campus.live.core.data.datasource.HostDataSource
-import ru.campus.live.discussion.domain.usecase.CommentsDeclinationUseCase
 import ru.campus.live.core.ui.MyOnClick
 import ru.campus.live.databinding.ItemPublicationBinding
 import ru.campus.live.feed.data.model.FeedObject
@@ -21,13 +20,14 @@ class FeedPublicationViewHolder(
 ) : RecyclerView.ViewHolder(itemBinding.root) {
 
     private val context = itemBinding.root.context
-    private val commentsDeclinationUseCase = CommentsDeclinationUseCase(context)
+   // private val commentsDeclinationUseCase = CommentsDeclinationUseCase(context)
     private val host = HostDataSource(context).domain()
 
     fun bind(model: FeedObject) {
         itemBinding.message.text = model.message
         itemBinding.date.text = model.relativeTime
-        itemBinding.comment.text = commentsDeclinationUseCase.getTextComments(model.comments)
+       // itemBinding.comment.text = commentsDeclinationUseCase.getTextComments(model.comments)
+        itemBinding.comment.text = "Нет комментариев"
         renderMediaView(model)
         renderVoteView(model)
         renderRatingView(model)

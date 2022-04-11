@@ -1,6 +1,5 @@
 package ru.campus.live.discussion.viewmodel
 
-import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -28,7 +27,6 @@ class DiscussionViewModel @Inject constructor(
     fun getTitleLiveData(): LiveData<String> = titleLiveData
     fun complaintEvent() = _complaintEvent
 
-    @SuppressLint("NullSafeMutableLiveData")
     fun get(params: FeedObject?) {
         viewModelScope.launch(Dispatchers.IO) {
             if (publication == null) publication = params
@@ -46,6 +44,7 @@ class DiscussionViewModel @Inject constructor(
                     withContext(Dispatchers.Main) {
                         _liveData.value = final
                     }
+                    interactor.refreshUserAvatar(_liveData.value!!)
                 }
                 is ResponseObject.Failure -> {
                 }
@@ -70,7 +69,7 @@ class DiscussionViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             var size = 0
             _liveData.value?.let { size = it.size - 1 }
-            val result = interactor.title(size)
+            val result = interactor.getTitle(size)
             withContext(Dispatchers.Main) {
                 titleLiveData.value = result
             }
@@ -92,15 +91,6 @@ class DiscussionViewModel @Inject constructor(
         _complaintEvent.value = item
         viewModelScope.launch(Dispatchers.IO) {
             interactor.complaint(item.id)
-        }
-    }
-
-    fun remove(item: DiscussionObject) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val result = interactor.remove(item, _liveData.value!!)
-            withContext(Dispatchers.Main) {
-                _liveData.value = result
-            }
         }
     }
 

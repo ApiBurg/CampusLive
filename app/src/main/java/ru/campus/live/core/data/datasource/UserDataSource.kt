@@ -61,4 +61,12 @@ class UserDataSource @Inject constructor(context: Context) : IUserDataSource {
         return LocationDataObject(id = id, name = name!!, address = address!!, type = type)
     }
 
+    override fun saveUserAvatarIcon(userAvatarIcon: Int) {
+        sPref.edit().putInt("USER_AVATAR", userAvatarIcon).apply()
+    }
+
+    override fun getUserAvatarIcon(): Int {
+        return sPref.getInt("USER_AVATAR", 0)
+    }
+
 }

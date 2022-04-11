@@ -37,4 +37,5 @@ class DiscussionVoteUseCase {
         model.add(index, newItem)
         return model
     }
+
 }
