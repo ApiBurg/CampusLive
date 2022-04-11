@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import ru.campus.live.R
-import ru.campus.live.core.di.AppDepsProvider
 import ru.campus.live.core.di.component.DaggerDiscussionComponent
 import ru.campus.live.core.di.component.DiscussionComponent
+import ru.campus.live.core.di.deps.AppDepsProvider
 import ru.campus.live.core.ui.BaseFragment
 import ru.campus.live.core.ui.BounceEdgeEffectFactory
 import ru.campus.live.core.ui.MyOnClick
@@ -41,6 +41,7 @@ class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
 
     private val myOnClick = object : MyOnClick<DiscussionObject> {
         override fun item(view: View, item: DiscussionObject) {
+            if (item.hidden == 1) return
             val bottomSheetDialog = DiscussionBottomSheetFragment()
             val bundle = Bundle()
             bundle.putParcelable("item", item)

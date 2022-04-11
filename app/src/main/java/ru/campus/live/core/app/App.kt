@@ -1,7 +1,7 @@
 package ru.campus.live.core.app
 
 import android.app.Application
-import ru.campus.live.core.di.AppDepsStore
+import ru.campus.live.core.di.deps.AppDepsStore
 import ru.campus.live.core.di.component.AppComponent
 import ru.campus.live.core.di.component.DaggerAppComponent
 

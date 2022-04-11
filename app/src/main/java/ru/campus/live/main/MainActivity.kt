@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import ru.campus.live.R
-import ru.campus.live.core.di.AppDepsProvider
+import ru.campus.live.core.di.deps.AppDepsProvider
 import ru.campus.live.core.di.component.DaggerMainComponent
 import ru.campus.live.core.di.component.MainComponent
 

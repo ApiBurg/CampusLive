@@ -18,10 +18,10 @@ import ru.campus.live.gallery.data.model.UploadMediaObject
 import javax.inject.Inject
 
 class DiscussionCreateViewModel @Inject constructor(
-    private val commentInteractor: CreateCommentInteractor
+    private val interactor: CreateCommentInteractor
 ) : ViewModel() {
 
-    private val successLiveData = SingleLiveEvent<DiscussionObject>()
+    private val successLiveData = SingleLiveEvent<DiscussionObject?>()
     private val failureLiveData = SingleLiveEvent<ErrorObject>()
     private val uploadLiveData = MutableLiveData<ArrayList<UploadMediaObject>>()
     fun onSuccessEvent() = successLiveData
@@ -29,14 +29,12 @@ class DiscussionCreateViewModel @Inject constructor(
     fun onUploadLiveData(): LiveData<ArrayList<UploadMediaObject>> = uploadLiveData
 
     fun post(params: CommentCreateObject) {
-        var upload = 0
-        uploadLiveData.value?.let { model -> upload = model[0].id }
-        params.attachment = upload
         viewModelScope.launch(Dispatchers.IO) {
-            when (val result = commentInteractor.post(params)) {
+            params.attachment = uploadLiveData.value?.get(0)?.id ?: 0
+            when (val result = interactor.post(params)) {
                 is ResponseObject.Success -> {
                     withContext(Dispatchers.Main) {
-                        successLiveData.value = result.data!!
+                        successLiveData.value = result.data
                     }
                 }
                 is ResponseObject.Failure -> {
@@ -51,12 +49,12 @@ class DiscussionCreateViewModel @Inject constructor(
     fun upload(params: GalleryDataObject) {
         viewModelScope.launch(Dispatchers.IO) {
             val model = ArrayList<UploadMediaObject>()
-            model.add(commentInteractor.uploadMediaMapper(params = params))
+            model.add(interactor.uploadMediaMapper(params = params))
             withContext(Dispatchers.Main) {
                 uploadLiveData.value = model
             }
 
-            val result = commentInteractor.upload(params = params)
+            val result = interactor.upload(params = params)
             model.clear()
             model.add(result)
             withContext(Dispatchers.Main) {
@@ -67,7 +65,7 @@ class DiscussionCreateViewModel @Inject constructor(
 
     fun clearMediaUpload() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = commentInteractor.clearUploadMedia()
+            val result = interactor.clearUploadMedia()
             withContext(Dispatchers.Main) {
                 uploadLiveData.value = result
             }

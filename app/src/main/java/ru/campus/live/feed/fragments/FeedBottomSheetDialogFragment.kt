@@ -1,7 +1,6 @@
 package ru.campus.live.feed.fragments
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,12 +11,10 @@ import androidx.core.view.isVisible
 import androidx.navigation.navGraphViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ru.campus.live.R
-import ru.campus.live.core.app.App
-import ru.campus.live.core.di.AppDepsProvider
+import ru.campus.live.core.di.deps.AppDepsProvider
 import ru.campus.live.core.di.component.DaggerFeedComponent
 import ru.campus.live.core.di.component.FeedComponent
 import ru.campus.live.databinding.FragmentFeedBottomSheetBinding
-import ru.campus.live.discussion.domain.usecase.CommentsDeclinationUseCase
 import ru.campus.live.feed.data.model.FeedObject
 import ru.campus.live.feed.viewmodel.FeedViewModel
 
@@ -59,8 +56,8 @@ class FeedBottomSheetDialogFragment : BottomSheetDialogFragment(), View.OnClickL
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.publicationId.text = "id" + model!!.id
-        binding.comments.text =
-            CommentsDeclinationUseCase(requireContext()).getTextComments(model!!.comments)
+        binding.comments.text = "Нет комментариев"
+           // CommentsDeclinationUseCase(requireContext()).getTextComments(model!!.comments)
         renderVoteView()
         renderRatingView()
         binding.commentsRoot.setOnClickListener(this)

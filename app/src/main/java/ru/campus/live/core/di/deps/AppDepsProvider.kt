@@ -1,10 +1,10 @@
-package ru.campus.live.core.di
+package ru.campus.live.core.di.deps
 
-import ru.campus.live.core.di.deps.AppDeps
 import kotlin.properties.Delegates.notNull
 
 interface AppDepsProvider {
     val deps: AppDeps
+
     companion object : AppDepsProvider by AppDepsStore
 }
 

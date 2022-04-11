@@ -1,7 +1,6 @@
 package ru.campus.live.gallery.fragments
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -13,8 +12,7 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import ru.campus.live.R
-import ru.campus.live.core.app.App
-import ru.campus.live.core.di.AppDepsProvider
+import ru.campus.live.core.di.deps.AppDepsProvider
 import ru.campus.live.core.di.component.DaggerGalleryComponent
 import ru.campus.live.core.di.component.GalleryComponent
 import ru.campus.live.core.ui.BaseBottomSheetDialogFragment
