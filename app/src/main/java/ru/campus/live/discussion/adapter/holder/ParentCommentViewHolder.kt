@@ -14,18 +14,23 @@ import ru.campus.live.databinding.ItemParentCommetBinding
 import ru.campus.live.discussion.data.model.DiscussionObject
 import kotlin.math.roundToInt
 
-
 class ParentCommentViewHolder(
     private val itemBinding: ItemParentCommetBinding,
     private val myOnClick: MyOnClick<DiscussionObject>
-) :
-    RecyclerView.ViewHolder(itemBinding.root) {
+) : RecyclerView.ViewHolder(itemBinding.root) {
 
     private val context = itemBinding.root.context
     private val host = HostDataSource(context).domain()
 
     fun bind(model: DiscussionObject) {
-        itemBinding.message.text = model.message
+        if (model.hidden == 0) {
+            itemBinding.message.text = model.message
+            itemBinding.message.setTextColor("#000000".toColorInt())
+        } else {
+            itemBinding.message.text = context.getString(R.string.comment_hidden)
+            itemBinding.message.setTextColor("#53646e".toColorInt())
+        }
+
         itemBinding.date.text = model.relativeTime
         Glide.with(context).load(userAvatar(model)).into(itemBinding.userPhoto)
         renderMediaView(model)
