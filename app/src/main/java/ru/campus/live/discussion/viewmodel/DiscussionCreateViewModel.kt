@@ -12,13 +12,13 @@ import ru.campus.live.core.data.model.ResponseObject
 import ru.campus.live.core.wrapper.SingleLiveEvent
 import ru.campus.live.discussion.data.model.CommentCreateObject
 import ru.campus.live.discussion.data.model.DiscussionObject
-import ru.campus.live.discussion.domain.DiscussionCreateInteractor
+import ru.campus.live.discussion.domain.CreateFragmentInteractor
 import ru.campus.live.gallery.data.model.GalleryDataObject
 import ru.campus.live.gallery.data.model.UploadMediaObject
 import javax.inject.Inject
 
 class DiscussionCreateViewModel @Inject constructor(
-    private val interactor: DiscussionCreateInteractor
+    private val fragmentInteractor: CreateFragmentInteractor
 ) : ViewModel() {
 
     private val successLiveData = SingleLiveEvent<DiscussionObject>()
@@ -33,7 +33,7 @@ class DiscussionCreateViewModel @Inject constructor(
         uploadLiveData.value?.let { model -> upload = model[0].id }
         params.attachment = upload
         viewModelScope.launch(Dispatchers.IO) {
-            when (val result = interactor.post(params)) {
+            when (val result = fragmentInteractor.post(params)) {
                 is ResponseObject.Success -> {
                     withContext(Dispatchers.Main) {
                         successLiveData.value = result.data!!
@@ -51,12 +51,12 @@ class DiscussionCreateViewModel @Inject constructor(
     fun upload(params: GalleryDataObject) {
         viewModelScope.launch(Dispatchers.IO) {
             val model = ArrayList<UploadMediaObject>()
-            model.add(interactor.list(params = params))
+            model.add(fragmentInteractor.list(params = params))
             withContext(Dispatchers.Main) {
                 uploadLiveData.value = model
             }
 
-            val result = interactor.upload(params = params)
+            val result = fragmentInteractor.upload(params = params)
             model.clear()
             model.add(result)
             withContext(Dispatchers.Main) {
@@ -67,7 +67,7 @@ class DiscussionCreateViewModel @Inject constructor(
 
     fun clearMediaUpload() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = interactor.mediaRemove()
+            val result = fragmentInteractor.mediaRemove()
             withContext(Dispatchers.Main) {
                 uploadLiveData.value = result
             }

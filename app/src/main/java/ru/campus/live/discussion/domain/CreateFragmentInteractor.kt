@@ -10,7 +10,7 @@ import ru.campus.live.gallery.data.model.GalleryDataObject
 import ru.campus.live.gallery.data.model.UploadMediaObject
 import javax.inject.Inject
 
-class DiscussionCreateInteractor @Inject constructor(
+class CreateFragmentInteractor @Inject constructor(
     private val repository: IDiscussionRepository,
     private val uploadRepository: IUploadMediaRepository
 ) {
