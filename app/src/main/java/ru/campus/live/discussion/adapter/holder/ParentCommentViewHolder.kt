@@ -67,18 +67,10 @@ class ParentCommentViewHolder(
     }
 
     private fun renderVoteView(model: DiscussionObject) {
+        itemBinding.likeStatus.isVisible = model.vote != 0
         when (model.vote) {
-            0 -> {
-                itemBinding.likeStatus.isVisible = false
-            }
-            1 -> {
-                itemBinding.likeStatus.isVisible = true
-                itemBinding.likeStatus.setImageResource(R.drawable.like)
-            }
-            2 -> {
-                itemBinding.likeStatus.isVisible = true
-                itemBinding.likeStatus.setImageResource(R.drawable.dislike)
-            }
+            1 -> itemBinding.likeStatus.setImageResource(R.drawable.like)
+            2 -> itemBinding.likeStatus.setImageResource(R.drawable.dislike)
         }
     }
 
