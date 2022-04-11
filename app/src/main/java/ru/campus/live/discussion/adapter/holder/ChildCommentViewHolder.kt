@@ -17,8 +17,7 @@ import kotlin.math.roundToInt
 class ChildCommentViewHolder(
     private val itemBinding: ItemChildCommentBinding,
     private val myOnClick: MyOnClick<DiscussionObject>
-) :
-    RecyclerView.ViewHolder(itemBinding.root) {
+) : RecyclerView.ViewHolder(itemBinding.root) {
 
     private val context = itemBinding.root.context
     private val host = HostDataSource(context).domain()
