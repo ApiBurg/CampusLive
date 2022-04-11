@@ -1,9 +1,8 @@
 package ru.campus.live.discussion.domain.usecase
 
-import ru.campus.live.core.data.datasource.UserDataSource
 import ru.campus.live.discussion.data.model.DiscussionObject
 
-class UserAvatarUseCase(private val userDataSource: UserDataSource) {
+class UserAvatarUseCase(private val uid: Int) {
 
     fun execute(model: ArrayList<DiscussionObject>): Int {
         val icon = search(model)
@@ -12,14 +11,13 @@ class UserAvatarUseCase(private val userDataSource: UserDataSource) {
     }
 
     private fun search(model: ArrayList<DiscussionObject>): Int {
-        val uid = userDataSource.uid()
         model.forEach { item -> if (item.author == uid) return item.icon_id }
         return 0
     }
 
     private fun generateArrayListIcon(): ArrayList<Int> {
         val model = ArrayList<Int>()
-        for (i in 0..50) {
+        for (i in 1..50) {
             model.add(i)
         }
         return model

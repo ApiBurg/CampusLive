@@ -28,7 +28,7 @@ class ParentCommentViewHolder(
             itemBinding.message.setTextColor("#000000".toColorInt())
         } else {
             itemBinding.message.text = context.getString(R.string.comment_hidden)
-            itemBinding.message.setTextColor("#53646e".toColorInt())
+            itemBinding.message.setTextColor("#999999".toColorInt())
         }
 
         itemBinding.date.text = model.relativeTime

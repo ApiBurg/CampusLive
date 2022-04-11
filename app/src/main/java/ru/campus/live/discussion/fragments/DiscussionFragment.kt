@@ -1,6 +1,5 @@
 package ru.campus.live.discussion.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -29,13 +28,13 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
 
+    private var publicationObject: FeedObject? = null
     private val discussionComponent: DiscussionComponent by lazy {
         DaggerDiscussionComponent.builder()
             .deps(AppDepsProvider.deps)
             .build()
     }
 
-    private var publication: FeedObject? = null
     private val viewModel: DiscussionViewModel by navGraphViewModels(R.id.discussionFragment) {
         discussionComponent.viewModelsFactory()
     }
@@ -49,11 +48,13 @@ class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
             bottomSheetDialog.show((requireActivity().supportFragmentManager), "BottomSheetDialog")
         }
     }
+
     private val adapter = DiscussionAdapter(myOnClick)
+    override fun getViewBinding() = FragmentDiscussionBinding.inflate(layoutInflater)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let { publication = it.getParcelable("publication") }
+        arguments?.let { publicationObject = it.getParcelable("publication") }
         parentFragment?.setFragmentResultListener("discussionObject") { _, bundle ->
             val params: DiscussionObject? = bundle.getParcelable("object")
             if (params != null) viewModel.insert(params)
@@ -63,8 +64,6 @@ class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
             if (params != null) onReplyEvent(params)
         }
     }
-
-    override fun getViewBinding() = FragmentDiscussionBinding.inflate(layoutInflater)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -86,12 +85,12 @@ class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
         }
         binding.toolbar.setOnMenuItemClickListener {
             isProgressBarVisible(true)
-            viewModel.get(publication)
+            viewModel.get(publicationObject)
             return@setOnMenuItemClickListener false
         }
         binding.fab.setOnClickListener {
             val bundle = Bundle()
-            bundle.putInt("publication", publication?.id ?: 0)
+            bundle.putInt("publication", publicationObject?.id ?: 0)
             findNavController().navigate(
                 R.id.action_discussionFragment_to_createCommentFragment,
                 bundle
@@ -100,7 +99,7 @@ class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
     }
 
     private fun liveDataObserve() {
-        viewModel.get(publication)
+        viewModel.get(publicationObject)
         viewModel.liveData().observe(viewLifecycleOwner) { model ->
             isProgressBarVisible(false)
             adapter.setData(model)
@@ -114,7 +113,7 @@ class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
     }
 
     private fun onComplaintEvent() {
-        viewModel.complaintEvent().observe(viewLifecycleOwner) { item ->
+        viewModel.complaintEvent().observe(viewLifecycleOwner) {
             val isCancel = AtomicBoolean(false)
             val snack = Snackbar.make(
                 binding.root, getString(R.string.complaint_response),
@@ -143,11 +142,12 @@ class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
     private fun onReplyEvent(item: DiscussionObject) {
         val parent = if (item.parent == 0) item.id else item.parent
         val bundle = Bundle()
-        bundle.putInt("publication", publication!!.id)
+        bundle.putInt("publication", publicationObject!!.id)
         bundle.putInt("parent", parent)
         bundle.putInt("answered", item.id)
         findNavController().navigate(
-            R.id.action_discussionFragment_to_createCommentFragment, bundle
+            R.id.action_discussionFragment_to_createCommentFragment,
+            bundle
         )
     }
 
