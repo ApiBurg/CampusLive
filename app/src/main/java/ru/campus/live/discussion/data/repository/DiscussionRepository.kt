@@ -1,6 +1,5 @@
 package ru.campus.live.discussion.data.repository
 
-import android.util.Log
 import okhttp3.ResponseBody
 import ru.campus.live.core.data.APIService
 import ru.campus.live.core.data.datasource.CloudDataSource
