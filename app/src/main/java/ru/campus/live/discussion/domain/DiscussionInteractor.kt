@@ -51,7 +51,8 @@ class DiscussionInteractor @Inject constructor(
         var count = 0
         model?.forEach { item ->
             if (item.type == DiscussionViewType.PARENT
-                || item.type == DiscussionViewType.CHILD) count++
+                || item.type == DiscussionViewType.CHILD
+            ) count++
         }
         return count
     }
@@ -102,31 +103,33 @@ class DiscussionInteractor @Inject constructor(
                         response.add(child)
                     }
                 }
+            } else {
+                response.add(item)
             }
         }
-
-        return preparation(model)
+        return listPreparation(response)
     }
 
-    private fun preparation(model: ArrayList<DiscussionObject>): ArrayList<DiscussionObject> {
+    private fun listPreparation(model: ArrayList<DiscussionObject>): ArrayList<DiscussionObject> {
         model.forEachIndexed { index, item ->
-            var pathUserIcon = hostDataSource.domain() + "media/icon/" + item.icon_id + ".png"
-            if (item.icon_id < 10) pathUserIcon =
-                hostDataSource.domain() + "media/icon/" + item.icon_id + ".png"
-            model[index].userAvatar = pathUserIcon
+            if (item.type == DiscussionViewType.PARENT || item.type == DiscussionViewType.CHILD) {
+                var pathUserIcon = hostDataSource.domain() + "media/icon/" + item.icon_id + ".png"
+                if (item.icon_id < 10) pathUserIcon =
+                    hostDataSource.domain() + "media/icon/" + item.icon_id + ".png"
+                model[index].userAvatar = pathUserIcon
 
-            if (item.attachment != null) {
-                val params = display.get(item.attachment.width, item.attachment.height)
-                model[index].mediaWidth = params[0]
-                model[index].mediaHeight = params[1]
-            } else {
-                model[index].mediaWidth = 0
-                model[index].mediaHeight = 1
+                if (item.attachment != null) {
+                    val params = display.get(item.attachment.width, item.attachment.height)
+                    model[index].mediaWidth = params[0]
+                    model[index].mediaHeight = params[1]
+                } else {
+                    model[index].mediaWidth = 0
+                    model[index].mediaHeight = 1
+                }
+
+                if (item.hidden == 1)
+                    model[index].message = stringProvider.get(R.string.comment_hidden)
             }
-
-            if (item.hidden == 1)
-                model[index].message = stringProvider.get(R.string.comment_hidden)
-
         }
         return model
     }
@@ -153,6 +156,5 @@ class DiscussionInteractor @Inject constructor(
         )
         return model
     }
-
 
 }

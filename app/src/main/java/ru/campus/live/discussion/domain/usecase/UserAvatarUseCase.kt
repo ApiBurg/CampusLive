@@ -16,19 +16,22 @@ class UserAvatarUseCase() {
     }
 
     private fun generate(model: ArrayList<DiscussionObject>?): Int {
-        val icon = generateArrayListIcon()
-        model?.forEach { item ->
-            val index = icon.indexOfLast { it == item.icon_id }
-            if (index != -1) icon.removeAt(index)
-        }
+        try {
+            val icon = generateArrayListIcon()
+            model?.forEach { item ->
+                val index = icon.indexOfLast { it == item.icon_id }
+                if (index != -1) icon.removeAt(index)
+            }
 
-        if (icon.size != 0) {
-            val index = icon.random()
-            return icon[index]
+            if (icon.size != 0) {
+                val index = icon.random()
+                return icon[index]
+            }
+            return 0
+        } catch (e: Exception) {
+            return 0
         }
-        return 0
     }
-
 
     private fun generateArrayListIcon(): ArrayList<Int> {
         val model = ArrayList<Int>()

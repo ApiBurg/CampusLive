@@ -84,9 +84,8 @@ class DiscussionViewModel @Inject constructor(
 
     fun insert(item: DiscussionObject) {
         viewModelScope.launch(Dispatchers.IO) {
-            val model = ArrayList<DiscussionObject>()
-            _liveData.value?.let { model.addAll(it) }
-            model.add(item)
+            val model = _liveData.value
+            model!!.add(item)
             val result = interactor.setTypeObject(model)
             withContext(Dispatchers.Main) {
                 _liveData.value = result

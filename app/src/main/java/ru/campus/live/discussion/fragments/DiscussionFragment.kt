@@ -1,6 +1,7 @@
 package ru.campus.live.discussion.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.core.graphics.toColorInt
@@ -146,6 +147,8 @@ class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
 
     private fun onReplyEvent(item: DiscussionObject) {
         val parent = if (item.parent == 0) item.id else item.parent
+        Log.d("MyLog", "Получен евент с ответом на комментарий!")
+        Log.d("MyLog", "parent = $parent")
         val bundle = Bundle()
         bundle.putInt("publication", publicationObject!!.id)
         bundle.putInt("parent", parent)
