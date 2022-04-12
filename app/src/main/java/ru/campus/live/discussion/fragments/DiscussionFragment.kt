@@ -83,14 +83,14 @@ class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
     }
 
     private fun initToolBar() {
-        isProgressBarVisible(true)
+        isProgressBarVisible(false)
         binding.toolbar.setNavigationIcon(R.drawable.baseline_close_black_24)
         binding.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
         binding.toolbar.setOnMenuItemClickListener {
             isProgressBarVisible(true)
-            viewModel.get(publicationObject)
+            viewModel.refresh()
             return@setOnMenuItemClickListener false
         }
         binding.fab.setOnClickListener {

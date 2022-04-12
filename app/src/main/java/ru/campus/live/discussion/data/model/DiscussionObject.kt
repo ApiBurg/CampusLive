@@ -6,16 +6,16 @@ import ru.campus.live.core.data.model.AttachmentModel
 
 @Parcelize
 data class DiscussionObject(
-    var type: DiscussionViewType,
-    val id: Int,
-    val hidden: Int,
-    val author: Int,
-    val icon_id: Int,
-    val message: String,
-    val attachment: AttachmentModel?,
-    var rating: Int,
-    var vote: Int,
-    val parent: Int,
-    val answered: Int,
-    val relativeTime: String
+    var type: DiscussionViewType = DiscussionViewType.PARENT_SHIMMER,
+    val id: Int = 0,
+    val hidden: Int = 0,
+    val author: Int = 0,
+    val icon_id: Int = 0,
+    val message: String = "",
+    val attachment: AttachmentModel? = null,
+    var rating: Int = 0,
+    var vote: Int = 0,
+    val parent: Int = 0,
+    val answered: Int = 0,
+    val relativeTime: String = ""
 ) : Parcelable

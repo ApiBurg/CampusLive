@@ -22,6 +22,20 @@ class DiscussionInteractor @Inject constructor(
         return repository.get(publicationId)
     }
 
+    fun shimmer(): ArrayList<DiscussionObject> {
+        val model = ArrayList<DiscussionObject>()
+        model.add(DiscussionObject(DiscussionViewType.PARENT_SHIMMER))
+        model.add(DiscussionObject(DiscussionViewType.CHILD_SHIMMER))
+        model.add(DiscussionObject(DiscussionViewType.CHILD_SHIMMER))
+        model.add(DiscussionObject(DiscussionViewType.CHILD_SHIMMER))
+        model.add(DiscussionObject(DiscussionViewType.PARENT_SHIMMER))
+        model.add(DiscussionObject(DiscussionViewType.CHILD_SHIMMER))
+        model.add(DiscussionObject(DiscussionViewType.PARENT_SHIMMER))
+        model.add(DiscussionObject(DiscussionViewType.CHILD_SHIMMER))
+        model.add(DiscussionObject(DiscussionViewType.CHILD_SHIMMER))
+        return model
+    }
+
     fun refreshUserAvatar(model: ArrayList<DiscussionObject>) {
         userDataSource.saveUserAvatarIcon(UserAvatarUseCase().execute(model, userDataSource.uid()))
     }

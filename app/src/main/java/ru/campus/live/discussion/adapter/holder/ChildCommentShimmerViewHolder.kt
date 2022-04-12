@@ -1,12 +1,8 @@
 package ru.campus.live.discussion.adapter.holder
 
 import androidx.recyclerview.widget.RecyclerView
-import ru.campus.live.databinding.ItemParentCommentShimmerBinding
+import ru.campus.live.databinding.ItemChildCommentShimmerBinding
 
-class ChildCommentShimmerViewHolder(itemBinding: ItemParentCommentShimmerBinding) :
+class ChildCommentShimmerViewHolder(itemBinding: ItemChildCommentShimmerBinding) :
     RecyclerView.ViewHolder(itemBinding.root) {
-
-    fun bind() {
-
-    }
 }

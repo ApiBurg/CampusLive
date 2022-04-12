@@ -34,6 +34,8 @@ class DiscussionViewModel @Inject constructor(
             val model = ArrayList<DiscussionObject>()
             _liveData.value?.let { model.addAll(it) }
             val start = interactor.header(model, publication!!)
+            val shimmer = interactor.shimmer()
+            start.addAll(shimmer)
             withContext(Dispatchers.Main) {
                 _liveData.value = start
             }
@@ -51,6 +53,21 @@ class DiscussionViewModel @Inject constructor(
                 }
             }
             title()
+        }
+    }
+
+    fun refresh() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = interactor.get(publication?.id ?: 0)
+            if (result is ResponseObject.Success) {
+                val model = ArrayList<DiscussionObject>()
+                _liveData.value?.let { model.add(it[0]) }
+                val response = interactor.setTypeObject(result.data)
+                model.addAll(response)
+                withContext(Dispatchers.Main) {
+                    _liveData.value = model
+                }
+            }
         }
     }
 
