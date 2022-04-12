@@ -122,7 +122,7 @@ class CreateCommentFragment : BaseFragment<FragmentCreateCommentBinding>() {
         viewModel.onSuccessEvent().observe(viewLifecycleOwner) { item ->
             val bundle = Bundle()
             bundle.putParcelable("object", item)
-            setFragmentResult("discussionObject", bundle)
+            parentFragment?.setFragmentResult("discussionObject", bundle)
             findNavController().popBackStack()
         }
     }
