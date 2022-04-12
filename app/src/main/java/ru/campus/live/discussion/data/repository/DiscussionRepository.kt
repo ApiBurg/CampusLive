@@ -1,5 +1,6 @@
 package ru.campus.live.discussion.data.repository
 
+import android.util.Log
 import okhttp3.ResponseBody
 import ru.campus.live.core.data.APIService
 import ru.campus.live.core.data.datasource.CloudDataSource
@@ -36,6 +37,8 @@ class DiscussionRepository @Inject constructor(
     }
 
     override fun vote(id: Int, vote: Int) {
+        val call = apiService.voteComment(token = user.token(), vote = vote, objectId = id)
+        CloudDataSource<ResponseBody>(errorDataSource = errorDataSource).execute(call)
     }
 
     override fun complaint(id: Int) {

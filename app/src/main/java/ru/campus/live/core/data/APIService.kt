@@ -78,4 +78,11 @@ interface APIService {
         @Field("publication_id") publicationId: Int,
     ): Call<DiscussionObject>
 
+    @GET("api/2.0/comment.vote")
+    fun voteComment(
+        @Query("token") token: String,
+        @Query("vote") vote: Int,
+        @Query("object_id") objectId: Int
+    ): Call<ResponseBody>
+
 }

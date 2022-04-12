@@ -1,6 +1,7 @@
 package ru.campus.live.discussion.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.core.graphics.toColorInt
@@ -61,6 +62,7 @@ class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
         super.onCreate(savedInstanceState)
         arguments?.let { publicationObject = it.getParcelable("publication") }
         parentFragment?.setFragmentResultListener("discussionObject") { _, bundle ->
+            Log.d("MyLog", "Получен новый комментарий!")
             val params: DiscussionObject? = bundle.getParcelable("object")
             if (params != null) viewModel.insert(params)
         }
@@ -68,6 +70,7 @@ class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
             val params: DiscussionObject? = bundle.getParcelable("object")
             if (params != null) onReplyEvent(params)
         }
+        viewModel.get(publicationObject)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -104,7 +107,6 @@ class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
     }
 
     private fun liveDataObserve() {
-        viewModel.get(publicationObject)
         viewModel.liveData().observe(viewLifecycleOwner) { model ->
             isProgressBarVisible(false)
             adapter.setData(model)

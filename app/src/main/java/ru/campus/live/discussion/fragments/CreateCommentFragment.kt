@@ -106,8 +106,7 @@ class CreateCommentFragment : BaseFragment<FragmentCreateCommentBinding>() {
         if (message.isEmpty()) return
         val params = CommentCreateObject(
             icon = 0, message = message, attachment = 0,
-            parent = parent, answered = answered, publication = publication
-        )
+            parent = parent, answered = answered, publication = publication)
         viewModel.post(params)
     }
 
