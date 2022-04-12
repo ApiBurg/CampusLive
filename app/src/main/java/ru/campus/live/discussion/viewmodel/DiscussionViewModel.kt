@@ -92,9 +92,8 @@ class DiscussionViewModel @Inject constructor(
 
     fun title() {
         viewModelScope.launch(Dispatchers.IO) {
-            var size = 0
-            _liveData.value?.let { size = it.size - 1 }
-            val result = interactor.getTitle(size)
+            val count =_liveData.value?.size ?: 0
+            val result = interactor.getTitle(count)
             withContext(Dispatchers.Main) {
                 titleLiveData.value = result
             }
