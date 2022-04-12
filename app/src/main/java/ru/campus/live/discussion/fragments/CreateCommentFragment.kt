@@ -14,6 +14,7 @@ import ru.campus.live.core.di.component.DaggerDiscussionComponent
 import ru.campus.live.core.di.component.DiscussionComponent
 import ru.campus.live.core.di.deps.AppDepsProvider
 import ru.campus.live.core.ui.BaseFragment
+import ru.campus.live.core.ui.Keyboard
 import ru.campus.live.core.ui.MyOnClick
 import ru.campus.live.databinding.FragmentCreateCommentBinding
 import ru.campus.live.dialog.ErrorDialog
@@ -92,6 +93,7 @@ class CreateCommentFragment : BaseFragment<FragmentCreateCommentBinding>() {
         binding.toolBar.setNavigationIcon(R.drawable.baseline_close_black_24)
         binding.toolBar.setNavigationOnClickListener { findNavController().popBackStack() }
         binding.toolBar.setOnMenuItemClickListener {
+            Keyboard().hide(activity)
             binding.toolBar.menu.clear()
             binding.progressBar.isVisible = true
             sendDataOnServer()
