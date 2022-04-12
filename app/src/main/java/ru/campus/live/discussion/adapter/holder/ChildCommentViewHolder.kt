@@ -23,7 +23,7 @@ class ChildCommentViewHolder(
     fun bind(model: DiscussionObject) {
         val color = if (model.hidden == 0) "#000000".toColorInt() else "#999999".toColorInt()
         itemBinding.message.setTextColor(color)
-
+        itemBinding.message.text = model.message
         itemBinding.date.text = model.relativeTime
         Glide.with(context).load(model.userAvatar).into(itemBinding.userPhoto)
         renderMediaView(model)

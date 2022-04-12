@@ -62,7 +62,7 @@ class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
         super.onCreate(savedInstanceState)
         arguments?.let { publicationObject = it.getParcelable("publication") }
         parentFragment?.setFragmentResultListener("discussionObject") { _, bundle ->
-            Log.d("MyLog", "Получен новый комментарий!")
+            Log.d("MyLog", "Получен эвент с новым комментарием!")
             val params: DiscussionObject? = bundle.getParcelable("object")
             if (params != null) viewModel.insert(params)
         }
