@@ -75,6 +75,7 @@ class DiscussionViewModel @Inject constructor(
                 withContext(Dispatchers.Main) {
                     _liveData.value = model
                 }
+                title()
             } else {
                 _liveData.postValue(_liveData.value!!)
             }
