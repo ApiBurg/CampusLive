@@ -1,18 +1,16 @@
 package ru.campus.live.discussion.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.campus.live.core.ui.MyOnClick
 import ru.campus.live.databinding.ItemChildCommentBinding
+import ru.campus.live.databinding.ItemParentCommentShimmerBinding
 import ru.campus.live.databinding.ItemParentCommetBinding
 import ru.campus.live.databinding.ItemPublicationBinding
 import ru.campus.live.discussion.adapter.diff.DiscussionDiffUtilCallBack
-import ru.campus.live.discussion.adapter.holder.ChildCommentViewHolder
-import ru.campus.live.discussion.adapter.holder.DiscussionPublicationViewHolder
-import ru.campus.live.discussion.adapter.holder.ParentCommentViewHolder
+import ru.campus.live.discussion.adapter.holder.*
 import ru.campus.live.discussion.data.model.DiscussionObject
 import ru.campus.live.discussion.data.model.DiscussionViewType
 
@@ -36,6 +34,7 @@ class DiscussionAdapter(
                     )
                 return ParentCommentViewHolder(itemBinding, myOnClick)
             }
+
             DiscussionViewType.CHILD -> {
                 val itemBinding =
                     ItemChildCommentBinding.inflate(
@@ -44,6 +43,24 @@ class DiscussionAdapter(
                     )
                 return ChildCommentViewHolder(itemBinding, myOnClick)
             }
+
+            DiscussionViewType.PARENT_SHIMMER -> {
+                val itemBinding =
+                    ItemParentCommentShimmerBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent, false
+                    )
+                return ParentCommentShimmerViewHolder(itemBinding)
+            }
+
+            DiscussionViewType.CHILD_SHIMMER -> {
+                val itemBinding = ItemParentCommentShimmerBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent, false
+                )
+                return ChildCommentShimmerViewHolder(itemBinding)
+            }
+
             else -> {
                 val itemBinding =
                     ItemPublicationBinding.inflate(
@@ -59,6 +76,8 @@ class DiscussionAdapter(
         when (model[position].type) {
             DiscussionViewType.PARENT -> (holder as ParentCommentViewHolder).bind(model[position])
             DiscussionViewType.CHILD -> (holder as ChildCommentViewHolder).bind(model[position])
+            DiscussionViewType.PARENT_SHIMMER -> (holder as ParentCommentShimmerViewHolder).bind()
+            DiscussionViewType.CHILD_SHIMMER -> (holder as ChildCommentShimmerViewHolder).bind()
             else -> (holder as DiscussionPublicationViewHolder).bind(model[position])
         }
     }
@@ -67,7 +86,6 @@ class DiscussionAdapter(
         return model.size
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun setData(newModel: ArrayList<DiscussionObject>) {
         val result =
             DiffUtil.calculateDiff(DiscussionDiffUtilCallBack(model, newModel))

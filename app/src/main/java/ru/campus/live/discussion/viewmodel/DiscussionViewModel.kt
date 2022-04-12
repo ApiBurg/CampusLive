@@ -15,6 +15,7 @@ import ru.campus.live.discussion.domain.DiscussionInteractor
 import ru.campus.live.feed.data.model.FeedObject
 import javax.inject.Inject
 
+
 class DiscussionViewModel @Inject constructor(
     private val interactor: DiscussionInteractor
 ) : ViewModel() {

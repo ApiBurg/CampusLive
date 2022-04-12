@@ -41,12 +41,16 @@ class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
 
     private val myOnClick = object : MyOnClick<DiscussionObject> {
         override fun item(view: View, item: DiscussionObject) {
-            if (item.hidden == 1) return
-            val bottomSheetDialog = DiscussionBottomSheetFragment()
-            val bundle = Bundle()
-            bundle.putParcelable("item", item)
-            bottomSheetDialog.arguments = bundle
-            bottomSheetDialog.show((requireActivity().supportFragmentManager), "BottomSheetDialog")
+            if (item.hidden == 0) {
+                val bottomSheetDialog = DiscussionBottomSheetFragment()
+                val bundle = Bundle()
+                bundle.putParcelable("item", item)
+                bottomSheetDialog.arguments = bundle
+                bottomSheetDialog.show(
+                    (requireActivity().supportFragmentManager),
+                    "BottomSheetDialog"
+                )
+            }
         }
     }
 
