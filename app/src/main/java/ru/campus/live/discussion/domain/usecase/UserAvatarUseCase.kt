@@ -17,7 +17,7 @@ class UserAvatarUseCase() {
 
     private fun generateArrayListIcon(): ArrayList<Int> {
         val model = ArrayList<Int>()
-        for (i in 1..50) {
+        for (i in 1..40) {
             model.add(i)
         }
         return model
