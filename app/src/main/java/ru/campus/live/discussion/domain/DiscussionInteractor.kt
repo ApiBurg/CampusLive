@@ -47,7 +47,7 @@ class DiscussionInteractor @Inject constructor(
         userDataSource.saveUserAvatarIcon(UserAvatarUseCase().execute(model, userDataSource.uid()))
     }
 
-    fun count(model: ArrayList<DiscussionObject>?): Int {
+    fun commentsCount(model: ArrayList<DiscussionObject>?): Int {
         var count = 0
         model?.forEach { item ->
             if (item.type == DiscussionViewType.PARENT

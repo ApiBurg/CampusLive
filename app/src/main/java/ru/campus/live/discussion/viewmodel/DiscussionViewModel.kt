@@ -95,7 +95,7 @@ class DiscussionViewModel @Inject constructor(
 
     fun title() {
         viewModelScope.launch(Dispatchers.IO) {
-            val count = interactor.count(_liveData.value)
+            val count = interactor.commentsCount(_liveData.value)
             val result = interactor.getTitle(count)
             withContext(Dispatchers.Main) {
                 titleLiveData.value = result
