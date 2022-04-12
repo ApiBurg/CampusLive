@@ -1,6 +1,5 @@
 package ru.campus.live.discussion.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -59,6 +58,15 @@ class DiscussionAdapter(
                 return ChildCommentShimmerViewHolder(itemBinding)
             }
 
+            DiscussionViewType.DISCUSSION_NONE -> {
+                val itemBinding = ItemDiscussionNoneBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+                return CommentsNoneViewHolder(itemBinding)
+            }
+
             else -> {
                 val itemBinding =
                     ItemPublicationBinding.inflate(
@@ -76,6 +84,7 @@ class DiscussionAdapter(
             DiscussionViewType.CHILD -> (holder as ChildCommentViewHolder).bind(model[position])
             DiscussionViewType.PARENT_SHIMMER -> (holder as ParentCommentShimmerViewHolder)
             DiscussionViewType.CHILD_SHIMMER -> (holder as ChildCommentShimmerViewHolder)
+            DiscussionViewType.DISCUSSION_NONE -> (holder as CommentsNoneViewHolder)
             else -> (holder as DiscussionPublicationViewHolder).bind(model[position])
         }
     }

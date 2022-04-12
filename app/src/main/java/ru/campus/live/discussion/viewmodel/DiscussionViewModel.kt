@@ -11,6 +11,7 @@ import ru.campus.live.core.data.model.ResponseObject
 import ru.campus.live.core.data.model.VoteObject
 import ru.campus.live.core.wrapper.SingleLiveEvent
 import ru.campus.live.discussion.data.model.DiscussionObject
+import ru.campus.live.discussion.data.model.DiscussionViewType
 import ru.campus.live.discussion.domain.DiscussionInteractor
 import ru.campus.live.feed.data.model.FeedObject
 import javax.inject.Inject
@@ -50,6 +51,12 @@ class DiscussionViewModel @Inject constructor(
                     interactor.refreshUserAvatar(_liveData.value!!)
                 }
                 is ResponseObject.Failure -> {
+                    val response = ArrayList<DiscussionObject>()
+                    response.add(DiscussionObject(DiscussionViewType.DISCUSSION_NONE))
+                    val final = interactor.header(response, publication!!)
+                    withContext(Dispatchers.Main) {
+                        _liveData.value = final
+                    }
                 }
             }
             title()
