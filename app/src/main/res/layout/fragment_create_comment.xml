@@ -35,21 +35,21 @@
         android:id="@+id/toolbarSeparator"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="#eeeeee"
-        android:layout_below="@id/appBarLayout"/>
+        android:layout_below="@id/appBarLayout"
+        android:background="#eeeeee" />
 
     <EditText
         android:id="@+id/editText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbarSeparator"
         android:layout_above="@id/recyclerViewUploadMedia"
+        android:layout_below="@id/toolbarSeparator"
         android:background="#ffffff"
         android:gravity="top"
-        android:hint="@string/create_publication_hint"
+        android:hint="@string/comment_create_hint"
         android:importantForAutofill="no"
         android:inputType="textMultiLine"
-        android:maxLength="300"
+        android:maxLength="200"
         android:padding="16dp" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/bottomNavigationSeparator"
         android:layout_marginBottom="4dp"
-        android:orientation="horizontal"/>
+        android:orientation="horizontal" />
 
     <View
         android:id="@+id/bottomNavigationSeparator"
@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right|center_vertical"
             android:layout_marginEnd="16dp"
-            android:text="300"
+            android:text="200"
             tools:ignore="HardcodedText,RtlHardcoded" />
 
     </FrameLayout>

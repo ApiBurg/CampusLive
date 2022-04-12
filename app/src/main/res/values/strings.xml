@@ -40,5 +40,6 @@
     <string name="complaint_response">Жалоба отправлена</string>
     <string name="new_comment">Новый комментарий</string>
     <string name="comment_hidden">Комментарий скрыт по решению сообщества</string>
+    <string name="comment_create_hint">Ваш комментарий</string>
 
 </resources>

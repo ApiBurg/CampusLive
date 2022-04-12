@@ -3,15 +3,16 @@ package ru.campus.live.discussion.fragments
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.campus.live.R
-import ru.campus.live.core.di.deps.AppDepsProvider
 import ru.campus.live.core.di.component.DaggerDiscussionComponent
 import ru.campus.live.core.di.component.DiscussionComponent
+import ru.campus.live.core.di.deps.AppDepsProvider
 import ru.campus.live.core.ui.BaseFragment
 import ru.campus.live.core.ui.MyOnClick
 import ru.campus.live.databinding.FragmentCreateCommentBinding
@@ -76,6 +77,10 @@ class CreateCommentFragment : BaseFragment<FragmentCreateCommentBinding>() {
         onUploadLiveData()
         onSuccessEvent()
         onFailureEvent()
+        binding.editText.doAfterTextChanged {
+            val count = 200 - it.toString().length
+            binding.textCount.text = count.toString()
+        }
     }
 
     private fun initToolbar() {
