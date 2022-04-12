@@ -10,22 +10,14 @@ class UserAvatarUseCase() {
         return icon
     }
 
-    private fun search(model: ArrayList<DiscussionObject>, uid: Int): Int {
-        model.forEach { item -> if (item.author == uid) return item.icon_id }
+    private fun search(model: ArrayList<DiscussionObject>?, uid: Int): Int {
+        model?.forEach { item -> if (item.author == uid) return item.icon_id }
         return 0
     }
 
-    private fun generateArrayListIcon(): ArrayList<Int> {
-        val model = ArrayList<Int>()
-        for (i in 1..40) {
-            model.add(i)
-        }
-        return model
-    }
-
-    private fun generate(model: ArrayList<DiscussionObject>): Int {
+    private fun generate(model: ArrayList<DiscussionObject>?): Int {
         val icon = generateArrayListIcon()
-        model.forEach { item ->
+        model?.forEach { item ->
             val index = icon.indexOfLast { it == item.icon_id }
             if (index != -1) icon.removeAt(index)
         }
@@ -35,6 +27,15 @@ class UserAvatarUseCase() {
             return icon[index]
         }
         return 0
+    }
+
+
+    private fun generateArrayListIcon(): ArrayList<Int> {
+        val model = ArrayList<Int>()
+        for (i in 1..40) {
+            model.add(i)
+        }
+        return model
     }
 
 }

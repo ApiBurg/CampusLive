@@ -29,15 +29,6 @@ class DiscussionInteractor @Inject constructor(
         return repository.get(publicationId)
     }
 
-    fun count(model: ArrayList<DiscussionObject>): Int {
-        var count = 0
-        model.forEach { item ->
-            if (item.type == DiscussionViewType.PARENT
-                || item.type == DiscussionViewType.CHILD) count++
-        }
-        return count
-    }
-
     fun shimmer(): ArrayList<DiscussionObject> {
         val model = ArrayList<DiscussionObject>()
         model.add(DiscussionObject(DiscussionViewType.PARENT_SHIMMER))
@@ -54,6 +45,15 @@ class DiscussionInteractor @Inject constructor(
 
     fun refreshUserAvatar(model: ArrayList<DiscussionObject>) {
         userDataSource.saveUserAvatarIcon(UserAvatarUseCase().execute(model, userDataSource.uid()))
+    }
+
+    fun count(model: ArrayList<DiscussionObject>?): Int {
+        var count = 0
+        model?.forEach { item ->
+            if (item.type == DiscussionViewType.PARENT
+                || item.type == DiscussionViewType.CHILD) count++
+        }
+        return count
     }
 
     fun getTitle(size: Int): String {

@@ -48,7 +48,6 @@ class DiscussionViewModel @Inject constructor(
                     withContext(Dispatchers.Main) {
                         _liveData.value = final
                     }
-                    interactor.refreshUserAvatar(_liveData.value!!)
                 }
                 is ResponseObject.Failure -> {
                     val response = ArrayList<DiscussionObject>()
@@ -59,6 +58,8 @@ class DiscussionViewModel @Inject constructor(
                     }
                 }
             }
+
+            interactor.refreshUserAvatar(_liveData.value!!)
             title()
         }
     }
@@ -74,6 +75,8 @@ class DiscussionViewModel @Inject constructor(
                 withContext(Dispatchers.Main) {
                     _liveData.value = model
                 }
+            } else {
+                _liveData.postValue(_liveData.value!!)
             }
         }
     }
@@ -92,7 +95,7 @@ class DiscussionViewModel @Inject constructor(
 
     fun title() {
         viewModelScope.launch(Dispatchers.IO) {
-            val count =_liveData.value?.size ?: 0
+            val count = interactor.count(_liveData.value)
             val result = interactor.getTitle(count)
             withContext(Dispatchers.Main) {
                 titleLiveData.value = result
