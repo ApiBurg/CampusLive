@@ -1,6 +1,10 @@
 package ru.campus.live.discussion.domain
 
+import ru.campus.live.R
+import ru.campus.live.core.data.datasource.Display
+import ru.campus.live.core.data.datasource.HostDataSource
 import ru.campus.live.core.data.datasource.IUserDataSource
+import ru.campus.live.core.data.datasource.StringProvider
 import ru.campus.live.core.data.model.ResponseObject
 import ru.campus.live.core.data.model.VoteObject
 import ru.campus.live.discussion.data.model.DiscussionObject
@@ -15,7 +19,10 @@ import javax.inject.Inject
 class DiscussionInteractor @Inject constructor(
     private val repository: IDiscussionRepository,
     private val titleUseCase: DiscussionTitleUseCase,
-    private val userDataSource: IUserDataSource
+    private val userDataSource: IUserDataSource,
+    private val hostDataSource: HostDataSource,
+    private val display: Display,
+    private val stringProvider: StringProvider
 ) {
 
     fun get(publicationId: Int): ResponseObject<ArrayList<DiscussionObject>> {
@@ -88,7 +95,31 @@ class DiscussionInteractor @Inject constructor(
                 }
             }
         }
-        return response
+
+        return preparation(model)
+    }
+
+    private fun preparation(model: ArrayList<DiscussionObject>): ArrayList<DiscussionObject> {
+        model.forEachIndexed { index, item ->
+            var pathUserIcon = hostDataSource.domain() + "media/icon/" + item.icon_id + ".png"
+            if (item.icon_id < 10) pathUserIcon =
+                hostDataSource.domain() + "media/icon/" + item.icon_id + ".png"
+            model[index].userAvatar = pathUserIcon
+
+            if (item.attachment != null) {
+                val params = display.get(item.attachment.width, item.attachment.height)
+                model[index].mediaWidth = params[0]
+                model[index].mediaHeight = params[1]
+            } else {
+                model[index].mediaWidth = 0
+                model[index].mediaHeight = 1
+            }
+
+            if (item.hidden == 1)
+                model[index].message = stringProvider.get(R.string.comment_hidden)
+
+        }
+        return model
     }
 
     private fun mapper(

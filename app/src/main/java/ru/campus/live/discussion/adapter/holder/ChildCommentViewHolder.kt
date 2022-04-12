@@ -1,7 +1,6 @@
 package ru.campus.live.discussion.adapter.holder
 
 import android.annotation.SuppressLint
-import android.util.DisplayMetrics
 import android.view.ViewGroup
 import androidx.core.graphics.toColorInt
 import androidx.core.view.isVisible
@@ -12,7 +11,6 @@ import ru.campus.live.core.data.datasource.HostDataSource
 import ru.campus.live.core.ui.MyOnClick
 import ru.campus.live.databinding.ItemChildCommentBinding
 import ru.campus.live.discussion.data.model.DiscussionObject
-import kotlin.math.roundToInt
 
 class ChildCommentViewHolder(
     private val itemBinding: ItemChildCommentBinding,
@@ -23,16 +21,11 @@ class ChildCommentViewHolder(
     private val host = HostDataSource(context).domain()
 
     fun bind(model: DiscussionObject) {
-        if (model.hidden == 0) {
-            itemBinding.message.text = model.message
-            itemBinding.message.setTextColor("#000000".toColorInt())
-        } else {
-            itemBinding.message.text = context.getString(R.string.comment_hidden)
-            itemBinding.message.setTextColor("#999999".toColorInt())
-        }
+        val color = if (model.hidden == 0) "#000000".toColorInt() else "#999999".toColorInt()
+        itemBinding.message.setTextColor(color)
 
         itemBinding.date.text = model.relativeTime
-        Glide.with(context).load(userAvatar(model)).into(itemBinding.userPhoto)
+        Glide.with(context).load(model.userAvatar).into(itemBinding.userPhoto)
         renderMediaView(model)
         renderVoteView(model)
         renderRatingView(model)
@@ -41,24 +34,14 @@ class ChildCommentViewHolder(
         }
     }
 
-    private fun userAvatar(model: DiscussionObject): String {
-        var pathUserIcon = host + "media/icon/" + model.icon_id + ".png"
-        if (model.icon_id < 10) pathUserIcon = host + "media/icon/" + model.icon_id + ".png"
-        return pathUserIcon
-    }
-
     private fun renderMediaView(model: DiscussionObject) {
         if (model.attachment == null) {
             itemBinding.photo.isVisible = false
         } else {
             itemBinding.photo.isVisible = true
-            val displayMetrics = context.resources.displayMetrics
-            val pxAndDp = (80 * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
-            val k = pxAndDp.toFloat() / model.attachment.width.toFloat()
-            val height = (model.attachment.height.toFloat() * k).roundToInt()
             val params: ViewGroup.LayoutParams = itemBinding.photo.layoutParams
-            params.width = pxAndDp
-            params.height = height
+            params.width = model.mediaWidth
+            params.height = model.mediaHeight
             itemBinding.photo.layoutParams = params
             Glide.with(context)
                 .load(host + model.attachment.path)
