@@ -26,7 +26,7 @@ import ru.campus.live.gallery.data.model.UploadMediaObject
 import ru.campus.live.gallery.fragments.GalleryBottomSheetDialog
 
 
-class CreatePublicationFragment : BaseFragment<FragmentCreatePublicationBinding>() {
+class EditorPublicationFragment : BaseFragment<FragmentCreatePublicationBinding>() {
 
     private val feedComponent: FeedComponent by lazy {
         DaggerFeedComponent.builder()
