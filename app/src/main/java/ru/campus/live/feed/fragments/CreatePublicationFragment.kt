@@ -73,7 +73,10 @@ class CreatePublicationFragment : BaseFragment<FragmentCreatePublicationBinding>
         binding.toolBar.setTitle(R.string.new_publication)
         binding.toolBar.setNavigationIcon(R.drawable.outline_clear_black_24)
         isVisibleToolBarMenu(true)
-        binding.toolBar.setNavigationOnClickListener { findNavController().popBackStack() }
+        binding.toolBar.setNavigationOnClickListener {
+            Keyboard().hide(activity)
+            findNavController().popBackStack()
+        }
         binding.toolBar.setOnMenuItemClickListener { item ->
             if (item.itemId == R.id.send) {
                 Keyboard().hide(activity)

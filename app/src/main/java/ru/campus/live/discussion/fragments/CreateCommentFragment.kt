@@ -92,7 +92,10 @@ class CreateCommentFragment : BaseFragment<FragmentCreateCommentBinding>() {
             getString(R.string.reply)
         binding.toolBar.inflateMenu(R.menu.send_menu)
         binding.toolBar.setNavigationIcon(R.drawable.baseline_close_black_24)
-        binding.toolBar.setNavigationOnClickListener { findNavController().popBackStack() }
+        binding.toolBar.setNavigationOnClickListener {
+            Keyboard().hide(activity)
+            findNavController().popBackStack()
+        }
         binding.toolBar.setOnMenuItemClickListener {
             Keyboard().hide(activity)
             binding.toolBar.menu.clear()
