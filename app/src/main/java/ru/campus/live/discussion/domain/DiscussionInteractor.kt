@@ -1,7 +1,7 @@
 package ru.campus.live.discussion.domain
 
 import ru.campus.live.R
-import ru.campus.live.core.data.datasource.Display
+import ru.campus.live.core.data.datasource.DisplayMetrics
 import ru.campus.live.core.data.datasource.HostDataSource
 import ru.campus.live.core.data.datasource.IUserDataSource
 import ru.campus.live.core.data.datasource.StringProvider
@@ -21,7 +21,7 @@ class DiscussionInteractor @Inject constructor(
     private val titleUseCase: DiscussionTitleUseCase,
     private val userDataSource: IUserDataSource,
     private val hostDataSource: HostDataSource,
-    private val display: Display,
+    private val display: DisplayMetrics,
     private val stringProvider: StringProvider
 ) {
 

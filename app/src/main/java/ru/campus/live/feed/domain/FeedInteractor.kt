@@ -1,5 +1,6 @@
 package ru.campus.live.feed.domain
 
+import ru.campus.live.core.data.datasource.DisplayMetrics
 import ru.campus.live.core.data.datasource.IUserDataSource
 import ru.campus.live.core.data.model.ResponseObject
 import ru.campus.live.core.data.model.UploadResultObject
@@ -19,7 +20,8 @@ import ru.campus.live.location.data.model.LocationDataObject
 class FeedInteractor(
     private val repository: IWallRepository,
     private val userDataSource: IUserDataSource,
-    private val uploadRepository: IUploadMediaRepository
+    private val uploadRepository: IUploadMediaRepository,
+    private val displayMetrics: DisplayMetrics
 ) {
 
     fun getCache(): ArrayList<FeedObject> {
@@ -35,6 +37,22 @@ class FeedInteractor(
     fun get(model: ArrayList<FeedObject>): ResponseObject<ArrayList<FeedObject>> {
         val offset = FeedOffsetUseCase().execute(model)
         return repository.get(offset)
+    }
+
+    fun listPreparation(model: ArrayList<FeedObject>): ArrayList<FeedObject> {
+        model.forEachIndexed { index, item ->
+            if(item.viewType == FeedViewType.PUBLICATION) {
+                if (item.attachment != null) {
+                    val params = displayMetrics.get(item.attachment.width, item.attachment.height)
+                    model[index].mediaWidth = params[0]
+                    model[index].mediaHeight = params[1]
+                } else {
+                    model[index].mediaWidth = 0
+                    model[index].mediaHeight = 0
+                }
+            }
+        }
+        return model
     }
 
     fun setHeader(model: ArrayList<FeedObject>): ArrayList<FeedObject> {

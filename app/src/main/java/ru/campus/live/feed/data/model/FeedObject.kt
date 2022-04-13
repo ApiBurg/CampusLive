@@ -13,6 +13,8 @@ data class FeedObject(
     val id: Int = 0,
     val message: String = "",
     val attachment: AttachmentModel? = null,
+    var mediaWidth: Int = 0,
+    var mediaHeight: Int = 0,
     var rating: Int = 0,
     val comments: Int = 0,
     var vote: Int = 0,

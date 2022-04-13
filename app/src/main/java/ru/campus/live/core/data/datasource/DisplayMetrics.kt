@@ -5,7 +5,7 @@ import android.util.DisplayMetrics
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
-class Display @Inject constructor(private val context: Context) {
+class DisplayMetrics @Inject constructor(private val context: Context) {
 
     private val displayMetrics = context.resources.displayMetrics
 
@@ -15,7 +15,6 @@ class Display @Inject constructor(private val context: Context) {
         val k = pxAndDp.toFloat() / width.toFloat()
         params[0] = pxAndDp
         params[1] = (height.toFloat() * k).roundToInt()
-
         return params
     }
 

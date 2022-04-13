@@ -48,7 +48,8 @@ class FeedViewModel @Inject constructor(
             when (val result = interactor.get(model)) {
                 is ResponseObject.Success -> {
                     model.addAll(result.data)
-                    val response = interactor.setHeader(model)
+                    val list = interactor.setHeader(model)
+                    val response = interactor.listPreparation(list)
                     withContext(Dispatchers.Main) {
                         _liveData.value = response
                         insertCache()

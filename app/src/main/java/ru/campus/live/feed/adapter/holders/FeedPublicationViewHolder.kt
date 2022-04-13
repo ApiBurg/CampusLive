@@ -39,13 +39,9 @@ class FeedPublicationViewHolder(
     private fun renderMediaView(model: FeedObject) {
         if (model.attachment != null && model.attachment.id != 0) {
             itemBinding.media.isVisible = true
-            val displayMetrics = context.resources.displayMetrics
-            val pxAndDp = (80 * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
-            val k = pxAndDp.toFloat() / model.attachment.width.toFloat()
-            val height = (model.attachment.height.toFloat() * k).roundToInt()
             val params: ViewGroup.LayoutParams = itemBinding.media.layoutParams
-            params.width = pxAndDp
-            params.height = height
+            params.width = model.mediaWidth
+            params.height = model.mediaHeight
             itemBinding.media.layoutParams = params
             Glide.with(context).load(host + model.attachment.path).into(itemBinding.media)
         } else {
