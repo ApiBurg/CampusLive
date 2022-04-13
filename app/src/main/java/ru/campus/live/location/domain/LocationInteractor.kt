@@ -3,8 +3,9 @@ package ru.campus.live.location.domain
 import ru.campus.live.core.data.model.ResponseObject
 import ru.campus.live.location.data.model.LocationDataObject
 import ru.campus.live.location.data.repository.ILocationRepository
+import javax.inject.Inject
 
-class LocationInteractor(private val repository: ILocationRepository) {
+class LocationInteractor @Inject constructor(private val repository: ILocationRepository) {
 
     fun search(name: String?): List<LocationDataObject> {
         val result = repository.get(name)

@@ -1,4 +1,4 @@
-package ru.campus.live.location.adapter
+package ru.campus.live.location.adapter.holder
 
 import androidx.recyclerview.widget.RecyclerView
 import ru.campus.live.location.data.model.LocationDataObject

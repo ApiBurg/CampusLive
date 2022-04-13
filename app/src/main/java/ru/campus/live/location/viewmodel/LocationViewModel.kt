@@ -12,7 +12,7 @@ import ru.campus.live.location.domain.LocationInteractor
 import javax.inject.Inject
 
 class LocationViewModel @Inject constructor(
-    private val interactor: LocationInteractor
+    private val interactor: LocationInteractor,
 ) : ViewModel() {
 
     private val _liveData = MutableLiveData<List<LocationDataObject>>()
@@ -33,9 +33,7 @@ class LocationViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             interactor.rating(item.id)
             interactor.saveLocationData(item)
-            withContext(Dispatchers.Main) {
-                _feedStartEvent.value = item
-            }
+            _feedStartEvent.postValue(item)
         }
     }
 

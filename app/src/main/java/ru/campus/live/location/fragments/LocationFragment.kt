@@ -8,9 +8,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.campus.live.R
-import ru.campus.live.core.di.deps.AppDepsProvider
 import ru.campus.live.core.di.component.DaggerLocationComponent
 import ru.campus.live.core.di.component.LocationComponent
+import ru.campus.live.core.di.deps.AppDepsProvider
 import ru.campus.live.core.ui.BaseFragment
 import ru.campus.live.core.ui.MyOnClick
 import ru.campus.live.databinding.FragmentLocationBinding
@@ -21,17 +21,13 @@ import ru.campus.live.location.viewmodel.LocationViewModel
 
 class LocationFragment : BaseFragment<FragmentLocationBinding>() {
 
-    private val locationComponent: LocationComponent by lazy {
+    private val component: LocationComponent by lazy {
         DaggerLocationComponent.builder()
             .deps(AppDepsProvider.deps)
             .build()
     }
 
-    private val adapter by lazy { LocationAdapter(myOnClick) }
-    private val viewModel by viewModels<LocationViewModel> {
-        locationComponent.viewModelsFactory()
-    }
-
+    private val viewModel by viewModels<LocationViewModel> { component.viewModelsFactory() }
     private val myOnClick = object : MyOnClick<LocationDataObject> {
         override fun item(view: View, item: LocationDataObject) {
             binding.progressBar.isVisible = true
@@ -39,7 +35,7 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
         }
     }
 
-
+    private val adapter = LocationAdapter(myOnClick)
     override fun getViewBinding() = FragmentLocationBinding.inflate(layoutInflater)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

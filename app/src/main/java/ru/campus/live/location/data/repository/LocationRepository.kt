@@ -12,22 +12,22 @@ import javax.inject.Inject
 class LocationRepository @Inject constructor(
     private val apiService: APIService,
     private val errorDataSource: ErrorDataSource,
-    private val user: UserDataSource
+    private val userDataSource: UserDataSource,
 ) : ILocationRepository {
 
     override fun get(name: String?): ResponseObject<List<LocationDataObject>> {
-        val call = apiService.location(user.token(), name)
+        val call = apiService.location(userDataSource.token(), name)
         return CloudDataSource<List<LocationDataObject>>(errorDataSource = errorDataSource)
             .execute(call)
     }
 
     override fun ratingUp(id: Int) {
-        val call = apiService.locationRating(id, user.token())
+        val call = apiService.locationRating(id, userDataSource.token())
         CloudDataSource<ResponseBody>(errorDataSource = errorDataSource).execute(call)
     }
 
     override fun save(data: LocationDataObject) {
-        user.locationSave(data)
+        userDataSource.locationSave(data)
     }
 
 }

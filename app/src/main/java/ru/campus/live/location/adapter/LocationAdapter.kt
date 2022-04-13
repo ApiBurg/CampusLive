@@ -1,11 +1,13 @@
 package ru.campus.live.location.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.campus.live.core.ui.MyOnClick
 import ru.campus.live.databinding.ItemLocationBinding
+import ru.campus.live.location.adapter.diff.LocationDiffUtilCallBack
+import ru.campus.live.location.adapter.holder.LocationViewHolder
 import ru.campus.live.location.data.model.LocationDataObject
 
 class LocationAdapter(private val myOnClick: MyOnClick<LocationDataObject>) :
@@ -27,11 +29,13 @@ class LocationAdapter(private val myOnClick: MyOnClick<LocationDataObject>) :
         return model.size
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun setData(newDataObject: List<LocationDataObject>) {
+    fun setData(newModel: List<LocationDataObject>) {
+        val result =
+            DiffUtil.calculateDiff(LocationDiffUtilCallBack(model,
+                newModel as ArrayList<LocationDataObject>))
         model.clear()
-        model.addAll(newDataObject)
-        notifyDataSetChanged()
+        model.addAll(newModel)
+        result.dispatchUpdatesTo(this)
     }
 
 }

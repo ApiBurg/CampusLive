@@ -1,45 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/container"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:foreground="?android:attr/selectableItemBackground"
     android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:orientation="vertical"
     tools:ignore="UnusedAttribute">
 
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="2dp"
-        android:textSize="18sp"
-        android:text="Астраханский государственный политехнический колледж"
         android:fontFamily="@font/roboto_regular"
-        app:fontFamily="@font/roboto_regular"
-        android:textColor="#000000"/>
+        android:paddingStart="@dimen/padding_start"
+        android:paddingTop="@dimen/padding_top"
+        android:paddingEnd="@dimen/padding_end"
+        android:paddingBottom="2dp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textSizeMedium"
+        app:fontFamily="@font/roboto_regular" />
 
     <TextView
         android:id="@+id/address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:paddingStart="16dp"
-        android:paddingEnd="32dp"
-        android:paddingBottom="16dp"
         android:fontFamily="@font/montserrat"
-        app:fontFamily="@font/montserrat"
-        android:text="Астрахань, ул. Куликова 46"/>
+        android:paddingStart="@dimen/padding_start"
+        android:paddingEnd="@dimen/big_padding"
+        android:paddingBottom="@dimen/padding_bottom"
+        android:textSize="@dimen/textSizeMini"
+        app:fontFamily="@font/montserrat" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.3dp"
-        android:background="#eeeeee"/>
+        android:background="#eeeeee" />
 
 </LinearLayout>
