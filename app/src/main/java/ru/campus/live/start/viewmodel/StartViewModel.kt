@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import ru.campus.live.core.data.model.ErrorObject
 import ru.campus.live.core.data.model.ResponseObject
 import ru.campus.live.core.wrapper.SingleLiveEvent
@@ -30,9 +29,7 @@ class StartViewModel @Inject constructor(
     fun start() {
         viewModelScope.launch(Dispatchers.IO) {
             val result = interactor.start()
-            withContext(Dispatchers.Main) {
-                _liveData.value = result
-            }
+            _liveData.postValue(result)
         }
     }
 
@@ -40,16 +37,8 @@ class StartViewModel @Inject constructor(
     fun login() {
         viewModelScope.launch(Dispatchers.IO) {
             when (val result = interactor.registration()) {
-                is ResponseObject.Success -> {
-                    withContext(Dispatchers.Main) {
-                        _successEvent.value = result.data
-                    }
-                }
-                is ResponseObject.Failure -> {
-                    withContext(Dispatchers.Main) {
-                        _failureEvent.value = result.errorObject
-                    }
-                }
+                is ResponseObject.Success -> _successEvent.postValue(result.data)
+                is ResponseObject.Failure -> _failureEvent.postValue(result.errorObject)
             }
         }
     }
