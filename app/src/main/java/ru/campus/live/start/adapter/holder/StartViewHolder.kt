@@ -7,15 +7,14 @@ import ru.campus.live.databinding.RowOnboardBinding
 import ru.campus.live.start.data.model.StartDataObject
 
 class StartViewHolder(
-    @NonNull private val itemBinding: RowOnboardBinding
+    @NonNull private val itemBinding: RowOnboardBinding,
 ) : RecyclerView.ViewHolder(itemBinding.root) {
 
-    private val context = itemBinding.root.context
-
-    fun bind(model: StartDataObject) {
-        itemBinding.title.text = model.title
-        itemBinding.message.text = model.message
-        Glide.with(context).load(model.icon).into(itemBinding.icon)
+    fun bind(item: StartDataObject) {
+        itemBinding.title.text = item.title
+        itemBinding.message.text = item.message
+        val context = itemBinding.root.context
+        Glide.with(context).load(item.icon).into(itemBinding.icon)
     }
 
 }
