@@ -134,6 +134,12 @@ class FeedFragment : BaseFragment<FragmentFeedBinding>() {
                 val totalItemCount = linearLayoutManager?.itemCount ?: 0
                 val firstVisibleItem = linearLayoutManager?.findFirstVisibleItemPosition() ?: 0
                 if (visibleItemCount + firstVisibleItem >= totalItemCount) viewModel.get()
+
+                if (dy < 0 && !binding.fab.isShown) {
+                    binding.fab.show()
+                } else if (dy > 0 && binding.fab.isShown) {
+                    binding.fab.hide()
+                }
             }
         })
     }
