@@ -5,7 +5,7 @@ import android.util.DisplayMetrics
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
-class DisplayMetrics @Inject constructor(private val context: Context) {
+class DisplayMetrics @Inject constructor(context: Context) {
 
     private val displayMetrics = context.resources.displayMetrics
 

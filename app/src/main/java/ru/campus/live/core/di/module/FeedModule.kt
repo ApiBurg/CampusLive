@@ -1,8 +1,10 @@
 package ru.campus.live.core.di.module
 
+import android.content.Context
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import ru.campus.live.core.data.datasource.DisplayMetrics
 import ru.campus.live.core.data.datasource.UserDataSource
 import ru.campus.live.core.data.repository.IUploadMediaRepository
 import ru.campus.live.core.data.repository.UploadMediaRepository
@@ -18,9 +20,20 @@ class FeedModule {
     fun provideFeedInteractor(
         iWallRepository: IWallRepository,
         userDataSource: UserDataSource,
-        uploadMediaRepository: IUploadMediaRepository
+        uploadMediaRepository: IUploadMediaRepository,
+        displayMetrics: DisplayMetrics
     ): FeedInteractor {
-        return FeedInteractor(iWallRepository, userDataSource, uploadMediaRepository)
+        return FeedInteractor(
+            iWallRepository,
+            userDataSource,
+            uploadMediaRepository,
+            displayMetrics
+        )
+    }
+
+    @Provides
+    fun provideDisplayMetrics(context: Context): DisplayMetrics {
+        return DisplayMetrics(context)
     }
 
 }
