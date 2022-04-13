@@ -35,13 +35,16 @@ class DiscussionViewModel @Inject constructor(
             val model = ArrayList<DiscussionObject>()
             _liveData.value?.let { model.addAll(it) }
             val start = interactor.header(model, publication!!)
-            val shimmer = interactor.shimmer()
-            start.addAll(shimmer)
+            if(params!!.comments != 0) {
+                val shimmer = interactor.shimmer()
+                start.addAll(shimmer)
+            }
+
             withContext(Dispatchers.Main) {
                 _liveData.value = start
             }
 
-            when (val result = interactor.get(params?.id ?: 0)) {
+            when (val result = interactor.get(params.id)) {
                 is ResponseObject.Success -> {
                     val response = interactor.setTypeObject(result.data)
                     val final = interactor.header(response, publication!!)

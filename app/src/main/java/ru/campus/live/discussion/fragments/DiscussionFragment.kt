@@ -86,6 +86,13 @@ class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
 
     private fun initToolBar() {
         isProgressBarVisible(false)
+
+        if(publicationObject?.comments == 0) {
+            isProgressBarVisible(true)
+        } else {
+            isProgressBarVisible(false)
+        }
+
         binding.toolbar.setNavigationIcon(R.drawable.baseline_close_black_24)
         binding.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
