@@ -19,17 +19,16 @@ import ru.campus.live.start.viewmodel.StartViewModel
 
 class StartFragment : BaseFragment<FragmentStartBinding>() {
 
-    private val startComponent: StartComponent by lazy {
+    private val component: StartComponent by lazy {
         DaggerStartComponent.builder()
             .deps(AppDepsProvider.deps)
             .build()
     }
 
-    private val viewModel by viewModels<StartViewModel> { startComponent.viewModelsFactory() }
+    private val viewModel by viewModels<StartViewModel> { component.viewModelsFactory() }
     private val adapter = StartAdapter()
 
     override fun getViewBinding() = FragmentStartBinding.inflate(layoutInflater)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.start()
@@ -37,15 +36,19 @@ class StartFragment : BaseFragment<FragmentStartBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        liveDataObserve()
-        onLoginEvent()
-        onErrorEvent()
         binding.viewPager.adapter = adapter
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { _, _ -> }.attach()
+        observers()
         binding.start.setOnClickListener {
             isVisibleProgressBar(true)
             viewModel.login()
         }
+    }
+
+    private fun observers() {
+        liveDataObserve()
+        onLoginEvent()
+        onErrorEvent()
     }
 
     private fun liveDataObserve() {
