@@ -17,6 +17,7 @@ data class FeedObject(
     var mediaHeight: Int = 0,
     var rating: Int = 0,
     val comments: Int = 0,
+    var commentsString: String = "",
     var vote: Int = 0,
     val relativeTime: String = ""
 ) : Parcelable

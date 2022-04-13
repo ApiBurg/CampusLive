@@ -20,14 +20,12 @@ class FeedPublicationViewHolder(
 ) : RecyclerView.ViewHolder(itemBinding.root) {
 
     private val context = itemBinding.root.context
-   // private val commentsDeclinationUseCase = CommentsDeclinationUseCase(context)
     private val host = HostDataSource(context).domain()
 
     fun bind(model: FeedObject) {
         itemBinding.message.text = model.message
         itemBinding.date.text = model.relativeTime
-       // itemBinding.comment.text = commentsDeclinationUseCase.getTextComments(model.comments)
-        itemBinding.comment.text = "Нет комментариев"
+        itemBinding.comment.text = model.commentsString
         renderMediaView(model)
         renderVoteView(model)
         renderRatingView(model)

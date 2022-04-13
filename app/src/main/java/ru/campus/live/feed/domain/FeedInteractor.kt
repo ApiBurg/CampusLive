@@ -6,6 +6,7 @@ import ru.campus.live.core.data.model.ResponseObject
 import ru.campus.live.core.data.model.UploadResultObject
 import ru.campus.live.core.data.model.VoteObject
 import ru.campus.live.core.data.repository.IUploadMediaRepository
+import ru.campus.live.discussion.domain.usecase.DiscussionTitleUseCase
 import ru.campus.live.feed.data.model.FeedObject
 import ru.campus.live.feed.data.model.FeedViewType
 import ru.campus.live.feed.data.model.PublicationPostObject
@@ -21,7 +22,8 @@ class FeedInteractor(
     private val repository: IWallRepository,
     private val userDataSource: IUserDataSource,
     private val uploadRepository: IUploadMediaRepository,
-    private val displayMetrics: DisplayMetrics
+    private val displayMetrics: DisplayMetrics,
+    private val discussionTitleUseCase: DiscussionTitleUseCase
 ) {
 
     fun getCache(): ArrayList<FeedObject> {
@@ -41,7 +43,7 @@ class FeedInteractor(
 
     fun listPreparation(model: ArrayList<FeedObject>): ArrayList<FeedObject> {
         model.forEachIndexed { index, item ->
-            if(item.viewType == FeedViewType.PUBLICATION) {
+            if (item.viewType == FeedViewType.PUBLICATION) {
                 if (item.attachment != null) {
                     val params = displayMetrics.get(item.attachment.width, item.attachment.height)
                     model[index].mediaWidth = params[0]
@@ -50,6 +52,7 @@ class FeedInteractor(
                     model[index].mediaWidth = 0
                     model[index].mediaHeight = 0
                 }
+                model[index].commentsString = discussionTitleUseCase.execute(item.comments)
             }
         }
         return model

@@ -9,6 +9,7 @@ import ru.campus.live.core.data.datasource.UserDataSource
 import ru.campus.live.core.data.repository.IUploadMediaRepository
 import ru.campus.live.core.data.repository.UploadMediaRepository
 import ru.campus.live.core.di.module.viewmodel.FeedVModule
+import ru.campus.live.discussion.domain.usecase.DiscussionTitleUseCase
 import ru.campus.live.feed.data.repository.IWallRepository
 import ru.campus.live.feed.data.repository.WallRepository
 import ru.campus.live.feed.domain.FeedInteractor
@@ -21,13 +22,15 @@ class FeedModule {
         iWallRepository: IWallRepository,
         userDataSource: UserDataSource,
         uploadMediaRepository: IUploadMediaRepository,
-        displayMetrics: DisplayMetrics
+        displayMetrics: DisplayMetrics,
+        discussionTitleUseCase: DiscussionTitleUseCase
     ): FeedInteractor {
         return FeedInteractor(
             iWallRepository,
             userDataSource,
             uploadMediaRepository,
-            displayMetrics
+            displayMetrics,
+            discussionTitleUseCase
         )
     }
 
