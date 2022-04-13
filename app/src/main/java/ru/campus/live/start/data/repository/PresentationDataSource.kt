@@ -5,7 +5,7 @@ import ru.campus.live.core.data.datasource.StringProvider
 import ru.campus.live.start.data.model.StartDataObject
 import javax.inject.Inject
 
-class StartDataSource(private val stringProvider: StringProvider) {
+class PresentationDataSource(private val stringProvider: StringProvider) {
 
     fun execute(): ArrayList<StartDataObject> {
         val model = ArrayList<StartDataObject>()

@@ -4,8 +4,8 @@ import org.junit.After
 import org.junit.Test
 import org.mockito.Mockito
 import org.mockito.kotlin.mock
-import ru.campus.live.core.data.model.ResponseObject
 import ru.campus.live.core.data.model.ErrorObject
+import ru.campus.live.core.data.model.ResponseObject
 import ru.campus.live.start.data.model.RegistrationDataObject
 import ru.campus.live.start.data.repository.IStartRepository
 

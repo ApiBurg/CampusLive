@@ -7,9 +7,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import ru.campus.live.R
-import ru.campus.live.core.di.deps.AppDepsProvider
 import ru.campus.live.core.di.component.DaggerStartComponent
 import ru.campus.live.core.di.component.StartComponent
+import ru.campus.live.core.di.deps.AppDepsProvider
 import ru.campus.live.core.ui.BaseFragment
 import ru.campus.live.databinding.FragmentStartBinding
 import ru.campus.live.dialog.ErrorDialog
@@ -20,15 +20,20 @@ import ru.campus.live.start.viewmodel.StartViewModel
 class StartFragment : BaseFragment<FragmentStartBinding>() {
 
     private val startComponent: StartComponent by lazy {
-       DaggerStartComponent.builder()
-           .deps(AppDepsProvider.deps)
-           .build()
+        DaggerStartComponent.builder()
+            .deps(AppDepsProvider.deps)
+            .build()
     }
 
     private val viewModel by viewModels<StartViewModel> { startComponent.viewModelsFactory() }
     private val adapter = StartAdapter()
 
     override fun getViewBinding() = FragmentStartBinding.inflate(layoutInflater)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.start()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -44,7 +49,6 @@ class StartFragment : BaseFragment<FragmentStartBinding>() {
     }
 
     private fun liveDataObserve() {
-        viewModel.start()
         viewModel.liveData().observe(viewLifecycleOwner) { newModel ->
             adapter.setData(newModel)
         }

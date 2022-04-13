@@ -19,7 +19,7 @@ class StartRepository @Inject constructor(
 ) : IStartRepository {
 
     override fun start(): ArrayList<StartDataObject> {
-        return StartDataSource(stringProvider).execute()
+        return PresentationDataSource(stringProvider).execute()
     }
 
     override fun registration(): ResponseObject<RegistrationDataObject> {
