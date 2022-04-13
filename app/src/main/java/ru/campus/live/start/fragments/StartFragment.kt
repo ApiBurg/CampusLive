@@ -70,7 +70,7 @@ class StartFragment : BaseFragment<FragmentStartBinding>() {
             bundle.putParcelable("params", errorObject)
             val customDialog = ErrorDialog()
             customDialog.arguments = bundle
-            customDialog.show(requireActivity().supportFragmentManager, "CustomDialogError")
+            customDialog.show(requireActivity().supportFragmentManager, "CustomErrorDialog")
         }
     }
 
