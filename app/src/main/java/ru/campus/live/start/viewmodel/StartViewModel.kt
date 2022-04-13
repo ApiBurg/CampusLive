@@ -16,7 +16,7 @@ import ru.campus.live.start.domain.StartInteractor
 import javax.inject.Inject
 
 class StartViewModel @Inject constructor(
-    private val interactor: StartInteractor
+    private val interactor: StartInteractor,
 ) : ViewModel() {
 
     private val _liveData = MutableLiveData<ArrayList<StartDataObject>>()
