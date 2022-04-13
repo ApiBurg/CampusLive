@@ -56,8 +56,7 @@ class FeedBottomSheetDialogFragment : BottomSheetDialogFragment(), View.OnClickL
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.publicationId.text = "id" + model!!.id
-        binding.comments.text = "Нет комментариев"
-           // CommentsDeclinationUseCase(requireContext()).getTextComments(model!!.comments)
+        binding.comments.text = model!!.commentsString
         renderVoteView()
         renderRatingView()
         binding.commentsRoot.setOnClickListener(this)
