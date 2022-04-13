@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import ru.campus.live.R
-import ru.campus.live.core.di.deps.AppDepsProvider
 import ru.campus.live.core.di.component.DaggerFeedComponent
 import ru.campus.live.core.di.component.FeedComponent
+import ru.campus.live.core.di.deps.AppDepsProvider
 import ru.campus.live.core.ui.BaseFragment
 import ru.campus.live.core.ui.BounceEdgeEffectFactory
 import ru.campus.live.core.ui.MyOnClick
@@ -77,6 +77,9 @@ class FeedFragment : BaseFragment<FragmentFeedBinding>() {
         onCommentEvent()
         onComplaintEvent()
         onScrollEvent()
+        binding.fab.setOnClickListener {
+            findNavController().navigate(R.id.action_feedFragment_to_createPublicationFragment)
+        }
     }
 
     private fun liveDataObserve() {

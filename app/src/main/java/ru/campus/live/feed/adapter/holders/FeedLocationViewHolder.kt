@@ -6,16 +6,12 @@ import ru.campus.live.databinding.ItemFeedLocationBinding
 import ru.campus.live.feed.data.model.FeedObject
 
 class FeedLocationViewHolder(
-    private val itemBinding: ItemFeedLocationBinding,
-    private val myOnClick: MyOnClick<FeedObject>
+    private val itemBinding: ItemFeedLocationBinding
 ) :
     RecyclerView.ViewHolder(itemBinding.root) {
 
     fun bind(model: FeedObject) {
         itemBinding.name.text = model.location!!.name
-        itemBinding.fab.setOnClickListener {
-            myOnClick.item(itemBinding.fab, model)
-        }
     }
 
 }

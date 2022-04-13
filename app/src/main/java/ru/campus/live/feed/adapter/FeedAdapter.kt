@@ -32,7 +32,7 @@ class FeedAdapter(private val myOnClick: MyOnClick<FeedObject>) :
                         LayoutInflater.from(parent.context),
                         parent, false
                     )
-                FeedLocationViewHolder(itemBinding, myOnClick)
+                FeedLocationViewHolder(itemBinding)
             }
             FeedViewType.PUBLICATION -> {
                 val itemBinding =
