@@ -46,24 +46,24 @@ class StartFragment : BaseFragment<FragmentStartBinding>() {
     }
 
     private fun observers() {
-        liveDataObserve()
-        onLoginEvent()
-        onErrorEvent()
+        listDataObserve()
+        loginEvent()
+        errorEvent()
     }
 
-    private fun liveDataObserve() {
+    private fun listDataObserve() {
         viewModel.liveData().observe(viewLifecycleOwner) { newModel ->
             adapter.setData(newModel)
         }
     }
 
-    private fun onLoginEvent() {
+    private fun loginEvent() {
         viewModel.successEvent().observe(viewLifecycleOwner) {
             findNavController().navigate(R.id.action_onBoarFragment_to_locationFragment)
         }
     }
 
-    private fun onErrorEvent() {
+    private fun errorEvent() {
         viewModel.failureEvent().observe(viewLifecycleOwner) { errorObject ->
             isVisibleProgressBar(false)
             val bundle = Bundle()
