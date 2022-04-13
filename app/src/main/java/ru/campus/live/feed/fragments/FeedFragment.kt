@@ -81,6 +81,7 @@ class FeedFragment : BaseFragment<FragmentFeedBinding>() {
             findNavController().navigate(R.id.action_feedFragment_to_createPublicationFragment)
         }
 
+        binding.swipeRefreshLayout.setColorSchemeColors("#517fba".toColorInt())
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.get(refresh = true)
         }
