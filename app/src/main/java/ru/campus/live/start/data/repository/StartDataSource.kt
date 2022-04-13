@@ -12,14 +12,6 @@ class StartDataSource(private val stringProvider: StringProvider) {
         model.add(
             StartDataObject(
                 id = 1,
-                title = stringProvider.get(R.string.onboard_title_one),
-                message = stringProvider.get(R.string.onboard_message_one),
-                icon = R.drawable.community
-            )
-        )
-        model.add(
-            StartDataObject(
-                id = 1,
                 title = stringProvider.get(R.string.start_title_two),
                 message = stringProvider.get(R.string.start_message_two),
                 icon = R.drawable.college

@@ -114,7 +114,7 @@ class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
 
     private fun liveDataObserve() {
         viewModel.liveData().observe(viewLifecycleOwner) { model ->
-            isProgressBarVisible(false)
+            if(model.size > 1) isProgressBarVisible(false)
             adapter.setData(model)
         }
     }
