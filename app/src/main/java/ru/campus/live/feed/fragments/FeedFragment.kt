@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.core.graphics.toColorInt
+import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
@@ -73,17 +74,21 @@ class FeedFragment : BaseFragment<FragmentFeedBinding>() {
         liveDataObserve()
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = linearLayoutManager
-        binding.recyclerView.edgeEffectFactory = BounceEdgeEffectFactory()
         onCommentEvent()
         onComplaintEvent()
         onScrollEvent()
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.action_feedFragment_to_createPublicationFragment)
         }
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.get(refresh = true)
+        }
     }
 
     private fun liveDataObserve() {
         viewModel.liveData().observe(viewLifecycleOwner) { newModel ->
+            if(binding.swipeRefreshLayout.isRefreshing) binding.swipeRefreshLayout.isRefreshing = false
             adapter.setData(newModel)
         }
     }

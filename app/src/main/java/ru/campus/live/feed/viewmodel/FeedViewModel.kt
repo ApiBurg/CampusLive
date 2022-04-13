@@ -39,12 +39,12 @@ class FeedViewModel @Inject constructor(
         }
     }
 
-    fun get() {
+    fun get(refresh: Boolean = false) {
         if (isLazyLoad) return
         viewModelScope.launch(Dispatchers.IO) {
             isLazyLoad = true
             val model = ArrayList<FeedObject>()
-            _liveData.value?.let { model.addAll(it) }
+            if(!refresh) _liveData.value?.let { model.addAll(it) }
             when (val result = interactor.get(model)) {
                 is ResponseObject.Success -> {
                     model.addAll(result.data)

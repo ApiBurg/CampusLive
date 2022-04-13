@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CampusLive</string>
+    <string name="app_name">Кампус Live</string>
     <string name="host">http://apiburg.beget.tech</string>
     <string name="onboard_title_one">Сообщество студентов для твоего учебного заведения</string>
     <string name="onboard_message_one">Анонимно общайся с другими студентами из твоего учебного заведения</string>
