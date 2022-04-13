@@ -3,11 +3,11 @@ package ru.campus.live.start.adapter.holder
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import ru.campus.live.databinding.RowOnboardBinding
+import ru.campus.live.databinding.ItemPresentationBinding
 import ru.campus.live.start.data.model.StartDataObject
 
 class StartViewHolder(
-    @NonNull private val itemBinding: RowOnboardBinding,
+    @NonNull private val itemBinding: ItemPresentationBinding,
 ) : RecyclerView.ViewHolder(itemBinding.root) {
 
     fun bind(item: StartDataObject) {

@@ -3,7 +3,6 @@ package ru.campus.live.start.data.repository
 import ru.campus.live.core.data.APIService
 import ru.campus.live.core.data.datasource.CloudDataSource
 import ru.campus.live.core.data.datasource.ErrorDataSource
-import ru.campus.live.core.data.datasource.StringProvider
 import ru.campus.live.core.data.datasource.UserDataSource
 import ru.campus.live.core.data.model.ResponseObject
 import ru.campus.live.start.data.model.OSType
@@ -15,16 +14,15 @@ class StartRepository @Inject constructor(
     private val apiService: APIService,
     private val errorDataSource: ErrorDataSource,
     private val userDataSource: UserDataSource,
-    private val stringProvider: StringProvider
+    private val dataSource: PresentationDataSource,
 ) : IStartRepository {
 
     override fun start(): ArrayList<StartDataObject> {
-        return PresentationDataSource(stringProvider).execute()
+        return dataSource.execute()
     }
 
     override fun registration(): ResponseObject<RegistrationDataObject> {
-        val os = OSType.ANDROID.ordinal
-        val call = apiService.registration(os = os)
+        val call = apiService.registration(os = OSType.ANDROID.ordinal)
         return CloudDataSource<RegistrationDataObject>(errorDataSource = errorDataSource)
             .execute(call)
     }

@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import ru.campus.live.databinding.RowOnboardBinding
+import ru.campus.live.databinding.ItemPresentationBinding
 import ru.campus.live.start.adapter.diff.StartDiffUtilCallBack
 import ru.campus.live.start.adapter.holder.StartViewHolder
 import ru.campus.live.start.data.model.StartDataObject
@@ -15,7 +15,7 @@ class StartAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val itemBinding =
-            RowOnboardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemPresentationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return StartViewHolder(itemBinding)
     }
 

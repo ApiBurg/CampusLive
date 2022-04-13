@@ -5,7 +5,7 @@ import ru.campus.live.core.data.datasource.StringProvider
 import ru.campus.live.start.data.model.StartDataObject
 import javax.inject.Inject
 
-class PresentationDataSource(private val stringProvider: StringProvider) {
+class PresentationDataSource @Inject constructor(private val stringProvider: StringProvider) {
 
     fun execute(): ArrayList<StartDataObject> {
         val model = ArrayList<StartDataObject>()
@@ -28,8 +28,8 @@ class PresentationDataSource(private val stringProvider: StringProvider) {
         model.add(
             StartDataObject(
                 id = 1,
-                title = stringProvider.get(R.string.onboard_title_one),
-                message = stringProvider.get(R.string.onboard_message_one),
+                title = stringProvider.get(R.string.start_title_four),
+                message = stringProvider.get(R.string.start_message_four),
                 icon = R.drawable.forum
             )
         )
