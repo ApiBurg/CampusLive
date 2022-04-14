@@ -28,7 +28,10 @@ class DiscussionInteractor @Inject constructor(
         return repository.get(publication)
     }
 
-    fun header(item: DiscussionObject, model: ArrayList<DiscussionObject>): ArrayList<DiscussionObject> {
+    fun header(
+        item: DiscussionObject,
+        model: ArrayList<DiscussionObject>,
+    ): ArrayList<DiscussionObject> {
         model.add(0, item)
         return model
     }
@@ -36,7 +39,8 @@ class DiscussionInteractor @Inject constructor(
     fun preparation(model: ArrayList<DiscussionObject>): ArrayList<DiscussionObject> {
         val response = ArrayList<DiscussionObject>()
         model.forEach { item ->
-            if(item.type != DiscussionViewType.PUBLICATION) {
+            if (item.type == DiscussionViewType.UNKNOWN ||
+                item.type == DiscussionViewType.PUBLICATION) {
                 if (item.parent == 0) {
                     item.type = DiscussionViewType.PARENT
                     response.add(item)

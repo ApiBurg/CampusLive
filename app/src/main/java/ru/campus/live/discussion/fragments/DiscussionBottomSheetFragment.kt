@@ -51,7 +51,7 @@ class DiscussionBottomSheetFragment :
     }
 
     override fun onClick(view: View?) {
-        /*when (view?.id) {
+        when (view?.id) {
             R.id.complaint -> viewModel.
             complaint(item!!)
             R.id.reply -> {
@@ -69,8 +69,6 @@ class DiscussionBottomSheetFragment :
             }
         }
         dismiss()
-
-         */
     }
 
     private fun renderVoteView() {

@@ -44,15 +44,13 @@ class DiscussionViewModel @Inject constructor(
             if (listLiveData.value == null) shimmer()
             when (val result = interactor.get(publication!!.id)) {
                 is ResponseObject.Success -> {
-                    val preparationList = interactor.preparation(result.data)
-                    val response = interactor.header(publication!!, preparationList)
+                    val response = interactor.preparation(result.data)
                     withContext(dispatcher.MAIN) {
                         listLiveData.value = response
                     }
                 }
                 is ResponseObject.Failure -> {
-                    val error = interactor.error(publication!!)
-                    val response = interactor.header(publication!!, error)
+                    val response = interactor.error(publication!!)
                     withContext(dispatcher.MAIN) {
                         listLiveData.value = response
                     }
@@ -100,7 +98,6 @@ class DiscussionViewModel @Inject constructor(
             }
         }
     }
-
 
     fun vote(params: VoteObject) {
         viewModelScope.launch(dispatcher.IO) {
