@@ -11,31 +11,31 @@ import ru.campus.live.start.data.repository.IStartRepository
 
 class StartInteractorTest {
 
-    private val startRepository = mock<IStartRepository>()
+    private val repository = mock<IStartRepository>()
 
     @After
     fun tearDown() {
-        Mockito.reset(startRepository)
+        Mockito.reset(repository)
     }
 
     @Test
     fun `the start method calls the repository`() {
-        Mockito.`when`(startRepository.start()).thenReturn(ArrayList())
-        val interactor = StartInteractor(repository = startRepository)
+        Mockito.`when`(repository.start()).thenReturn(ArrayList())
+        val interactor = StartInteractor(repository)
 
         interactor.start()
-        Mockito.verify(startRepository, Mockito.times(1)).start()
+        Mockito.verify(repository, Mockito.times(1)).start()
     }
 
     @Test
     fun `upon successful registration, call login`() {
         val response =
             ResponseObject.Success(LoginModel(uid = 1, token = "", rating = 15))
-        Mockito.`when`(startRepository.registration()).thenReturn(response)
-        val interactor = StartInteractor(repository = startRepository)
+        Mockito.`when`(repository.registration()).thenReturn(response)
+        val interactor = StartInteractor(repository)
 
         interactor.login()
-        Mockito.verify(startRepository, Mockito.times(1)).login(response.data)
+        Mockito.verify(repository, Mockito.times(1)).login(response.data)
     }
 
     @Test
@@ -44,11 +44,11 @@ class StartInteractorTest {
             ErrorObject(code = 0, icon = 1, message = "")
         )
         val registrationDataObject = LoginModel(uid = 1, token = "", rating = 15)
-        Mockito.`when`(startRepository.registration()).thenReturn(response)
+        Mockito.`when`(repository.registration()).thenReturn(response)
 
-        val interactor = StartInteractor(repository = startRepository)
+        val interactor = StartInteractor(repository)
         interactor.login()
-        Mockito.verify(startRepository, Mockito.never()).login(registrationDataObject)
+        Mockito.verify(repository, Mockito.never()).login(registrationDataObject)
     }
 
 }
