@@ -40,7 +40,8 @@ class DiscussionInteractor @Inject constructor(
         val response = ArrayList<DiscussionObject>()
         model.forEach { item ->
             if (item.type == DiscussionViewType.UNKNOWN ||
-                item.type == DiscussionViewType.PUBLICATION) {
+                item.type == DiscussionViewType.PARENT || item.type == DiscussionViewType.CHILD
+            ) {
                 if (item.parent == 0) {
                     item.type = DiscussionViewType.PARENT
                     response.add(item)
@@ -57,10 +58,9 @@ class DiscussionInteractor @Inject constructor(
         return preparationDataViewHolder(response)
     }
 
-    fun error(publication: DiscussionObject): ArrayList<DiscussionObject> {
+    fun error(): ArrayList<DiscussionObject> {
         val model = ArrayList<DiscussionObject>()
         model.add(DiscussionObject(DiscussionViewType.DISCUSSION_NONE))
-        model.add(0, publication)
         return model
     }
 

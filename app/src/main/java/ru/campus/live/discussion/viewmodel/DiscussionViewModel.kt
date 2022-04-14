@@ -44,13 +44,15 @@ class DiscussionViewModel @Inject constructor(
             if (listLiveData.value == null) shimmer()
             when (val result = interactor.get(publication!!.id)) {
                 is ResponseObject.Success -> {
-                    val response = interactor.preparation(result.data)
+                    val preparation = interactor.preparation(result.data)
+                    val response = interactor.header(publication!!, preparation)
                     withContext(dispatcher.MAIN) {
                         listLiveData.value = response
                     }
                 }
                 is ResponseObject.Failure -> {
-                    val response = interactor.error(publication!!)
+                    val model = interactor.error()
+                    val response = interactor.header(publication!!, model)
                     withContext(dispatcher.MAIN) {
                         listLiveData.value = response
                     }
@@ -82,7 +84,8 @@ class DiscussionViewModel @Inject constructor(
     fun insert(item: DiscussionObject) {
         viewModelScope.launch(dispatcher.IO) {
             val result = interactor.insert(item, listLiveData.value!!)
-            val response = interactor.preparation(result)
+            val list = interactor.preparation(result)
+            val response = interactor.header(publication!!, list)
             withContext(dispatcher.MAIN) {
                 listLiveData.value = response
             }
