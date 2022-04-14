@@ -4,15 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import ru.campus.live.core.di.Dispatchers
 import ru.campus.live.core.presentation.wrapper.SingleLiveEvent
 import ru.campus.live.location.data.model.LocationModel
 import ru.campus.live.location.domain.LocationInteractor
 import javax.inject.Inject
 
 class LocationViewModel @Inject constructor(
+    private val dispatcher: Dispatchers,
     private val interactor: LocationInteractor,
 ) : ViewModel() {
 
@@ -22,16 +23,16 @@ class LocationViewModel @Inject constructor(
     fun onSuccess(): LiveData<LocationModel> = success
 
     fun search(name: String? = null) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcher.io()) {
             val result = interactor.search(name)
-            withContext(Dispatchers.Main) {
+            withContext(dispatcher.main()) {
                 listLiveData.value = result
             }
         }
     }
 
-    fun locationSave(item: LocationModel) {
-        viewModelScope.launch(Dispatchers.IO) {
+    fun save(item: LocationModel) {
+        viewModelScope.launch(dispatcher.io()) {
             interactor.rating(item.id)
             interactor.saveLocationData(item)
             success.postValue(item)

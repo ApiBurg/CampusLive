@@ -28,7 +28,7 @@ class StartViewModel @Inject constructor(
     fun onFailure(): LiveData<ErrorObject> = failure
 
     fun start() {
-        viewModelScope.launch(dispatchers.IO) {
+        viewModelScope.launch(dispatchers.io()) {
             val result = interactor.start()
             listLiveData.postValue(result)
         }
@@ -36,7 +36,7 @@ class StartViewModel @Inject constructor(
 
     @SuppressLint("NullSafeMutableLiveData")
     fun login() {
-        viewModelScope.launch(dispatchers.IO) {
+        viewModelScope.launch(dispatchers.io()) {
             when (val result = interactor.login()) {
                 is ResponseObject.Success -> success.postValue(result.data)
                 is ResponseObject.Failure -> failure.postValue(result.errorObject)

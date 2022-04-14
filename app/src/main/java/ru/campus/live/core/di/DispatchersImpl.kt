@@ -5,9 +5,7 @@ import ru.campus.live.core.di.Dispatchers
 
 class DispatchersImpl : Dispatchers {
 
-    override val MAIN: CoroutineDispatcher
-        get() = kotlinx.coroutines.Dispatchers.Main
+    override fun main(): CoroutineDispatcher = kotlinx.coroutines.Dispatchers.Main
+    override fun io(): CoroutineDispatcher = kotlinx.coroutines.Dispatchers.IO
 
-    override val IO: CoroutineDispatcher
-        get() = kotlinx.coroutines.Dispatchers.IO
 }

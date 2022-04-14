@@ -31,7 +31,7 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
     private val myOnClick = object : MyOnClick<LocationModel> {
         override fun item(view: View, item: LocationModel) {
             binding.progressBar.isVisible = true
-            viewModel.locationSave(item)
+            viewModel.save(item)
         }
     }
 
