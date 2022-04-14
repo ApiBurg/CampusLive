@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class LocationDataObject(
+data class LocationModel(
     val id: Int,
     val name: String,
     val address: String,

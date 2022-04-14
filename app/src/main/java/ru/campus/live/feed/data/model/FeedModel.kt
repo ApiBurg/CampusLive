@@ -4,12 +4,12 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 import ru.campus.live.core.data.model.AttachmentModel
-import ru.campus.live.location.data.model.LocationDataObject
+import ru.campus.live.location.data.model.LocationModel
 
 @Parcelize
 data class FeedModel(
     val viewType: FeedViewType = FeedViewType.PUBLICATION,
-    val location: LocationDataObject? = null,
+    val location: LocationModel? = null,
     val id: Int = 0,
     val message: String = "",
     val attachment: AttachmentModel? = null,

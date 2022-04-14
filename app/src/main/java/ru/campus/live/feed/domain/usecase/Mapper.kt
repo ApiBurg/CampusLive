@@ -4,7 +4,7 @@ import ru.campus.live.core.data.model.AttachmentModel
 import ru.campus.live.feed.data.model.FeedModel
 import ru.campus.live.feed.data.model.FeedViewType
 import ru.campus.live.feed.db.Publication
-import ru.campus.live.location.data.model.LocationDataObject
+import ru.campus.live.location.data.model.LocationModel
 
 class Mapper {
 
@@ -14,7 +14,7 @@ class Mapper {
             model.add(
                 FeedModel(
                     viewType = FeedViewType.values()[item.type],
-                    location = LocationDataObject(
+                    location = LocationModel(
                         id = item.locationId ?: 0,
                         name = item.locationName ?: "",
                         address = item.locationAddress ?: "",

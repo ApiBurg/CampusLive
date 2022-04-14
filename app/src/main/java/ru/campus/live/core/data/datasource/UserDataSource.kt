@@ -2,7 +2,7 @@ package ru.campus.live.core.data.datasource
 
 import android.content.Context
 import android.content.SharedPreferences
-import ru.campus.live.location.data.model.LocationDataObject
+import ru.campus.live.location.data.model.LocationModel
 import ru.campus.live.start.data.model.LoginModel
 import javax.inject.Inject
 
@@ -43,22 +43,22 @@ class UserDataSource @Inject constructor(context: Context) : IUserDataSource {
         return sPref.getInt("UID", 0)
     }
 
-    override fun locationSave(dataObject: LocationDataObject) {
+    override fun locationSave(model: LocationModel) {
         with(sPref.edit()) {
-            putInt("LOCATION_ID", dataObject.id)
-            putString("LOCATION_NAME", dataObject.name)
-            putString("LOCATION_ADDRESS", dataObject.address)
-            putInt("LOCATION_TYPE", dataObject.type)
+            putInt("LOCATION_ID", model.id)
+            putString("LOCATION_NAME", model.name)
+            putString("LOCATION_ADDRESS", model.address)
+            putInt("LOCATION_TYPE", model.type)
             apply()
         }
     }
 
-    override fun location(): LocationDataObject {
+    override fun location(): LocationModel {
         val id = sPref.getInt("LOCATION_ID", 0)
         val name = sPref.getString("LOCATION_NAME", "")
         val address = sPref.getString("LOCATION_ADDRESS", "")
         val type = sPref.getInt("LOCATION_TYPE", 1)
-        return LocationDataObject(id = id, name = name!!, address = address!!, type = type)
+        return LocationModel(id = id, name = name!!, address = address!!, type = type)
     }
 
     override fun saveUserAvatarIcon(userAvatarIcon: Int) {

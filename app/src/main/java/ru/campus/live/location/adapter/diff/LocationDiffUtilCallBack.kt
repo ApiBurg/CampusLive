@@ -1,11 +1,11 @@
 package ru.campus.live.location.adapter.diff
 
 import androidx.recyclerview.widget.DiffUtil
-import ru.campus.live.location.data.model.LocationDataObject
+import ru.campus.live.location.data.model.LocationModel
 
 class LocationDiffUtilCallBack(
-    private val oldData: ArrayList<LocationDataObject>,
-    private val newData: ArrayList<LocationDataObject>,
+    private val oldData: ArrayList<LocationModel>,
+    private val newData: ArrayList<LocationModel>,
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {

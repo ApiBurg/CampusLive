@@ -8,12 +8,12 @@ import ru.campus.live.core.presentation.ui.MyOnClick
 import ru.campus.live.databinding.ItemLocationBinding
 import ru.campus.live.location.adapter.diff.LocationDiffUtilCallBack
 import ru.campus.live.location.adapter.holder.LocationViewHolder
-import ru.campus.live.location.data.model.LocationDataObject
+import ru.campus.live.location.data.model.LocationModel
 
-class LocationAdapter(private val myOnClick: MyOnClick<LocationDataObject>) :
+class LocationAdapter(private val myOnClick: MyOnClick<LocationModel>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val model = ArrayList<LocationDataObject>()
+    private val model = ArrayList<LocationModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val itemBinding =
@@ -29,10 +29,10 @@ class LocationAdapter(private val myOnClick: MyOnClick<LocationDataObject>) :
         return model.size
     }
 
-    fun setData(newModel: List<LocationDataObject>) {
+    fun setData(newModel: List<LocationModel>) {
         val result =
             DiffUtil.calculateDiff(LocationDiffUtilCallBack(model,
-                newModel as ArrayList<LocationDataObject>))
+                newModel as ArrayList<LocationModel>))
         model.clear()
         model.addAll(newModel)
         result.dispatchUpdatesTo(this)

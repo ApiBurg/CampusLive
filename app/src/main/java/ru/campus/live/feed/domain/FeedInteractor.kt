@@ -16,7 +16,7 @@ import ru.campus.live.feed.domain.usecase.FeedVoteUseCase
 import ru.campus.live.feed.domain.usecase.Mapper
 import ru.campus.live.gallery.data.model.GalleryDataObject
 import ru.campus.live.gallery.data.model.UploadMediaObject
-import ru.campus.live.location.data.model.LocationDataObject
+import ru.campus.live.location.data.model.LocationModel
 
 class FeedInteractor(
     private val repository: IWallRepository,
@@ -60,7 +60,7 @@ class FeedInteractor(
 
     fun setHeader(model: ArrayList<FeedModel>): ArrayList<FeedModel> {
         if (model.size != 0 && model[0].viewType != FeedViewType.HEADING) {
-            val location = LocationDataObject(
+            val location = LocationModel(
                 id = userDataSource.location().id,
                 name = userDataSource.location().name,
                 address = userDataSource.location().name,

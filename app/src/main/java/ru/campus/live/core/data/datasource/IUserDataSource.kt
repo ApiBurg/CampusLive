@@ -1,6 +1,6 @@
 package ru.campus.live.core.data.datasource
 
-import ru.campus.live.location.data.model.LocationDataObject
+import ru.campus.live.location.data.model.LocationModel
 import ru.campus.live.start.data.model.LoginModel
 
 interface IUserDataSource {
@@ -8,8 +8,8 @@ interface IUserDataSource {
     fun isAuth(): Boolean
     fun token(): String
     fun uid(): Int
-    fun locationSave(dataObject: LocationDataObject)
-    fun location(): LocationDataObject
+    fun locationSave(model: LocationModel)
+    fun location(): LocationModel
     fun saveUserAvatarIcon(userAvatarIcon: Int)
     fun getUserAvatarIcon(): Int
 }

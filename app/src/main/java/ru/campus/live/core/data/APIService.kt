@@ -7,7 +7,7 @@ import retrofit2.http.*
 import ru.campus.live.core.data.model.UploadResultObject
 import ru.campus.live.discussion.data.model.DiscussionObject
 import ru.campus.live.feed.data.model.FeedModel
-import ru.campus.live.location.data.model.LocationDataObject
+import ru.campus.live.location.data.model.LocationModel
 import ru.campus.live.start.data.model.LoginModel
 
 interface APIService {
@@ -19,7 +19,7 @@ interface APIService {
     fun location(
         @Query("token") token: String,
         @Query("name") name: String?
-    ): Call<List<LocationDataObject>>
+    ): Call<List<LocationModel>>
 
     @GET("api/2.0/location.rating")
     fun locationRating(

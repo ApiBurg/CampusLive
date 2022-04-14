@@ -15,7 +15,7 @@ import ru.campus.live.core.presentation.ui.BaseFragment
 import ru.campus.live.core.presentation.ui.MyOnClick
 import ru.campus.live.databinding.FragmentLocationBinding
 import ru.campus.live.location.adapter.LocationAdapter
-import ru.campus.live.location.data.model.LocationDataObject
+import ru.campus.live.location.data.model.LocationModel
 import ru.campus.live.location.viewmodel.LocationViewModel
 
 
@@ -28,8 +28,8 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
     }
 
     private val viewModel by viewModels<LocationViewModel> { component.viewModelsFactory() }
-    private val myOnClick = object : MyOnClick<LocationDataObject> {
-        override fun item(view: View, item: LocationDataObject) {
+    private val myOnClick = object : MyOnClick<LocationModel> {
+        override fun item(view: View, item: LocationModel) {
             binding.progressBar.isVisible = true
             viewModel.locationSave(item)
         }
@@ -59,7 +59,7 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
     }
 
     private fun startFeedViewEvent() {
-        viewModel.feedStartEvent().observe(viewLifecycleOwner) {
+        viewModel.onSuccess().observe(viewLifecycleOwner) {
             binding.progressBar.isVisible = false
             findNavController()
                 .navigate(R.id.action_locationFragment_to_feedFragment)

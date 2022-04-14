@@ -7,7 +7,7 @@ import org.mockito.Mockito
 import org.mockito.kotlin.mock
 import ru.campus.live.core.data.model.ResponseObject
 import ru.campus.live.core.data.model.ErrorObject
-import ru.campus.live.location.data.model.LocationDataObject
+import ru.campus.live.location.data.model.LocationModel
 import ru.campus.live.location.data.repository.ILocationRepository
 
 class LocationInteractorTest {
@@ -21,7 +21,7 @@ class LocationInteractorTest {
 
     @Test
     fun `if an error occurs while searching for locations, an empty list is returned`() {
-        val response = ResponseObject.Failure<List<LocationDataObject>>(
+        val response = ResponseObject.Failure<List<LocationModel>>(
             ErrorObject(code = 0, icon = 1, message = "")
         )
         Mockito.`when`(repository.get(null)).thenReturn(response)
@@ -33,9 +33,9 @@ class LocationInteractorTest {
 
     @Test
     fun `on successful lookup list size is not 0`() {
-        val model = ArrayList<LocationDataObject>()
-        model.add(LocationDataObject(1, "name", "address", 1))
-        val response = ResponseObject.Success<List<LocationDataObject>>(model)
+        val model = ArrayList<LocationModel>()
+        model.add(LocationModel(1, "name", "address", 1))
+        val response = ResponseObject.Success<List<LocationModel>>(model)
         Mockito.`when`(repository.get("")).thenReturn(response)
 
         val interactor = LocationInteractor(repository)
