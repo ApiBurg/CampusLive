@@ -9,13 +9,13 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.campus.live.core.data.model.ResponseObject
 import ru.campus.live.core.data.model.VoteObject
-import ru.campus.live.core.wrapper.SingleLiveEvent
+import ru.campus.live.core.presentation.wrapper.SingleLiveEvent
 import ru.campus.live.feed.data.model.FeedModel
 import ru.campus.live.feed.domain.FeedInteractor
 import javax.inject.Inject
 
 class FeedViewModel @Inject constructor(
-    private val dispatchers: ru.campus.live.core.Dispatchers,
+    private val dispatchers: ru.campus.live.core.di.Dispatchers,
     private val interactor: FeedInteractor
 ) : ViewModel() {
 

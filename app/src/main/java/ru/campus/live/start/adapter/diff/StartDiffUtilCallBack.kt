@@ -1,11 +1,11 @@
 package ru.campus.live.start.adapter.diff
 
 import androidx.recyclerview.widget.DiffUtil
-import ru.campus.live.start.data.model.StartDataObject
+import ru.campus.live.start.data.model.StartModel
 
 class StartDiffUtilCallBack(
-    private val oldData: ArrayList<StartDataObject>,
-    private val newData: ArrayList<StartDataObject>
+    private val oldData: ArrayList<StartModel>,
+    private val newData: ArrayList<StartModel>,
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {

@@ -13,7 +13,7 @@ import ru.campus.live.core.data.model.VoteObject
 import ru.campus.live.core.di.component.DaggerDiscussionComponent
 import ru.campus.live.core.di.component.DiscussionComponent
 import ru.campus.live.core.di.deps.AppDepsProvider
-import ru.campus.live.core.ui.BaseBottomSheetDialogFragment
+import ru.campus.live.core.presentation.ui.BaseBottomSheetDialogFragment
 import ru.campus.live.databinding.FragmentDiscussionBottomSheetBinding
 import ru.campus.live.discussion.data.model.DiscussionObject
 import ru.campus.live.discussion.viewmodel.DiscussionViewModel

@@ -10,7 +10,7 @@ import kotlinx.coroutines.withContext
 import ru.campus.live.core.data.model.ErrorObject
 import ru.campus.live.core.data.model.ResponseObject
 import ru.campus.live.core.domain.UploadMediaInteractor
-import ru.campus.live.core.wrapper.SingleLiveEvent
+import ru.campus.live.core.presentation.wrapper.SingleLiveEvent
 import ru.campus.live.feed.data.model.FeedModel
 import ru.campus.live.feed.data.model.PublicationPostObject
 import ru.campus.live.feed.domain.CreatePublicationInteractor

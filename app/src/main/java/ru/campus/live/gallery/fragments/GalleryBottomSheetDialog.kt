@@ -15,8 +15,8 @@ import ru.campus.live.R
 import ru.campus.live.core.di.deps.AppDepsProvider
 import ru.campus.live.core.di.component.DaggerGalleryComponent
 import ru.campus.live.core.di.component.GalleryComponent
-import ru.campus.live.core.ui.BaseBottomSheetDialogFragment
-import ru.campus.live.core.ui.MyOnClick
+import ru.campus.live.core.presentation.ui.BaseBottomSheetDialogFragment
+import ru.campus.live.core.presentation.ui.MyOnClick
 import ru.campus.live.databinding.FragmentGalleryBottomSheetBinding
 import ru.campus.live.gallery.adapter.GalleryAdapter
 import ru.campus.live.gallery.data.model.GalleryDataObject

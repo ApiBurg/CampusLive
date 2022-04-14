@@ -1,4 +1,4 @@
-package ru.campus.live.core.app
+package ru.campus.live.core
 
 import android.app.Application
 import ru.campus.live.core.di.deps.AppDepsStore

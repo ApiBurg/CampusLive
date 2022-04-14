@@ -1,7 +1,6 @@
 package ru.campus.live.discussion.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
@@ -14,9 +13,9 @@ import ru.campus.live.R
 import ru.campus.live.core.di.component.DaggerDiscussionComponent
 import ru.campus.live.core.di.component.DiscussionComponent
 import ru.campus.live.core.di.deps.AppDepsProvider
-import ru.campus.live.core.ui.BaseFragment
-import ru.campus.live.core.ui.Keyboard
-import ru.campus.live.core.ui.MyOnClick
+import ru.campus.live.core.presentation.ui.BaseFragment
+import ru.campus.live.core.presentation.ui.Keyboard
+import ru.campus.live.core.presentation.ui.MyOnClick
 import ru.campus.live.databinding.FragmentCreateCommentBinding
 import ru.campus.live.dialog.ErrorDialog
 import ru.campus.live.discussion.data.model.CommentCreateObject

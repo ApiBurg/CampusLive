@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.campus.live.gallery.data.model.GalleryDataObject
 import ru.campus.live.databinding.ItemGalleryBinding
-import ru.campus.live.core.ui.MyOnClick
+import ru.campus.live.core.presentation.ui.MyOnClick
 import ru.campus.live.gallery.adapter.holder.GalleryViewHolder
 
 class GalleryAdapter(private val myOnClick: MyOnClick<GalleryDataObject>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

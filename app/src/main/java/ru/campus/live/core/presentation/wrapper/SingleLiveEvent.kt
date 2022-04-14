@@ -1,4 +1,4 @@
-package ru.campus.live.core.wrapper
+package ru.campus.live.core.presentation.wrapper
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner

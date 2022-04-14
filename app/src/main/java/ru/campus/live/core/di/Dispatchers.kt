@@ -1,4 +1,4 @@
-package ru.campus.live.core
+package ru.campus.live.core.di
 
 import kotlinx.coroutines.CoroutineDispatcher
 

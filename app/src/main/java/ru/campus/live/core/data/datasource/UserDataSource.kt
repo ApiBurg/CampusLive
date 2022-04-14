@@ -3,7 +3,7 @@ package ru.campus.live.core.data.datasource
 import android.content.Context
 import android.content.SharedPreferences
 import ru.campus.live.location.data.model.LocationDataObject
-import ru.campus.live.start.data.model.RegistrationDataObject
+import ru.campus.live.start.data.model.LoginModel
 import javax.inject.Inject
 
 class UserDataSource @Inject constructor(context: Context) : IUserDataSource {
@@ -11,7 +11,7 @@ class UserDataSource @Inject constructor(context: Context) : IUserDataSource {
     private val sPref: SharedPreferences =
         context.getSharedPreferences("AppDB", Context.MODE_PRIVATE)
 
-    override fun login(data: RegistrationDataObject): Boolean {
+    override fun login(data: LoginModel): Boolean {
         try {
             val dateReg = System.currentTimeMillis() / 1000
             with(sPref.edit()) {

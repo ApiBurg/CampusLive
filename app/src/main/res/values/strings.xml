@@ -42,5 +42,7 @@
     <string name="comment_hidden">Комментарий скрыт по решению сообщества</string>
     <string name="comment_create_hint">Ваш комментарий</string>
     <string name="discussion_none">Комментарии остутсвуют\nоставьте свой комментарий к данной публикации</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -6,40 +6,40 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import ru.campus.live.core.Dispatchers
 import ru.campus.live.core.data.model.ErrorObject
 import ru.campus.live.core.data.model.ResponseObject
-import ru.campus.live.core.wrapper.SingleLiveEvent
-import ru.campus.live.start.data.model.RegistrationDataObject
-import ru.campus.live.start.data.model.StartDataObject
-import ru.campus.live.start.domain.StartInteractor
+import ru.campus.live.core.di.Dispatchers
+import ru.campus.live.core.presentation.wrapper.SingleLiveEvent
+import ru.campus.live.start.data.model.LoginModel
+import ru.campus.live.start.data.model.StartModel
+import ru.campus.live.start.domain.IStartInteractor
 import javax.inject.Inject
 
 class StartViewModel @Inject constructor(
     private val dispatchers: Dispatchers,
-    private val interactor: StartInteractor
+    private val interactor: IStartInteractor,
 ) : ViewModel() {
 
-    private val _liveData = MutableLiveData<ArrayList<StartDataObject>>()
-    private val _successEvent = SingleLiveEvent<RegistrationDataObject>()
-    private val _failureEvent = SingleLiveEvent<ErrorObject>()
-    fun liveData(): LiveData<ArrayList<StartDataObject>> = _liveData
-    fun successEvent(): LiveData<RegistrationDataObject> = _successEvent
-    fun failureEvent(): LiveData<ErrorObject> = _failureEvent
+    private val listLiveData = MutableLiveData<ArrayList<StartModel>>()
+    private val success = SingleLiveEvent<LoginModel>()
+    private val failure = SingleLiveEvent<ErrorObject>()
+    fun getListLiveData(): LiveData<ArrayList<StartModel>> = listLiveData
+    fun onSuccess(): LiveData<LoginModel> = success
+    fun onFailure(): LiveData<ErrorObject> = failure
 
     fun start() {
         viewModelScope.launch(dispatchers.IO) {
             val result = interactor.start()
-            _liveData.postValue(result)
+            listLiveData.postValue(result)
         }
     }
 
     @SuppressLint("NullSafeMutableLiveData")
     fun login() {
         viewModelScope.launch(dispatchers.IO) {
-            when (val result = interactor.registration()) {
-                is ResponseObject.Success -> _successEvent.postValue(result.data)
-                is ResponseObject.Failure -> _failureEvent.postValue(result.errorObject)
+            when (val result = interactor.login()) {
+                is ResponseObject.Success -> success.postValue(result.data)
+                is ResponseObject.Failure -> failure.postValue(result.errorObject)
             }
         }
     }

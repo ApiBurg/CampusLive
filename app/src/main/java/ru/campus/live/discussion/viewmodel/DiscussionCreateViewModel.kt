@@ -1,6 +1,5 @@
 package ru.campus.live.discussion.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +9,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.campus.live.core.data.model.ErrorObject
 import ru.campus.live.core.data.model.ResponseObject
-import ru.campus.live.core.wrapper.SingleLiveEvent
+import ru.campus.live.core.presentation.wrapper.SingleLiveEvent
 import ru.campus.live.discussion.data.model.CommentCreateObject
 import ru.campus.live.discussion.data.model.DiscussionObject
 import ru.campus.live.discussion.domain.CreateCommentInteractor

@@ -1,7 +1,6 @@
 package ru.campus.live.discussion.adapter.holder
 
 import android.annotation.SuppressLint
-import android.util.DisplayMetrics
 import android.view.ViewGroup
 import androidx.core.graphics.toColorInt
 import androidx.core.view.isVisible
@@ -9,10 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ru.campus.live.R
 import ru.campus.live.core.data.datasource.HostDataSource
-import ru.campus.live.core.ui.MyOnClick
+import ru.campus.live.core.presentation.ui.MyOnClick
 import ru.campus.live.databinding.ItemParentCommetBinding
 import ru.campus.live.discussion.data.model.DiscussionObject
-import kotlin.math.roundToInt
 
 class ParentCommentViewHolder(
     private val itemBinding: ItemParentCommetBinding,

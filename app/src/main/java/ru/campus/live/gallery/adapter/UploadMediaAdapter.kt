@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ru.campus.live.core.ui.MyOnClick
+import ru.campus.live.core.presentation.ui.MyOnClick
 import ru.campus.live.databinding.ItemAttachmentBinding
 import ru.campus.live.gallery.adapter.holder.UploadViewHolder
 import ru.campus.live.gallery.data.model.UploadMediaObject

@@ -10,7 +10,7 @@ import ru.campus.live.R
 import ru.campus.live.core.di.component.DaggerStartComponent
 import ru.campus.live.core.di.component.StartComponent
 import ru.campus.live.core.di.deps.AppDepsProvider
-import ru.campus.live.core.ui.BaseFragment
+import ru.campus.live.core.presentation.ui.BaseFragment
 import ru.campus.live.databinding.FragmentStartBinding
 import ru.campus.live.dialog.ErrorDialog
 import ru.campus.live.start.adapter.StartAdapter
@@ -29,6 +29,7 @@ class StartFragment : BaseFragment<FragmentStartBinding>() {
     private val adapter = StartAdapter()
 
     override fun getViewBinding() = FragmentStartBinding.inflate(layoutInflater)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.start()
@@ -38,33 +39,33 @@ class StartFragment : BaseFragment<FragmentStartBinding>() {
         super.onViewCreated(view, savedInstanceState)
         binding.viewPager.adapter = adapter
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { _, _ -> }.attach()
-        observers()
+        liveDataObservers()
         binding.start.setOnClickListener {
             isVisibleProgressBar(true)
             viewModel.login()
         }
     }
 
-    private fun observers() {
+    private fun liveDataObservers() {
         listDataObserve()
-        loginEvent()
-        errorEvent()
+        loginSuccess()
+        loginFailure()
     }
 
     private fun listDataObserve() {
-        viewModel.liveData().observe(viewLifecycleOwner) { newModel ->
+        viewModel.getListLiveData().observe(viewLifecycleOwner) { newModel ->
             adapter.setData(newModel)
         }
     }
 
-    private fun loginEvent() {
-        viewModel.successEvent().observe(viewLifecycleOwner) {
+    private fun loginSuccess() {
+        viewModel.onSuccess().observe(viewLifecycleOwner) {
             findNavController().navigate(R.id.action_onBoarFragment_to_locationFragment)
         }
     }
 
-    private fun errorEvent() {
-        viewModel.failureEvent().observe(viewLifecycleOwner) { errorObject ->
+    private fun loginFailure() {
+        viewModel.onFailure().observe(viewLifecycleOwner) { errorObject ->
             isVisibleProgressBar(false)
             val bundle = Bundle()
             bundle.putParcelable("params", errorObject)

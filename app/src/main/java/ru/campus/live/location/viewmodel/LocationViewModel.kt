@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import ru.campus.live.core.wrapper.SingleLiveEvent
+import ru.campus.live.core.presentation.wrapper.SingleLiveEvent
 import ru.campus.live.location.data.model.LocationDataObject
 import ru.campus.live.location.domain.LocationInteractor
 import javax.inject.Inject

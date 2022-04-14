@@ -3,7 +3,7 @@ package ru.campus.live.core.data.datasource
 import android.content.Context
 import javax.inject.Inject
 
-class StringProvider @Inject constructor(
+class ResourceManager @Inject constructor(
     private val context: Context
 ) {
 

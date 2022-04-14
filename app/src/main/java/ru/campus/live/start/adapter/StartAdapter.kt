@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.campus.live.databinding.ItemPresentationBinding
 import ru.campus.live.start.adapter.diff.StartDiffUtilCallBack
 import ru.campus.live.start.adapter.holder.StartViewHolder
-import ru.campus.live.start.data.model.StartDataObject
+import ru.campus.live.start.data.model.StartModel
 
 class StartAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val model = ArrayList<StartDataObject>()
+    private val model = ArrayList<StartModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val itemBinding =
@@ -27,7 +27,7 @@ class StartAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return model.size
     }
 
-    fun setData(newModel: ArrayList<StartDataObject>) {
+    fun setData(newModel: ArrayList<StartModel>) {
         val result =
             DiffUtil.calculateDiff(StartDiffUtilCallBack(model, newModel))
         model.clear()

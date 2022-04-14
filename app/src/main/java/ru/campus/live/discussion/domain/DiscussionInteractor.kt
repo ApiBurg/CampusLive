@@ -4,7 +4,7 @@ import ru.campus.live.R
 import ru.campus.live.core.data.datasource.DisplayMetrics
 import ru.campus.live.core.data.datasource.HostDataSource
 import ru.campus.live.core.data.datasource.IUserDataSource
-import ru.campus.live.core.data.datasource.StringProvider
+import ru.campus.live.core.data.datasource.ResourceManager
 import ru.campus.live.core.data.model.ResponseObject
 import ru.campus.live.core.data.model.VoteObject
 import ru.campus.live.discussion.data.model.DiscussionObject
@@ -21,7 +21,7 @@ class DiscussionInteractor @Inject constructor(
     private val userDataSource: IUserDataSource,
     private val hostDataSource: HostDataSource,
     private val displayMetrics: DisplayMetrics,
-    private val stringProvider: StringProvider,
+    private val resourceManager: ResourceManager,
 ) {
 
     fun get(publication: Int): ResponseObject<ArrayList<DiscussionObject>> {
@@ -75,7 +75,7 @@ class DiscussionInteractor @Inject constructor(
     }
 
     fun title(count: Int): String {
-        return DiscussionTitleUseCase(stringProvider).execute(count)
+        return DiscussionTitleUseCase(resourceManager).execute(count)
     }
 
     fun insert(
@@ -154,7 +154,7 @@ class DiscussionInteractor @Inject constructor(
                 }
 
                 if (item.hidden == 1)
-                    model[index].message = stringProvider.get(R.string.comment_hidden)
+                    model[index].message = resourceManager.get(R.string.comment_hidden)
             }
         }
         return model

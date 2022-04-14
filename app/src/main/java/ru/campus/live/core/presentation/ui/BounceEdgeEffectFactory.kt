@@ -1,4 +1,4 @@
-package ru.campus.live.core.ui
+package ru.campus.live.core.presentation.ui
 
 import android.graphics.Canvas
 import android.widget.EdgeEffect
