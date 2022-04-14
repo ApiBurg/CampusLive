@@ -10,7 +10,7 @@ import kotlinx.coroutines.withContext
 import ru.campus.live.core.data.model.ResponseObject
 import ru.campus.live.core.data.model.VoteObject
 import ru.campus.live.core.wrapper.SingleLiveEvent
-import ru.campus.live.feed.data.model.FeedObject
+import ru.campus.live.feed.data.model.FeedModel
 import ru.campus.live.feed.domain.FeedInteractor
 import javax.inject.Inject
 
@@ -19,10 +19,10 @@ class FeedViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var isLazyLoad = false
-    private val _liveData = MutableLiveData<ArrayList<FeedObject>>()
-    private val _onCommentStartViewEvent = SingleLiveEvent<FeedObject>()
-    private val _complaintEvent = SingleLiveEvent<FeedObject>()
-    fun liveData(): LiveData<ArrayList<FeedObject>> = _liveData
+    private val _liveData = MutableLiveData<ArrayList<FeedModel>>()
+    private val _onCommentStartViewEvent = SingleLiveEvent<FeedModel>()
+    private val _complaintEvent = SingleLiveEvent<FeedModel>()
+    fun liveData(): LiveData<ArrayList<FeedModel>> = _liveData
     fun complaintEvent() = _complaintEvent
     fun onCommentStartViewEvent() = _onCommentStartViewEvent
 
@@ -43,7 +43,7 @@ class FeedViewModel @Inject constructor(
         if (isLazyLoad) return
         viewModelScope.launch(Dispatchers.IO) {
             isLazyLoad = true
-            val model = ArrayList<FeedObject>()
+            val model = ArrayList<FeedModel>()
             if(!refresh) _liveData.value?.let { model.addAll(it) }
             when (val result = interactor.get(model)) {
                 is ResponseObject.Success -> {
@@ -65,13 +65,13 @@ class FeedViewModel @Inject constructor(
 
     private fun insertCache() {
         viewModelScope.launch(Dispatchers.IO) {
-            val model = ArrayList<FeedObject>()
+            val model = ArrayList<FeedModel>()
             _liveData.value?.let { model.addAll(it) }
             if (model.size < 27) interactor.insertCache(model)
         }
     }
 
-    fun insert(item: FeedObject) {
+    fun insert(item: FeedModel) {
         viewModelScope.launch(Dispatchers.IO) {
             val model = _liveData.value!!
             model.add(index = 1, item)
@@ -81,21 +81,21 @@ class FeedViewModel @Inject constructor(
         }
     }
 
-    fun complaint(item: FeedObject) {
+    fun complaint(item: FeedModel) {
         _complaintEvent.value = item
     }
 
-    fun comments(item: FeedObject) {
+    fun comments(item: FeedModel) {
         _onCommentStartViewEvent.value = item
     }
 
-    fun complaintSendDataOnServer(item: FeedObject) {
+    fun complaintSendDataOnServer(item: FeedModel) {
         viewModelScope.launch(Dispatchers.IO) {
             interactor.complaint(item)
         }
     }
 
-    fun vote(item: FeedObject, vote: Int) {
+    fun vote(item: FeedModel, vote: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             val voteObject = VoteObject(id = item.id, vote = vote)
             val result = interactor.renderVoteView(_liveData.value!!, voteObject)

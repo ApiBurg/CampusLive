@@ -11,7 +11,7 @@ import ru.campus.live.core.data.model.ErrorObject
 import ru.campus.live.core.data.model.ResponseObject
 import ru.campus.live.core.domain.UploadMediaInteractor
 import ru.campus.live.core.wrapper.SingleLiveEvent
-import ru.campus.live.feed.data.model.FeedObject
+import ru.campus.live.feed.data.model.FeedModel
 import ru.campus.live.feed.data.model.PublicationPostObject
 import ru.campus.live.feed.domain.CreatePublicationInteractor
 import ru.campus.live.gallery.data.model.GalleryDataObject
@@ -23,7 +23,7 @@ class CreatePublicationViewModel @Inject constructor(
     private val uploadMediaInteractor: UploadMediaInteractor
 ) : ViewModel() {
 
-    private val successLiveData = SingleLiveEvent<FeedObject>()
+    private val successLiveData = SingleLiveEvent<FeedModel>()
     private val failureLiveData = SingleLiveEvent<ErrorObject>()
     private val uploadLiveData = MutableLiveData<ArrayList<UploadMediaObject>>()
     fun onSuccessEvent() = successLiveData

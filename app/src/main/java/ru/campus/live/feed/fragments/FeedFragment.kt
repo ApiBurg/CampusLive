@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.core.graphics.toColorInt
-import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
@@ -16,11 +15,10 @@ import ru.campus.live.core.di.component.DaggerFeedComponent
 import ru.campus.live.core.di.component.FeedComponent
 import ru.campus.live.core.di.deps.AppDepsProvider
 import ru.campus.live.core.ui.BaseFragment
-import ru.campus.live.core.ui.BounceEdgeEffectFactory
 import ru.campus.live.core.ui.MyOnClick
 import ru.campus.live.databinding.FragmentFeedBinding
 import ru.campus.live.feed.adapter.FeedAdapter
-import ru.campus.live.feed.data.model.FeedObject
+import ru.campus.live.feed.data.model.FeedModel
 import ru.campus.live.feed.viewmodel.FeedViewModel
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -39,8 +37,8 @@ class FeedFragment : BaseFragment<FragmentFeedBinding>() {
         feedComponent.viewModelsFactory()
     }
 
-    private val myOnClick = object : MyOnClick<FeedObject> {
-        override fun item(view: View, item: FeedObject) {
+    private val myOnClick = object : MyOnClick<FeedModel> {
+        override fun item(view: View, item: FeedModel) {
             if (view.id == R.id.fab) {
                 findNavController().navigate(R.id.action_feedFragment_to_createPublicationFragment)
             } else {
@@ -61,7 +59,7 @@ class FeedFragment : BaseFragment<FragmentFeedBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         parentFragment?.setFragmentResultListener("new_publication") { _, bundle ->
-            val params: FeedObject? = bundle.getParcelable("publication")
+            val params: FeedModel? = bundle.getParcelable("publication")
             if (params != null) viewModel.insert(params)
         }
         viewModel.getCache()

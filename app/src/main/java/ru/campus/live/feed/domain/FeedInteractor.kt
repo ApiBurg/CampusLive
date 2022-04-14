@@ -7,7 +7,7 @@ import ru.campus.live.core.data.model.UploadResultObject
 import ru.campus.live.core.data.model.VoteObject
 import ru.campus.live.core.data.repository.IUploadMediaRepository
 import ru.campus.live.discussion.domain.usecase.DiscussionTitleUseCase
-import ru.campus.live.feed.data.model.FeedObject
+import ru.campus.live.feed.data.model.FeedModel
 import ru.campus.live.feed.data.model.FeedViewType
 import ru.campus.live.feed.data.model.PublicationPostObject
 import ru.campus.live.feed.data.repository.IWallRepository
@@ -26,22 +26,22 @@ class FeedInteractor(
     private val discussionTitleUseCase: DiscussionTitleUseCase
 ) {
 
-    fun getCache(): ArrayList<FeedObject> {
+    fun getCache(): ArrayList<FeedModel> {
         val result = repository.getCache()
         return Mapper().toFeedObject(result)
     }
 
-    fun insertCache(model: ArrayList<FeedObject>) {
+    fun insertCache(model: ArrayList<FeedModel>) {
         val result = Mapper().toPublicationDb(model)
         repository.addCache(result)
     }
 
-    fun get(model: ArrayList<FeedObject>): ResponseObject<ArrayList<FeedObject>> {
+    fun get(model: ArrayList<FeedModel>): ResponseObject<ArrayList<FeedModel>> {
         val offset = FeedOffsetUseCase().execute(model)
         return repository.get(offset)
     }
 
-    fun listPreparation(model: ArrayList<FeedObject>): ArrayList<FeedObject> {
+    fun listPreparation(model: ArrayList<FeedModel>): ArrayList<FeedModel> {
         model.forEachIndexed { index, item ->
             if (item.viewType == FeedViewType.PUBLICATION) {
                 if (item.attachment != null) {
@@ -58,7 +58,7 @@ class FeedInteractor(
         return model
     }
 
-    fun setHeader(model: ArrayList<FeedObject>): ArrayList<FeedObject> {
+    fun setHeader(model: ArrayList<FeedModel>): ArrayList<FeedModel> {
         if (model.size != 0 && model[0].viewType != FeedViewType.HEADING) {
             val location = LocationDataObject(
                 id = userDataSource.location().id,
@@ -66,12 +66,12 @@ class FeedInteractor(
                 address = userDataSource.location().name,
                 type = userDataSource.location().type
             )
-            model.add(0, FeedObject(viewType = FeedViewType.HEADING, location = location))
+            model.add(0, FeedModel(viewType = FeedViewType.HEADING, location = location))
         }
         return model
     }
 
-    fun complaint(item: FeedObject) {
+    fun complaint(item: FeedModel) {
         repository.complaint(item.id)
     }
 
@@ -80,19 +80,19 @@ class FeedInteractor(
     }
 
     fun renderVoteView(
-        model: ArrayList<FeedObject>,
+        model: ArrayList<FeedModel>,
         voteObject: VoteObject
-    ): ArrayList<FeedObject> {
+    ): ArrayList<FeedModel> {
         return FeedVoteUseCase().execute(model, voteObject)
     }
 
-    fun removeItem(id: Int, model: ArrayList<FeedObject>): ArrayList<FeedObject> {
+    fun removeItem(id: Int, model: ArrayList<FeedModel>): ArrayList<FeedModel> {
         val index = model.indexOfLast { it.id == id }
         model.removeAt(index)
         return model
     }
 
-    fun post(params: PublicationPostObject): ResponseObject<FeedObject> {
+    fun post(params: PublicationPostObject): ResponseObject<FeedModel> {
         return repository.post(params)
     }
 

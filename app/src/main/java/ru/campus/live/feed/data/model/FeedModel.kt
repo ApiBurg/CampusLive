@@ -7,7 +7,7 @@ import ru.campus.live.core.data.model.AttachmentModel
 import ru.campus.live.location.data.model.LocationDataObject
 
 @Parcelize
-data class FeedObject(
+data class FeedModel(
     val viewType: FeedViewType = FeedViewType.PUBLICATION,
     val location: LocationDataObject? = null,
     val id: Int = 0,

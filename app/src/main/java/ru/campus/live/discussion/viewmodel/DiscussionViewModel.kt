@@ -4,124 +4,138 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import ru.campus.live.core.Dispatchers
 import ru.campus.live.core.data.model.ResponseObject
 import ru.campus.live.core.data.model.VoteObject
 import ru.campus.live.core.wrapper.SingleLiveEvent
 import ru.campus.live.discussion.data.model.DiscussionObject
-import ru.campus.live.discussion.data.model.DiscussionViewType
 import ru.campus.live.discussion.domain.DiscussionInteractor
-import ru.campus.live.feed.data.model.FeedObject
+import ru.campus.live.feed.data.model.FeedModel
 import javax.inject.Inject
 
-
 class DiscussionViewModel @Inject constructor(
-    private val interactor: DiscussionInteractor
+    private val dispatcher: Dispatchers,
+    private val interactor: DiscussionInteractor,
 ) : ViewModel() {
 
-    private var publication: FeedObject? = null
-    private val _liveData = MutableLiveData<ArrayList<DiscussionObject>>()
+    private var publication: DiscussionObject? = null
+    private val listLiveData = MutableLiveData<ArrayList<DiscussionObject>>()
+    fun getListLiveData(): LiveData<ArrayList<DiscussionObject>> = listLiveData
     private val titleLiveData = MutableLiveData<String>()
-    private val _complaintEvent = SingleLiveEvent<DiscussionObject>()
-    fun liveData(): LiveData<ArrayList<DiscussionObject>> = _liveData
     fun getTitleLiveData(): LiveData<String> = titleLiveData
-    fun complaintEvent() = _complaintEvent
+    private val complaintEvent = SingleLiveEvent<DiscussionObject>()
+    fun getComplaintEvent() = complaintEvent
 
-    fun get(params: FeedObject?) {
-        viewModelScope.launch(Dispatchers.IO) {
-            if (publication == null) publication = params
-            val model = ArrayList<DiscussionObject>()
-            _liveData.value?.let { model.addAll(it) }
-            val start = interactor.header(model, publication!!)
-            if(params!!.comments != 0) {
-                val shimmer = interactor.shimmer()
-                start.addAll(shimmer)
-            }
+    init {
+        listLiveData.observeForever {
+            title()
+            refreshUserAvatar()
+        }
+    }
 
-            withContext(Dispatchers.Main) {
-                _liveData.value = start
-            }
+    fun set(params: FeedModel) {
+        publication = interactor.map(params)
+    }
 
-            when (val result = interactor.get(params.id)) {
+    fun get() {
+        viewModelScope.launch(dispatcher.IO) {
+            if (listLiveData.value == null) shimmer()
+            when (val result = interactor.get(publication!!.id)) {
                 is ResponseObject.Success -> {
-                    val response = interactor.setTypeObject(result.data)
-                    val final = interactor.header(response, publication!!)
-                    withContext(Dispatchers.Main) {
-                        _liveData.value = final
+                    val preparationList = interactor.preparation(result.data)
+                    val response = interactor.header(publication!!, preparationList)
+                    withContext(dispatcher.MAIN) {
+                        listLiveData.value = response
                     }
                 }
                 is ResponseObject.Failure -> {
-                    val response = ArrayList<DiscussionObject>()
-                    response.add(DiscussionObject(DiscussionViewType.DISCUSSION_NONE))
-                    val final = interactor.header(response, publication!!)
-                    withContext(Dispatchers.Main) {
-                        _liveData.value = final
+                    val error = interactor.error(publication!!)
+                    val response = interactor.header(publication!!, error)
+                    withContext(dispatcher.MAIN) {
+                        listLiveData.value = response
                     }
                 }
             }
-
-            interactor.refreshUserAvatar(_liveData.value!!)
-            title()
         }
     }
 
     fun refresh() {
-        viewModelScope.launch(Dispatchers.IO) {
-            val result = interactor.get(publication?.id ?: 0)
-            if (result is ResponseObject.Success) {
-                val model = ArrayList<DiscussionObject>()
-                _liveData.value?.let { model.add(it[0]) }
-                val response = interactor.setTypeObject(result.data)
-                model.addAll(response)
-                withContext(Dispatchers.Main) {
-                    _liveData.value = model
+        viewModelScope.launch(dispatcher.IO) {
+            val publication = listLiveData.value?.get(0)!!
+            when (val result = interactor.get(publication.id)) {
+                is ResponseObject.Success -> {
+                    val preparationList = interactor.preparation(result.data)
+                    val response = interactor.header(publication, preparationList)
+                    withContext(dispatcher.MAIN) {
+                        listLiveData.value = response
+                    }
                 }
-                title()
-            } else {
-                _liveData.postValue(_liveData.value!!)
+                is ResponseObject.Failure -> {
+                    withContext(dispatcher.MAIN) {
+                        listLiveData.value = listLiveData.value
+                    }
+                }
             }
         }
     }
 
     fun insert(item: DiscussionObject) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val model = _liveData.value
-            model!!.add(item)
-            val result = interactor.setTypeObject(model)
-            withContext(Dispatchers.Main) {
-                _liveData.value = result
+        viewModelScope.launch(dispatcher.IO) {
+            val result = interactor.insert(item, listLiveData.value!!)
+            val response = interactor.preparation(result)
+            withContext(dispatcher.MAIN) {
+                listLiveData.value = response
             }
         }
     }
 
     fun title() {
-        viewModelScope.launch(Dispatchers.IO) {
-            val count = interactor.commentsCount(_liveData.value)
-            val result = interactor.getTitle(count)
-            withContext(Dispatchers.Main) {
-                titleLiveData.value = result
+        viewModelScope.launch(dispatcher.IO) {
+            val count = interactor.count(listLiveData.value!!)
+            val title = interactor.title(count)
+            withContext(dispatcher.MAIN) {
+                titleLiveData.value = title
             }
         }
     }
 
-    fun vote(item: DiscussionObject, vote: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val voteObject = VoteObject(id = item.id, vote = vote)
-            val result = interactor.renderVoteView(_liveData.value!!, voteObject)
-            withContext(Dispatchers.Main) {
-                _liveData.value = result
+
+    fun vote(params: VoteObject) {
+        viewModelScope.launch(dispatcher.IO) {
+            val result = interactor.renderVoteView(listLiveData.value!!, params)
+            withContext(dispatcher.MAIN) {
+                listLiveData.value = result
             }
-            interactor.vote(voteObject)
+            interactor.vote(params)
         }
     }
 
     fun complaint(item: DiscussionObject) {
-        _complaintEvent.value = item
-        viewModelScope.launch(Dispatchers.IO) {
+        complaintEvent.value = item
+        viewModelScope.launch(dispatcher.IO) {
             interactor.complaint(item.id)
         }
+    }
+
+    private suspend fun shimmer() {
+        val model = interactor.shimmer()
+        val response = interactor.header(publication!!, model)
+        withContext(dispatcher.MAIN) {
+            listLiveData.value = response
+        }
+    }
+
+    private fun refreshUserAvatar() {
+        viewModelScope.launch(dispatcher.IO) {
+            if (listLiveData.value != null) interactor.refreshUserAvatar(listLiveData.value!!)
+        }
+    }
+
+    override fun onCleared() {
+        listLiveData.removeObserver { }
+        super.onCleared()
     }
 
 }

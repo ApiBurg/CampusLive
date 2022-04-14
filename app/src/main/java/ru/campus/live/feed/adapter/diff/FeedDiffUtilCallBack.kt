@@ -1,11 +1,11 @@
 package ru.campus.live.feed.adapter.diff
 
 import androidx.recyclerview.widget.DiffUtil
-import ru.campus.live.feed.data.model.FeedObject
+import ru.campus.live.feed.data.model.FeedModel
 
 class FeedDiffUtilCallBack(
-    private val oldData: ArrayList<FeedObject>,
-    private val newData: ArrayList<FeedObject>
+    private val oldData: ArrayList<FeedModel>,
+    private val newData: ArrayList<FeedModel>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {

@@ -3,11 +3,11 @@ package ru.campus.live.feed.domain.usecase
 import ru.campus.live.core.data.model.ItemVoteDataObject
 import ru.campus.live.core.data.model.VoteObject
 import ru.campus.live.core.domain.ItemVoteEditUseCase
-import ru.campus.live.feed.data.model.FeedObject
+import ru.campus.live.feed.data.model.FeedModel
 
 class FeedVoteUseCase {
 
-    fun execute(model: ArrayList<FeedObject>, voteObject: VoteObject): ArrayList<FeedObject> {
+    fun execute(model: ArrayList<FeedModel>, voteObject: VoteObject): ArrayList<FeedModel> {
         val index = model.indexOfFirst { it.id == voteObject.id }
         val rating = model[index].rating
 

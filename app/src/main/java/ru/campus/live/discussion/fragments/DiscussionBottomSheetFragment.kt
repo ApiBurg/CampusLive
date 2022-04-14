@@ -9,9 +9,10 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResult
 import androidx.navigation.navGraphViewModels
 import ru.campus.live.R
-import ru.campus.live.core.di.deps.AppDepsProvider
+import ru.campus.live.core.data.model.VoteObject
 import ru.campus.live.core.di.component.DaggerDiscussionComponent
 import ru.campus.live.core.di.component.DiscussionComponent
+import ru.campus.live.core.di.deps.AppDepsProvider
 import ru.campus.live.core.ui.BaseBottomSheetDialogFragment
 import ru.campus.live.databinding.FragmentDiscussionBottomSheetBinding
 import ru.campus.live.discussion.data.model.DiscussionObject
@@ -50,21 +51,26 @@ class DiscussionBottomSheetFragment :
     }
 
     override fun onClick(view: View?) {
-        when (view?.id) {
-            R.id.complaint -> viewModel.complaint(item!!)
+        /*when (view?.id) {
+            R.id.complaint -> viewModel.
+            complaint(item!!)
             R.id.reply -> {
                 val bundle = Bundle()
                 bundle.putParcelable("object", item)
                 setFragmentResult("reply", bundle)
             }
             R.id.up -> {
-                viewModel.vote(item = item!!, vote = 1)
+                val voteObject = VoteObject(id = item!!.id, 1)
+                viewModel.vote(params = voteObject)
             }
             R.id.down -> {
-                viewModel.vote(item = item!!, vote = 2)
+                val voteObject = VoteObject(id = item!!.id, 2)
+                viewModel.vote(params = voteObject)
             }
         }
         dismiss()
+
+         */
     }
 
     private fun renderVoteView() {

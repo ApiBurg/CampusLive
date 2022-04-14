@@ -12,13 +12,13 @@ import ru.campus.live.feed.adapter.diff.FeedDiffUtilCallBack
 import ru.campus.live.feed.adapter.holders.FeedInviteViewHolder
 import ru.campus.live.feed.adapter.holders.FeedLocationViewHolder
 import ru.campus.live.feed.adapter.holders.FeedPublicationViewHolder
-import ru.campus.live.feed.data.model.FeedObject
+import ru.campus.live.feed.data.model.FeedModel
 import ru.campus.live.feed.data.model.FeedViewType
 
-class FeedAdapter(private val myOnClick: MyOnClick<FeedObject>) :
+class FeedAdapter(private val myOnClick: MyOnClick<FeedModel>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val model = ArrayList<FeedObject>()
+    private val model = ArrayList<FeedModel>()
 
     override fun getItemViewType(position: Int): Int {
         return model[position].viewType.ordinal
@@ -64,7 +64,7 @@ class FeedAdapter(private val myOnClick: MyOnClick<FeedObject>) :
         return model.size
     }
 
-    fun setData(newModel: ArrayList<FeedObject>) {
+    fun setData(newModel: ArrayList<FeedModel>) {
         val result =
             DiffUtil.calculateDiff(FeedDiffUtilCallBack(model, newModel))
         model.clear()

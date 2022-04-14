@@ -15,7 +15,7 @@ import ru.campus.live.core.di.deps.AppDepsProvider
 import ru.campus.live.core.di.component.DaggerFeedComponent
 import ru.campus.live.core.di.component.FeedComponent
 import ru.campus.live.databinding.FragmentFeedBottomSheetBinding
-import ru.campus.live.feed.data.model.FeedObject
+import ru.campus.live.feed.data.model.FeedModel
 import ru.campus.live.feed.viewmodel.FeedViewModel
 
 class FeedBottomSheetDialogFragment : BottomSheetDialogFragment(), View.OnClickListener {
@@ -28,7 +28,7 @@ class FeedBottomSheetDialogFragment : BottomSheetDialogFragment(), View.OnClickL
 
     private var _binding: FragmentFeedBottomSheetBinding? = null
     private val binding get() = _binding!!
-    private var model: FeedObject? = null
+    private var model: FeedModel? = null
     private val viewModel: FeedViewModel by navGraphViewModels(R.id.feedFragment) {
         feedComponent.viewModelsFactory()
     }

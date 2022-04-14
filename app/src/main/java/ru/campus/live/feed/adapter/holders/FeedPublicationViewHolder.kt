@@ -1,7 +1,6 @@
 package ru.campus.live.feed.adapter.holders
 
 import android.annotation.SuppressLint
-import android.util.DisplayMetrics
 import android.view.ViewGroup
 import androidx.core.graphics.toColorInt
 import androidx.core.view.isVisible
@@ -11,18 +10,17 @@ import ru.campus.live.R
 import ru.campus.live.core.data.datasource.HostDataSource
 import ru.campus.live.core.ui.MyOnClick
 import ru.campus.live.databinding.ItemPublicationBinding
-import ru.campus.live.feed.data.model.FeedObject
-import kotlin.math.roundToInt
+import ru.campus.live.feed.data.model.FeedModel
 
 class FeedPublicationViewHolder(
     private val itemBinding: ItemPublicationBinding,
-    private val myOnClick: MyOnClick<FeedObject>
+    private val myOnClick: MyOnClick<FeedModel>
 ) : RecyclerView.ViewHolder(itemBinding.root) {
 
     private val context = itemBinding.root.context
     private val host = HostDataSource(context).domain()
 
-    fun bind(model: FeedObject) {
+    fun bind(model: FeedModel) {
         itemBinding.message.text = model.message
         itemBinding.date.text = model.relativeTime
         itemBinding.comment.text = model.commentsString
@@ -34,7 +32,7 @@ class FeedPublicationViewHolder(
         }
     }
 
-    private fun renderMediaView(model: FeedObject) {
+    private fun renderMediaView(model: FeedModel) {
         if (model.attachment != null && model.attachment.id != 0) {
             itemBinding.media.isVisible = true
             val params: ViewGroup.LayoutParams = itemBinding.media.layoutParams
@@ -47,7 +45,7 @@ class FeedPublicationViewHolder(
         }
     }
 
-    private fun renderVoteView(model: FeedObject) {
+    private fun renderVoteView(model: FeedModel) {
         when (model.vote) {
             0 -> {
                 itemBinding.likeStatus.isVisible = false
@@ -64,7 +62,7 @@ class FeedPublicationViewHolder(
     }
 
     @SuppressLint("SetTextI18n")
-    private fun renderRatingView(model: FeedObject) {
+    private fun renderRatingView(model: FeedModel) {
         when {
             model.rating == 0 -> {
                 itemBinding.rating.isVisible = false

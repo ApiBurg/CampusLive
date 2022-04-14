@@ -23,21 +23,21 @@ import ru.campus.live.databinding.FragmentDiscussionBinding
 import ru.campus.live.discussion.adapter.DiscussionAdapter
 import ru.campus.live.discussion.data.model.DiscussionObject
 import ru.campus.live.discussion.viewmodel.DiscussionViewModel
-import ru.campus.live.feed.data.model.FeedObject
+import ru.campus.live.feed.data.model.FeedModel
 import java.util.concurrent.atomic.AtomicBoolean
 
 
 class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
 
-    private var publicationObject: FeedObject? = null
-    private val discussionComponent: DiscussionComponent by lazy {
+    private var publicationObject: FeedModel? = null
+    private val component: DiscussionComponent by lazy {
         DaggerDiscussionComponent.builder()
             .deps(AppDepsProvider.deps)
             .build()
     }
 
     private val viewModel: DiscussionViewModel by navGraphViewModels(R.id.discussionFragment) {
-        discussionComponent.viewModelsFactory()
+        component.viewModelsFactory()
     }
 
     private val myOnClick = object : MyOnClick<DiscussionObject> {
@@ -56,11 +56,12 @@ class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
     }
 
     private val adapter = DiscussionAdapter(myOnClick)
+
     override fun getViewBinding() = FragmentDiscussionBinding.inflate(layoutInflater)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let { publicationObject = it.getParcelable("publication") }
+        arguments?.let { publicationObject = it.getParcelable("publication")!! }
         parentFragment?.setFragmentResultListener("discussionObject") { _, bundle ->
             val params: DiscussionObject? = bundle.getParcelable("object")
             if (params != null) viewModel.insert(params)
@@ -69,7 +70,8 @@ class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
             val params: DiscussionObject? = bundle.getParcelable("object")
             if (params != null) onReplyEvent(params)
         }
-        viewModel.get(publicationObject)
+        viewModel.set(publicationObject!!)
+        viewModel.get()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -87,7 +89,7 @@ class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
     private fun initToolBar() {
         isProgressBarVisible(false)
 
-        if(publicationObject?.comments == 0) {
+        if (publicationObject?.comments == 0) {
             isProgressBarVisible(true)
         } else {
             isProgressBarVisible(false)
@@ -113,8 +115,9 @@ class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
     }
 
     private fun liveDataObserve() {
-        viewModel.liveData().observe(viewLifecycleOwner) { model ->
-            if(model.size > 1) isProgressBarVisible(false)
+        viewModel.getListLiveData().observe(viewLifecycleOwner) { model ->
+            Log.d("MyLog", "Полученны новые данные для адаптера!")
+            if (model.size > 1) isProgressBarVisible(false)
             adapter.setData(model)
         }
     }
@@ -126,7 +129,7 @@ class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
     }
 
     private fun onComplaintEvent() {
-        viewModel.complaintEvent().observe(viewLifecycleOwner) {
+        viewModel.getComplaintEvent().observe(viewLifecycleOwner) {
             val isCancel = AtomicBoolean(false)
             val snack = Snackbar.make(
                 binding.root, getString(R.string.complaint_response),
@@ -154,8 +157,6 @@ class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
 
     private fun onReplyEvent(item: DiscussionObject) {
         val parent = if (item.parent == 0) item.id else item.parent
-        Log.d("MyLog", "Получен евент с ответом на комментарий!")
-        Log.d("MyLog", "parent = $parent")
         val bundle = Bundle()
         bundle.putInt("publication", publicationObject!!.id)
         bundle.putInt("parent", parent)

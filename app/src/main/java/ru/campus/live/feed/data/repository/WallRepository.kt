@@ -7,7 +7,7 @@ import ru.campus.live.core.data.datasource.ErrorDataSource
 import ru.campus.live.core.data.datasource.UserDataSource
 import ru.campus.live.core.data.model.ResponseObject
 import ru.campus.live.core.data.model.VoteObject
-import ru.campus.live.feed.data.model.FeedObject
+import ru.campus.live.feed.data.model.FeedModel
 import ru.campus.live.feed.data.model.PublicationPostObject
 import ru.campus.live.feed.db.AppDatabase
 import ru.campus.live.feed.db.Publication
@@ -35,18 +35,18 @@ class WallRepository @Inject constructor(
         }
     }
 
-    override fun get(offset: Int): ResponseObject<ArrayList<FeedObject>> {
+    override fun get(offset: Int): ResponseObject<ArrayList<FeedModel>> {
         val call = apiService.wallGet(user.token(), user.location().id, offset)
-        return CloudDataSource<ArrayList<FeedObject>>(errorDataSource = errorDataSource)
+        return CloudDataSource<ArrayList<FeedModel>>(errorDataSource = errorDataSource)
             .execute(call)
     }
 
-    override fun post(postObject: PublicationPostObject): ResponseObject<FeedObject> {
+    override fun post(postObject: PublicationPostObject): ResponseObject<FeedModel> {
         val call = apiService.post(
             user.token(), user.location().id,
             postObject.message, postObject.attachment
         )
-        return CloudDataSource<FeedObject>(errorDataSource = errorDataSource).execute(call)
+        return CloudDataSource<FeedModel>(errorDataSource = errorDataSource).execute(call)
     }
 
     override fun vote(voteObject: VoteObject) {

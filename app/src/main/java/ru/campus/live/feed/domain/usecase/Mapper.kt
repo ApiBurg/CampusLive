@@ -1,18 +1,18 @@
 package ru.campus.live.feed.domain.usecase
 
 import ru.campus.live.core.data.model.AttachmentModel
-import ru.campus.live.feed.data.model.FeedObject
+import ru.campus.live.feed.data.model.FeedModel
 import ru.campus.live.feed.data.model.FeedViewType
 import ru.campus.live.feed.db.Publication
 import ru.campus.live.location.data.model.LocationDataObject
 
 class Mapper {
 
-    fun toFeedObject(params: List<Publication>): ArrayList<FeedObject> {
-        val model = ArrayList<FeedObject>()
+    fun toFeedObject(params: List<Publication>): ArrayList<FeedModel> {
+        val model = ArrayList<FeedModel>()
         params.forEach { item ->
             model.add(
-                FeedObject(
+                FeedModel(
                     viewType = FeedViewType.values()[item.type],
                     location = LocationDataObject(
                         id = item.locationId ?: 0,
@@ -43,7 +43,7 @@ class Mapper {
         return model
     }
 
-    fun toPublicationDb(params: ArrayList<FeedObject>): ArrayList<Publication> {
+    fun toPublicationDb(params: ArrayList<FeedModel>): ArrayList<Publication> {
         val model = ArrayList<Publication>()
         params.forEach { item ->
             model.add(
