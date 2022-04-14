@@ -27,7 +27,7 @@ import ru.campus.live.gallery.data.model.UploadMediaObject
 import ru.campus.live.gallery.fragments.GalleryBottomSheetDialog
 
 
-class CreateCommentFragment : BaseFragment<FragmentCreateCommentBinding>() {
+class CommentEditorFragment : BaseFragment<FragmentCreateCommentBinding>() {
 
     private val discussionComponent: DiscussionComponent by lazy {
         DaggerDiscussionComponent.builder()

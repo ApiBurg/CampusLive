@@ -60,7 +60,7 @@
     </fragment>
     <fragment
         android:id="@+id/createCommentFragment"
-        android:name="ru.campus.live.discussion.fragments.CreateCommentFragment"
+        android:name="ru.campus.live.discussion.fragments.CommentEditorFragment"
         android:label="fragment_create_comment"
         tools:layout="@layout/fragment_create_comment" />
 </navigation>
