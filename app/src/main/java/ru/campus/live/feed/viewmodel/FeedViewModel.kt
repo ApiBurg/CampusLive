@@ -15,6 +15,7 @@ import ru.campus.live.feed.domain.FeedInteractor
 import javax.inject.Inject
 
 class FeedViewModel @Inject constructor(
+    private val dispatchers: ru.campus.live.core.Dispatchers,
     private val interactor: FeedInteractor
 ) : ViewModel() {
 
@@ -41,7 +42,7 @@ class FeedViewModel @Inject constructor(
 
     fun get(refresh: Boolean = false) {
         if (isLazyLoad) return
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatchers.IO) {
             isLazyLoad = true
             val model = ArrayList<FeedModel>()
             if(!refresh) _liveData.value?.let { model.addAll(it) }
@@ -50,13 +51,18 @@ class FeedViewModel @Inject constructor(
                     model.addAll(result.data)
                     val list = interactor.setHeader(model)
                     val response = interactor.listPreparation(list)
-                    withContext(Dispatchers.Main) {
+                    withContext(dispatchers.MAIN) {
                         _liveData.value = response
                         insertCache()
                     }
                 }
                 is ResponseObject.Failure -> {
-
+                    if(model.size == 0) {
+                        val response = interactor.setHeader(model)
+                        withContext(dispatchers.MAIN) {
+                            _liveData.value = response
+                        }
+                    }
                 }
             }
             isLazyLoad = false
