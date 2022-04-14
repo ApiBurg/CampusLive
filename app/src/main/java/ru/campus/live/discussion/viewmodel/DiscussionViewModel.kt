@@ -39,9 +39,9 @@ class DiscussionViewModel @Inject constructor(
         publication = interactor.map(params)
     }
 
-    fun get() {
+    fun get(comments: Int = 0) {
         viewModelScope.launch(dispatcher.IO) {
-            if (listLiveData.value == null) shimmer()
+            if (listLiveData.value == null && comments != 0) shimmer()
             when (val result = interactor.get(publication!!.id)) {
                 is ResponseObject.Success -> {
                     val preparation = interactor.preparation(result.data)

@@ -71,7 +71,7 @@ class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
             if (params != null) onReplyEvent(params)
         }
         viewModel.set(publicationObject!!)
-        viewModel.get()
+        viewModel.get(publicationObject!!.comments)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
