@@ -1,30 +1,27 @@
 package ru.campus.live.main
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import ru.campus.live.core.presentation.wrapper.SingleLiveEvent
 import ru.campus.live.core.data.datasource.UserDataSource
+import ru.campus.live.core.presentation.wrapper.SingleLiveEvent
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(private val userDataSource: UserDataSource) : ViewModel() {
+class MainViewModel @Inject constructor(
+    private val dispatcher: ru.campus.live.core.di.Dispatchers,
+    private val userDataSource: UserDataSource
+) : ViewModel() {
 
     private val _authEvent = SingleLiveEvent<Boolean>()
     fun authEvent() = _authEvent
-
-    init {
-        isAuth()
-    }
+    init { isAuth() }
 
     private fun isAuth() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcher.io()) {
             val auth = userDataSource.isAuth()
-            Log.d("MyLog", "Статус авторизации = $auth")
             if (auth) {
-                withContext(Dispatchers.Main) {
+                withContext(dispatcher.main()) {
                     _authEvent.value = true
                 }
             }
