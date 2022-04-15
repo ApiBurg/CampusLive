@@ -1,12 +1,12 @@
-package ru.campus.live.start.adapter
+package ru.campus.live.start.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.campus.live.databinding.ItemPresentationBinding
-import ru.campus.live.start.adapter.diff.StartDiffUtilCallBack
-import ru.campus.live.start.adapter.holder.StartViewHolder
+import ru.campus.live.start.presentation.adapter.diff.StartDiffUtilCallBack
+import ru.campus.live.start.presentation.adapter.holder.StartViewHolder
 import ru.campus.live.start.data.model.StartModel
 
 class StartAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

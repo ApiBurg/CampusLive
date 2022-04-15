@@ -40,20 +40,20 @@ class DiscussionViewModel @Inject constructor(
     }
 
     fun get(comments: Int = 0) {
-        viewModelScope.launch(dispatcher.IO) {
+        viewModelScope.launch(dispatcher.io()) {
             if (listLiveData.value == null && comments != 0) shimmer()
             when (val result = interactor.get(publication!!.id)) {
                 is ResponseObject.Success -> {
                     val preparation = interactor.preparation(result.data)
                     val response = interactor.header(publication!!, preparation)
-                    withContext(dispatcher.MAIN) {
+                    withContext(dispatcher.main()) {
                         listLiveData.value = response
                     }
                 }
                 is ResponseObject.Failure -> {
                     val model = interactor.error()
                     val response = interactor.header(publication!!, model)
-                    withContext(dispatcher.MAIN) {
+                    withContext(dispatcher.main()) {
                         listLiveData.value = response
                     }
                 }
@@ -62,18 +62,18 @@ class DiscussionViewModel @Inject constructor(
     }
 
     fun refresh() {
-        viewModelScope.launch(dispatcher.IO) {
+        viewModelScope.launch(dispatcher.io()) {
             val publication = listLiveData.value?.get(0)!!
             when (val result = interactor.get(publication.id)) {
                 is ResponseObject.Success -> {
                     val preparationList = interactor.preparation(result.data)
                     val response = interactor.header(publication, preparationList)
-                    withContext(dispatcher.MAIN) {
+                    withContext(dispatcher.main()) {
                         listLiveData.value = response
                     }
                 }
                 is ResponseObject.Failure -> {
-                    withContext(dispatcher.MAIN) {
+                    withContext(dispatcher.main()) {
                         listLiveData.value = listLiveData.value
                     }
                 }
@@ -82,30 +82,30 @@ class DiscussionViewModel @Inject constructor(
     }
 
     fun insert(item: DiscussionObject) {
-        viewModelScope.launch(dispatcher.IO) {
+        viewModelScope.launch(dispatcher.io()) {
             val result = interactor.insert(item, listLiveData.value!!)
             val list = interactor.preparation(result)
             val response = interactor.header(publication!!, list)
-            withContext(dispatcher.MAIN) {
+            withContext(dispatcher.main()) {
                 listLiveData.value = response
             }
         }
     }
 
     fun title() {
-        viewModelScope.launch(dispatcher.IO) {
+        viewModelScope.launch(dispatcher.io()) {
             val count = interactor.count(listLiveData.value!!)
             val title = interactor.title(count)
-            withContext(dispatcher.MAIN) {
+            withContext(dispatcher.main()) {
                 titleLiveData.value = title
             }
         }
     }
 
     fun vote(params: VoteObject) {
-        viewModelScope.launch(dispatcher.IO) {
+        viewModelScope.launch(dispatcher.io()) {
             val result = interactor.renderVoteView(listLiveData.value!!, params)
-            withContext(dispatcher.MAIN) {
+            withContext(dispatcher.main()) {
                 listLiveData.value = result
             }
             interactor.vote(params)
@@ -114,7 +114,7 @@ class DiscussionViewModel @Inject constructor(
 
     fun complaint(item: DiscussionObject) {
         complaintEvent.value = item
-        viewModelScope.launch(dispatcher.IO) {
+        viewModelScope.launch(dispatcher.io()) {
             interactor.complaint(item.id)
         }
     }
@@ -122,13 +122,13 @@ class DiscussionViewModel @Inject constructor(
     private suspend fun shimmer() {
         val model = interactor.shimmer()
         val response = interactor.header(publication!!, model)
-        withContext(dispatcher.MAIN) {
+        withContext(dispatcher.main()) {
             listLiveData.value = response
         }
     }
 
     private fun refreshUserAvatar() {
-        viewModelScope.launch(dispatcher.IO) {
+        viewModelScope.launch(dispatcher.io()) {
             if (listLiveData.value != null) interactor.refreshUserAvatar(listLiveData.value!!)
         }
     }

@@ -1,4 +1,4 @@
-package ru.campus.live.start.fragments
+package ru.campus.live.start.presentation.fragments
 
 import android.os.Bundle
 import android.view.View
@@ -13,8 +13,8 @@ import ru.campus.live.core.di.deps.AppDepsProvider
 import ru.campus.live.core.presentation.ui.BaseFragment
 import ru.campus.live.databinding.FragmentStartBinding
 import ru.campus.live.dialog.ErrorDialog
-import ru.campus.live.start.adapter.StartAdapter
-import ru.campus.live.start.viewmodel.StartViewModel
+import ru.campus.live.start.presentation.adapter.StartAdapter
+import ru.campus.live.start.presentation.viewmodel.StartViewModel
 
 
 class StartFragment : BaseFragment<FragmentStartBinding>() {

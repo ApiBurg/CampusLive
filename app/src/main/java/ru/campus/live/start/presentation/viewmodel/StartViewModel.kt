@@ -1,4 +1,4 @@
-package ru.campus.live.start.viewmodel
+package ru.campus.live.start.presentation.viewmodel
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData

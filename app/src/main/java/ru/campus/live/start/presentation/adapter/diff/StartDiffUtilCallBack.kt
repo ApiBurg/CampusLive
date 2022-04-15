@@ -1,4 +1,4 @@
-package ru.campus.live.start.adapter.diff
+package ru.campus.live.start.presentation.adapter.diff
 
 import androidx.recyclerview.widget.DiffUtil
 import ru.campus.live.start.data.model.StartModel

@@ -1,4 +1,4 @@
-package ru.campus.live.start.adapter.holder
+package ru.campus.live.start.presentation.adapter.holder
 
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
