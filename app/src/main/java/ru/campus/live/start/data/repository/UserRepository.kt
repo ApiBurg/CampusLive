@@ -9,15 +9,10 @@ import ru.campus.live.start.data.model.LoginModel
 import ru.campus.live.start.data.model.OSType
 import javax.inject.Inject
 
-interface IUserRepository {
-    fun registration(): ResponseObject<LoginModel>
-    fun login(userData: LoginModel): Boolean
-}
-
 class UserRepository @Inject constructor(
     private val apiService: APIService,
     private val errorDataSource: ErrorDataSource,
-    private val userDataSource: UserDataSource
+    private val userDataSource: UserDataSource,
 ) : IUserRepository {
 
     override fun registration(): ResponseObject<LoginModel> {

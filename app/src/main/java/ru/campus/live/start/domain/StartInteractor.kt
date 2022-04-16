@@ -7,14 +7,9 @@ import ru.campus.live.start.data.repository.IStartRepository
 import ru.campus.live.start.data.repository.IUserRepository
 import javax.inject.Inject
 
-interface IStartInteractor {
-    fun start(): ArrayList<StartModel>
-    fun login(): ResponseObject<LoginModel>
-}
-
 class StartInteractor @Inject constructor(
     private val startRepository: IStartRepository,
-    private val userRepository: IUserRepository
+    private val userRepository: IUserRepository,
 ) : IStartInteractor {
 
     override fun start(): ArrayList<StartModel> {

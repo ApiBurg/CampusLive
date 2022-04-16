@@ -1,4 +1,4 @@
-package ru.campus.live.start.presentation.viewmodel
+package ru.campus.live.start.presentation
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
@@ -20,17 +20,22 @@ class StartViewModel @Inject constructor(
     private val interactor: IStartInteractor
 ) : ViewModel() {
 
-    private val listLiveData = MutableLiveData<ArrayList<StartModel>>()
-    private val success = SingleLiveEvent<LoginModel>()
-    private val failure = SingleLiveEvent<ErrorObject>()
-    fun getListLiveData(): LiveData<ArrayList<StartModel>> = listLiveData
-    fun onSuccess(): LiveData<LoginModel> = success
-    fun onFailure(): LiveData<ErrorObject> = failure
+    private val liveDataList = MutableLiveData<ArrayList<StartModel>>()
+    val list: LiveData<ArrayList<StartModel>>
+        get() = liveDataList
+
+    private val successLiveData = SingleLiveEvent<LoginModel>()
+    val success: LiveData<LoginModel>
+        get() = successLiveData
+
+    private val failureLiveData = SingleLiveEvent<ErrorObject>()
+    val failure: LiveData<ErrorObject>
+        get() = failureLiveData
 
     fun start() {
         viewModelScope.launch(dispatchers.io()) {
             val result = interactor.start()
-            listLiveData.postValue(result)
+            liveDataList.postValue(result)
         }
     }
 
@@ -38,8 +43,8 @@ class StartViewModel @Inject constructor(
     fun login() {
         viewModelScope.launch(dispatchers.io()) {
             when (val result = interactor.login()) {
-                is ResponseObject.Success -> success.postValue(result.data)
-                is ResponseObject.Failure -> failure.postValue(result.errorObject)
+                is ResponseObject.Success -> successLiveData.postValue(result.data)
+                is ResponseObject.Failure -> failureLiveData.postValue(result.errorObject)
             }
         }
     }
