@@ -1,4 +1,4 @@
-package ru.campus.live.feed.fragments
+package ru.campus.live.feed.presentation.fragments
 
 import android.os.Bundle
 import android.view.View
@@ -19,7 +19,7 @@ import ru.campus.live.core.presentation.ui.MyOnClick
 import ru.campus.live.databinding.FragmentCreatePublicationBinding
 import ru.campus.live.dialog.ErrorDialog
 import ru.campus.live.feed.data.model.PublicationPostObject
-import ru.campus.live.feed.viewmodel.CreatePublicationViewModel
+import ru.campus.live.feed.presentation.viewmodel.CreatePublicationViewModel
 import ru.campus.live.gallery.adapter.UploadMediaAdapter
 import ru.campus.live.gallery.data.model.GalleryDataObject
 import ru.campus.live.gallery.data.model.UploadMediaObject

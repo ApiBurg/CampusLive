@@ -1,4 +1,4 @@
-package ru.campus.live.feed.adapter.holders
+package ru.campus.live.feed.presentation.adapter.holders
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide

@@ -6,8 +6,8 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 import ru.campus.live.core.di.module.viewmodel.base.BaseViewModelModule
 import ru.campus.live.core.di.module.viewmodel.base.ViewModelKey
-import ru.campus.live.feed.viewmodel.CreatePublicationViewModel
-import ru.campus.live.feed.viewmodel.FeedViewModel
+import ru.campus.live.feed.presentation.viewmodel.CreatePublicationViewModel
+import ru.campus.live.feed.presentation.viewmodel.FeedViewModel
 
 @Module
 abstract class FeedVModule : BaseViewModelModule() {

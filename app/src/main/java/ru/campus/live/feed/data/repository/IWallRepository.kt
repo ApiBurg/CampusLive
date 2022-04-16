@@ -4,7 +4,7 @@ import ru.campus.live.core.data.model.ResponseObject
 import ru.campus.live.core.data.model.VoteObject
 import ru.campus.live.feed.data.model.FeedModel
 import ru.campus.live.feed.data.model.PublicationPostObject
-import ru.campus.live.feed.db.Publication
+import ru.campus.live.feed.data.db.Publication
 
 interface IWallRepository {
     fun getCache(): List<Publication>

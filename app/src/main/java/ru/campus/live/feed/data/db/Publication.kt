@@ -1,4 +1,4 @@
-package ru.campus.live.feed.db
+package ru.campus.live.feed.data.db
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

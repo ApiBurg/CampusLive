@@ -1,4 +1,4 @@
-package ru.campus.live.feed.adapter.diff
+package ru.campus.live.feed.presentation.adapter.diff
 
 import androidx.recyclerview.widget.DiffUtil
 import ru.campus.live.feed.data.model.FeedModel

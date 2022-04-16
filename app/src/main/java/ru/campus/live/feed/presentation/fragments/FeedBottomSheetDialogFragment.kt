@@ -1,4 +1,4 @@
-package ru.campus.live.feed.fragments
+package ru.campus.live.feed.presentation.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -16,7 +16,7 @@ import ru.campus.live.core.di.component.DaggerFeedComponent
 import ru.campus.live.core.di.component.FeedComponent
 import ru.campus.live.databinding.FragmentFeedBottomSheetBinding
 import ru.campus.live.feed.data.model.FeedModel
-import ru.campus.live.feed.viewmodel.FeedViewModel
+import ru.campus.live.feed.presentation.viewmodel.FeedViewModel
 
 class FeedBottomSheetDialogFragment : BottomSheetDialogFragment(), View.OnClickListener {
 

@@ -9,8 +9,8 @@ import ru.campus.live.core.data.model.ResponseObject
 import ru.campus.live.core.data.model.VoteObject
 import ru.campus.live.feed.data.model.FeedModel
 import ru.campus.live.feed.data.model.PublicationPostObject
-import ru.campus.live.feed.db.AppDatabase
-import ru.campus.live.feed.db.Publication
+import ru.campus.live.feed.data.db.AppDatabase
+import ru.campus.live.feed.data.db.Publication
 import javax.inject.Inject
 
 private const val OBJECT_TYPE = 1

@@ -13,7 +13,7 @@ import ru.campus.live.core.data.APIService
 import ru.campus.live.core.data.datasource.HostDataSource
 import ru.campus.live.core.data.datasource.IUserDataSource
 import ru.campus.live.core.data.datasource.UserDataSource
-import ru.campus.live.feed.db.AppDatabase
+import ru.campus.live.feed.data.db.AppDatabase
 
 @Module(includes = [AppBindModule::class])
 class AppModule {

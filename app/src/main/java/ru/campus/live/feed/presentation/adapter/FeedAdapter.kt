@@ -1,4 +1,4 @@
-package ru.campus.live.feed.adapter
+package ru.campus.live.feed.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,10 +8,10 @@ import ru.campus.live.core.presentation.ui.MyOnClick
 import ru.campus.live.databinding.ItemFeedInviteBinding
 import ru.campus.live.databinding.ItemFeedLocationBinding
 import ru.campus.live.databinding.ItemPublicationBinding
-import ru.campus.live.feed.adapter.diff.FeedDiffUtilCallBack
-import ru.campus.live.feed.adapter.holders.FeedInviteViewHolder
-import ru.campus.live.feed.adapter.holders.FeedLocationViewHolder
-import ru.campus.live.feed.adapter.holders.FeedPublicationViewHolder
+import ru.campus.live.feed.presentation.adapter.diff.FeedDiffUtilCallBack
+import ru.campus.live.feed.presentation.adapter.holders.FeedInviteViewHolder
+import ru.campus.live.feed.presentation.adapter.holders.FeedLocationViewHolder
+import ru.campus.live.feed.presentation.adapter.holders.FeedPublicationViewHolder
 import ru.campus.live.feed.data.model.FeedModel
 import ru.campus.live.feed.data.model.FeedViewType
 

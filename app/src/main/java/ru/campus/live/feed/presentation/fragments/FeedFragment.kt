@@ -1,10 +1,11 @@
-package ru.campus.live.feed.fragments
+package ru.campus.live.feed.presentation.fragments
 
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.core.graphics.toColorInt
 import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,9 +18,10 @@ import ru.campus.live.core.di.deps.AppDepsProvider
 import ru.campus.live.core.presentation.ui.BaseFragment
 import ru.campus.live.core.presentation.ui.MyOnClick
 import ru.campus.live.databinding.FragmentFeedBinding
-import ru.campus.live.feed.adapter.FeedAdapter
 import ru.campus.live.feed.data.model.FeedModel
-import ru.campus.live.feed.viewmodel.FeedViewModel
+import ru.campus.live.feed.presentation.adapter.FeedAdapter
+import ru.campus.live.feed.presentation.viewmodel.FeedViewModel
+import ru.campus.live.location.data.model.LocationModel
 import java.util.concurrent.atomic.AtomicBoolean
 
 
@@ -29,12 +31,6 @@ class FeedFragment : BaseFragment<FragmentFeedBinding>() {
         DaggerFeedComponent.builder()
             .deps(AppDepsProvider.deps)
             .build()
-    }
-
-    private val adapter by lazy { FeedAdapter(myOnClick) }
-    private var linearLayoutManager: LinearLayoutManager? = null
-    private val viewModel: FeedViewModel by navGraphViewModels(R.id.feedFragment) {
-        feedComponent.viewModelsFactory()
     }
 
     private val myOnClick = object : MyOnClick<FeedModel> {
@@ -54,6 +50,13 @@ class FeedFragment : BaseFragment<FragmentFeedBinding>() {
         }
     }
 
+    private val viewModel: FeedViewModel by navGraphViewModels(R.id.feedFragment) {
+        feedComponent.viewModelsFactory()
+    }
+
+    private val adapter = FeedAdapter(myOnClick)
+    private var linearLayoutManager: LinearLayoutManager? = null
+
     override fun getViewBinding() = FragmentFeedBinding.inflate(layoutInflater)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,61 +72,59 @@ class FeedFragment : BaseFragment<FragmentFeedBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        liveDataObserve()
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = linearLayoutManager
-        onCommentEvent()
-        onComplaintEvent()
-        onScrollEvent()
-        binding.fab.setOnClickListener {
-            findNavController().navigate(R.id.action_feedFragment_to_createPublicationFragment)
-        }
-
+        viewModel.list.observe(viewLifecycleOwner, list)
+        viewModel.startDiscussion.observe(viewLifecycleOwner, startDiscussion)
+        viewModel.complaint.observe(viewLifecycleOwner, complaint)
         binding.swipeRefreshLayout.setColorSchemeColors("#517fba".toColorInt())
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.get(refresh = true)
         }
-    }
 
-    private fun liveDataObserve() {
-        viewModel.liveData().observe(viewLifecycleOwner) { newModel ->
-            if(binding.swipeRefreshLayout.isRefreshing) binding.swipeRefreshLayout.isRefreshing = false
-            adapter.setData(newModel)
+        binding.fab.setOnClickListener {
+            findNavController().navigate(R.id.action_feedFragment_to_createPublicationFragment)
         }
+
+        onScrollEvent()
     }
 
-    private fun onCommentEvent() {
-        viewModel.onCommentStartViewEvent().observe(viewLifecycleOwner) { model ->
-            val bundle = Bundle()
-            bundle.putParcelable("publication", model)
-            findNavController().navigate(R.id.action_feedFragment_to_discussionFragment, bundle)
-        }
+    private val list = Observer<ArrayList<FeedModel>> { newModel ->
+        if(binding.swipeRefreshLayout.isRefreshing) binding.swipeRefreshLayout.isRefreshing = false
+        adapter.setData(newModel)
     }
 
-    private fun onComplaintEvent() {
-        viewModel.complaintEvent().observe(viewLifecycleOwner) {
-            val isCancel = AtomicBoolean(false)
-            val snack = Snackbar.make(
-                binding.root, getString(R.string.complaint_response),
-                Snackbar.LENGTH_LONG
-            )
-            val snackView = snack.view
-            val tv =
-                snackView.findViewById<TextView>(com.google.android.material.R.id.snackbar_action)
-            tv.setTextColor("#f44336".toColorInt())
-            snack.setAction(R.string.close) { isCancel.set(true) }
-            snack.addCallback(object : Snackbar.Callback() {
-                override fun onDismissed(snackbar: Snackbar, event: Int) {
-                    if (!isCancel.get()) {
-                        viewModel.complaintSendDataOnServer(it)
-                    }
+    private val startDiscussion = Observer<FeedModel> { model ->
+        val bundle = Bundle()
+        bundle.putParcelable("publication", model)
+        findNavController().navigate(R.id.action_feedFragment_to_discussionFragment, bundle)
+    }
+
+    private val complaint = Observer<FeedModel> {
+        val isCancel = AtomicBoolean(false)
+        val snack = Snackbar.make(
+            binding.root, getString(R.string.complaint_response),
+            Snackbar.LENGTH_LONG
+        )
+        val snackView = snack.view
+        val tv =
+            snackView.findViewById<TextView>(com.google.android.material.R.id.snackbar_action)
+        tv.setTextColor("#f44336".toColorInt())
+        snack.setAction(R.string.close) { isCancel.set(true) }
+        snack.addCallback(object : Snackbar.Callback() {
+            override fun onDismissed(snackbar: Snackbar, event: Int) {
+                if (!isCancel.get()) {
+                    viewModel.complaintSendDataOnServer(it)
+                    binding.fab.show()
                 }
+            }
 
-                override fun onShown(snackbar: Snackbar) {
-                }
-            })
-            snack.show()
-        }
+            override fun onShown(snackbar: Snackbar) {
+                binding.fab.hide()
+            }
+
+        })
+        snack.show()
     }
 
     private fun onScrollEvent() {

@@ -1,4 +1,4 @@
-package ru.campus.live.feed.adapter.holders
+package ru.campus.live.feed.presentation.adapter.holders
 
 import android.annotation.SuppressLint
 import android.view.ViewGroup

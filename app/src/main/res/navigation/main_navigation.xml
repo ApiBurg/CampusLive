@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/feedFragment"
-        android:name="ru.campus.live.feed.fragments.FeedFragment"
+        android:name="ru.campus.live.feed.presentation.fragments.FeedFragment"
         android:label="fragment_feed"
         tools:layout="@layout/fragment_feed" >
         <action
@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/createPublicationFragment"
-        android:name="ru.campus.live.feed.fragments.EditorPublicationFragment"
+        android:name="ru.campus.live.feed.presentation.fragments.EditorPublicationFragment"
         android:label="fragment_create_publication"
         tools:layout="@layout/fragment_create_publication" />
     <fragment

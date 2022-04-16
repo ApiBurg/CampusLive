@@ -3,7 +3,7 @@ package ru.campus.live.feed.domain.usecase
 import ru.campus.live.core.data.model.AttachmentModel
 import ru.campus.live.feed.data.model.FeedModel
 import ru.campus.live.feed.data.model.FeedViewType
-import ru.campus.live.feed.db.Publication
+import ru.campus.live.feed.data.db.Publication
 import ru.campus.live.location.data.model.LocationModel
 
 class Mapper {

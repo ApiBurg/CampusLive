@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class LocationViewModel @Inject constructor(
     private val dispatcher: IDispatchers,
-    private val interactor: LocationInteractor
+    private val interactor: LocationInteractor,
 ) : ViewModel() {
 
     private val listLiveData = MutableLiveData<List<LocationModel>>()
@@ -25,6 +25,9 @@ class LocationViewModel @Inject constructor(
     val success: LiveData<LocationModel>
         get() = successLiveData
 
+    init {
+        search()
+    }
 
     fun search(name: String? = null) {
         viewModelScope.launch(dispatcher.io) {

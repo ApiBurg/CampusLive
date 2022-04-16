@@ -1,4 +1,4 @@
-package ru.campus.live.feed.viewmodel
+package ru.campus.live.feed.presentation.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
