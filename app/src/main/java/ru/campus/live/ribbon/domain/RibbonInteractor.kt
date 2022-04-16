@@ -25,7 +25,7 @@ class RibbonInteractor @Inject constructor(
 ) {
 
     fun get(model: ArrayList<RibbonModel>): ArrayList<RibbonModel> {
-        when (val result = repository.get(offset = offset(model))) {
+        when (val result = repository.get(offset = getOffset(model))) {
             is ResponseObject.Success -> model.addAll(result.data)
             is ResponseObject.Failure -> {
                 if(model.size != 0 && result.error.code != 404) {
@@ -65,10 +65,8 @@ class RibbonInteractor @Inject constructor(
         return RibbonModel(viewType = RibbonViewType.ERROR, message = params.message)
     }
 
-    private fun offset(model: ArrayList<RibbonModel>): Int {
-        var offset = 0
-        model.forEach { item -> if (item.viewType == RibbonViewType.PUBLICATION) offset++ }
-        return offset
+    private fun getOffset(model: ArrayList<RibbonModel>): Int {
+        return model.count{ it.viewType == RibbonViewType.PUBLICATION }
     }
 
     private fun ArrayList<RibbonModel>.preparation(): ArrayList<RibbonModel> {
