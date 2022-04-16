@@ -23,7 +23,7 @@
     </fragment>
     <fragment
         android:id="@+id/locationFragment"
-        android:name="ru.campus.live.location.fragments.LocationFragment"
+        android:name="ru.campus.live.location.presentation.LocationFragment"
         android:label="fragment_location"
         tools:layout="@layout/fragment_location" >
         <action

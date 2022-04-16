@@ -9,12 +9,6 @@ import ru.campus.live.core.data.model.ResponseObject
 import ru.campus.live.location.data.model.LocationModel
 import javax.inject.Inject
 
-interface ILocationRepository {
-    fun get(name: String?): ResponseObject<List<LocationModel>>
-    fun ratingUp(id: Int)
-    fun save(data: LocationModel)
-}
-
 class LocationRepository @Inject constructor(
     private val apiService: APIService,
     private val errorDataSource: ErrorDataSource,
@@ -27,7 +21,7 @@ class LocationRepository @Inject constructor(
             .execute(call)
     }
 
-    override fun ratingUp(id: Int) {
+    override fun rating(id: Int) {
         val call = apiService.locationRating(id, userDataSource.token())
         CloudDataSource<ResponseBody>(errorDataSource = errorDataSource).execute(call)
     }

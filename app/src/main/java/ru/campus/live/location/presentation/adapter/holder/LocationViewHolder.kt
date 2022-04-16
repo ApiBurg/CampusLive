@@ -1,4 +1,4 @@
-package ru.campus.live.location.adapter.holder
+package ru.campus.live.location.presentation.adapter.holder
 
 import androidx.recyclerview.widget.RecyclerView
 import ru.campus.live.core.presentation.ui.MyOnClick

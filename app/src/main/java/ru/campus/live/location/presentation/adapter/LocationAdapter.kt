@@ -1,4 +1,4 @@
-package ru.campus.live.location.adapter
+package ru.campus.live.location.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.campus.live.core.presentation.ui.MyOnClick
 import ru.campus.live.databinding.ItemLocationBinding
-import ru.campus.live.location.adapter.diff.LocationDiffUtilCallBack
-import ru.campus.live.location.adapter.holder.LocationViewHolder
+import ru.campus.live.location.presentation.adapter.diff.LocationDiffUtilCallBack
+import ru.campus.live.location.presentation.adapter.holder.LocationViewHolder
 import ru.campus.live.location.data.model.LocationModel
 
 class LocationAdapter(private val myOnClick: MyOnClick<LocationModel>) :

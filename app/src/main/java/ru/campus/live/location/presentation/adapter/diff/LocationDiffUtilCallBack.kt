@@ -1,4 +1,4 @@
-package ru.campus.live.location.adapter.diff
+package ru.campus.live.location.presentation.adapter.diff
 
 import androidx.recyclerview.widget.DiffUtil
 import ru.campus.live.location.data.model.LocationModel

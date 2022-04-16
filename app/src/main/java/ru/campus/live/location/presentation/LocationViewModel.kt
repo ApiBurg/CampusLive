@@ -1,4 +1,4 @@
-package ru.campus.live.location.viewmodel
+package ru.campus.live.location.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,28 +14,31 @@ import javax.inject.Inject
 
 class LocationViewModel @Inject constructor(
     private val dispatcher: IDispatchers,
-    private val interactor: LocationInteractor,
+    private val interactor: LocationInteractor
 ) : ViewModel() {
 
     private val listLiveData = MutableLiveData<List<LocationModel>>()
-    private val success = SingleLiveEvent<LocationModel>()
-    fun liveData(): LiveData<List<LocationModel>> = listLiveData
-    fun onSuccess(): LiveData<LocationModel> = success
+    val list: LiveData<List<LocationModel>>
+        get() = listLiveData
+
+    private val successLiveData = SingleLiveEvent<LocationModel>()
+    val success: LiveData<LocationModel>
+        get() = successLiveData
+
 
     fun search(name: String? = null) {
-        viewModelScope.launch(dispatcher.io()) {
+        viewModelScope.launch(dispatcher.io) {
             val result = interactor.search(name)
-            withContext(dispatcher.main()) {
+            withContext(dispatcher.main) {
                 listLiveData.value = result
             }
         }
     }
 
     fun save(item: LocationModel) {
-        viewModelScope.launch(dispatcher.io()) {
-            interactor.rating(item.id)
-            interactor.saveLocationData(item)
-            success.postValue(item)
+        viewModelScope.launch(dispatcher.io) {
+            interactor.save(item)
+            successLiveData.postValue(item)
         }
     }
 

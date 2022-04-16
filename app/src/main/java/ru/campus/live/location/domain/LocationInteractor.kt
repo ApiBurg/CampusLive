@@ -5,9 +5,11 @@ import ru.campus.live.location.data.model.LocationModel
 import ru.campus.live.location.data.repository.ILocationRepository
 import javax.inject.Inject
 
-class LocationInteractor @Inject constructor(private val repository: ILocationRepository) {
+class LocationInteractor @Inject constructor(
+    private val repository: ILocationRepository,
+) : ILocationInteractor {
 
-    fun search(name: String?): List<LocationModel> {
+    override fun search(name: String?): List<LocationModel> {
         val result = repository.get(name)
         if (result is ResponseObject.Success)
             return result.data
@@ -15,12 +17,9 @@ class LocationInteractor @Inject constructor(private val repository: ILocationRe
             return emptyList()
     }
 
-    fun rating(id: Int) {
-        repository.ratingUp(id)
-    }
-
-    fun saveLocationData(data: LocationModel) {
-        repository.save(data)
+    override fun save(params: LocationModel) {
+        repository.rating(id = params.id)
+        repository.save(params)
     }
 
 }
