@@ -7,8 +7,8 @@ import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import ru.campus.live.core.di.IDispatchers
 import ru.campus.live.core.di.Dispatchers
-import ru.campus.live.core.di.DispatchersImpl
 import ru.campus.live.core.data.APIService
 import ru.campus.live.core.data.datasource.HostDataSource
 import ru.campus.live.core.data.datasource.IUserDataSource
@@ -37,8 +37,8 @@ class AppModule {
     }
 
     @Provides
-    fun provideDispatchersImpl(): DispatchersImpl {
-        return DispatchersImpl()
+    fun provideDispatchersImpl(): Dispatchers {
+        return Dispatchers()
     }
 }
 
@@ -49,6 +49,6 @@ interface AppBindModule {
     fun bindUserDataSource(userDataSource: UserDataSource): IUserDataSource
 
     @Binds
-    fun bindDispatchers(dispatchersImpl: DispatchersImpl): Dispatchers
+    fun bindDispatchers(dispatchers: Dispatchers): IDispatchers
 
 }

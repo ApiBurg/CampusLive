@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import ru.campus.live.core.di.Dispatchers
+import ru.campus.live.core.di.IDispatchers
 import ru.campus.live.core.data.model.ResponseObject
 import ru.campus.live.core.data.model.VoteObject
 import ru.campus.live.core.presentation.wrapper.SingleLiveEvent
@@ -16,7 +16,7 @@ import ru.campus.live.feed.data.model.FeedModel
 import javax.inject.Inject
 
 class DiscussionViewModel @Inject constructor(
-    private val dispatcher: Dispatchers,
+    private val dispatcher: IDispatchers,
     private val interactor: DiscussionInteractor,
 ) : ViewModel() {
 

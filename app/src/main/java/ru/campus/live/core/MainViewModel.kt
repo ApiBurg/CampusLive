@@ -1,4 +1,4 @@
-package ru.campus.live.main
+package ru.campus.live.core
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,7 +9,7 @@ import ru.campus.live.core.presentation.wrapper.SingleLiveEvent
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-    private val dispatcher: ru.campus.live.core.di.Dispatchers,
+    private val dispatcher: ru.campus.live.core.di.IDispatchers,
     private val userDataSource: UserDataSource
 ) : ViewModel() {
 

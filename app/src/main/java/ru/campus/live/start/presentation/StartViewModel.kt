@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.campus.live.core.data.model.ErrorObject
 import ru.campus.live.core.data.model.ResponseObject
-import ru.campus.live.core.di.Dispatchers
+import ru.campus.live.core.di.IDispatchers
 import ru.campus.live.core.presentation.wrapper.SingleLiveEvent
 import ru.campus.live.start.data.model.LoginModel
 import ru.campus.live.start.data.model.StartModel
@@ -16,7 +16,7 @@ import ru.campus.live.start.domain.IStartInteractor
 import javax.inject.Inject
 
 class StartViewModel @Inject constructor(
-    private val dispatchers: Dispatchers,
+    private val dispatchers: IDispatchers,
     private val interactor: IStartInteractor
 ) : ViewModel() {
 
@@ -33,7 +33,7 @@ class StartViewModel @Inject constructor(
         get() = failureLiveData
 
     fun start() {
-        viewModelScope.launch(dispatchers.io()) {
+        viewModelScope.launch(dispatchers.io) {
             val result = interactor.start()
             liveDataList.postValue(result)
         }
@@ -41,7 +41,7 @@ class StartViewModel @Inject constructor(
 
     @SuppressLint("NullSafeMutableLiveData")
     fun login() {
-        viewModelScope.launch(dispatchers.io()) {
+        viewModelScope.launch(dispatchers.io) {
             when (val result = interactor.login()) {
                 is ResponseObject.Success -> successLiveData.postValue(result.data)
                 is ResponseObject.Failure -> failureLiveData.postValue(result.errorObject)

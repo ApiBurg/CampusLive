@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CampusLive">
         <activity
-            android:name="ru.campus.live.main.MainActivity"
+            android:name="ru.campus.live.core.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">

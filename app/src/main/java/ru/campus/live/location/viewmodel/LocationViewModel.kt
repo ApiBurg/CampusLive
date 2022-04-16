@@ -6,14 +6,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import ru.campus.live.core.di.Dispatchers
+import ru.campus.live.core.di.IDispatchers
 import ru.campus.live.core.presentation.wrapper.SingleLiveEvent
 import ru.campus.live.location.data.model.LocationModel
 import ru.campus.live.location.domain.LocationInteractor
 import javax.inject.Inject
 
 class LocationViewModel @Inject constructor(
-    private val dispatcher: Dispatchers,
+    private val dispatcher: IDispatchers,
     private val interactor: LocationInteractor,
 ) : ViewModel() {
 

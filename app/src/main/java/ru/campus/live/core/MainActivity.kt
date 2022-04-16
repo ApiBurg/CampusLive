@@ -1,4 +1,4 @@
-package ru.campus.live.main
+package ru.campus.live.core
 
 import android.os.Bundle
 import androidx.activity.viewModels

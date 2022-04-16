@@ -6,7 +6,7 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 import ru.campus.live.core.di.module.viewmodel.base.BaseViewModelModule
 import ru.campus.live.core.di.module.viewmodel.base.ViewModelKey
-import ru.campus.live.main.MainViewModel
+import ru.campus.live.core.MainViewModel
 
 @Module
 abstract class MainVModule : BaseViewModelModule() {

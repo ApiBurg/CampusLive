@@ -1,7 +1,7 @@
 package ru.campus.live.core.di.deps
 
 import android.content.Context
-import ru.campus.live.core.di.Dispatchers
+import ru.campus.live.core.di.IDispatchers
 import ru.campus.live.core.data.APIService
 import ru.campus.live.core.data.datasource.IUserDataSource
 import ru.campus.live.core.data.datasource.UserDataSource
@@ -13,5 +13,5 @@ interface AppDeps {
     var context: Context
     var userDatabase: UserDataSource
     val userDataSource: IUserDataSource
-    val dispatchers: Dispatchers
+    val IDispatchers: IDispatchers
 }
