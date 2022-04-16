@@ -58,11 +58,6 @@ class RibbonFragment : BaseFragment<FragmentFeedBinding>() {
 
     override fun getViewBinding() = FragmentFeedBinding.inflate(layoutInflater)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.get()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

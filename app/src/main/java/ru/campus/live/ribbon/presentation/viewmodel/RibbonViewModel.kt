@@ -29,6 +29,10 @@ class RibbonViewModel @Inject constructor(
     val complaint: LiveData<RibbonModel>
         get() = complaintEvent
 
+    init {
+        get()
+    }
+
     fun get(refresh: Boolean = false) {
         viewModelScope.launch(dispatchers.io) {
             val model = ArrayList<RibbonModel>()
