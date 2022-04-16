@@ -44,7 +44,7 @@ class StartViewModel @Inject constructor(
         viewModelScope.launch(dispatchers.io) {
             when (val result = interactor.login()) {
                 is ResponseObject.Success -> successLiveData.postValue(result.data)
-                is ResponseObject.Failure -> failureLiveData.postValue(result.errorObject)
+                is ResponseObject.Failure -> failureLiveData.postValue(result.error)
             }
         }
     }

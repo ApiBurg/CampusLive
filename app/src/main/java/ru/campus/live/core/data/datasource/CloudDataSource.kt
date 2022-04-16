@@ -11,10 +11,10 @@ class CloudDataSource<T>(private val errorDataSource: ErrorDataSource) {
             if (response.code() == 200) {
                 ResponseObject.Success(data = response.body()!!)
             } else {
-                ResponseObject.Failure(errorObject = errorDataSource.get(response.code()))
+                ResponseObject.Failure(error = errorDataSource.get(response.code()))
             }
         } catch (e: Exception) {
-            ResponseObject.Failure(errorObject = errorDataSource.get())
+            ResponseObject.Failure(error = errorDataSource.get())
         }
     }
 

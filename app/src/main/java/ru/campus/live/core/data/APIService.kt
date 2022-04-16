@@ -6,7 +6,7 @@ import retrofit2.Call
 import retrofit2.http.*
 import ru.campus.live.core.data.model.UploadResultObject
 import ru.campus.live.discussion.data.model.DiscussionObject
-import ru.campus.live.feed.data.model.FeedModel
+import ru.campus.live.ribbon.data.model.RibbonModel
 import ru.campus.live.location.data.model.LocationModel
 import ru.campus.live.start.data.model.LoginModel
 
@@ -34,7 +34,7 @@ interface APIService {
         @Field("location_id") location: Int,
         @Field("message") message: String,
         @Field("attachment_id") attachment: Int
-    ): Call<FeedModel>
+    ): Call<RibbonModel>
 
     @Multipart
     @POST("api/2.0/media.upload")
@@ -45,7 +45,7 @@ interface APIService {
         @Query("token") token: String,
         @Query("location_id") location: Int,
         @Query("offset") offset: Int
-    ): Call<ArrayList<FeedModel>>
+    ): Call<ArrayList<RibbonModel>>
 
     @GET("api/2.0/wall.vote")
     fun publicationVote(

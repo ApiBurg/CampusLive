@@ -5,7 +5,7 @@ import ru.campus.live.core.di.IDispatchers
 import ru.campus.live.core.data.APIService
 import ru.campus.live.core.data.datasource.IUserDataSource
 import ru.campus.live.core.data.datasource.UserDataSource
-import ru.campus.live.feed.data.db.AppDatabase
+import ru.campus.live.ribbon.data.db.AppDatabase
 
 interface AppDeps {
     var apiService: APIService
@@ -13,5 +13,5 @@ interface AppDeps {
     var context: Context
     var userDatabase: UserDataSource
     val userDataSource: IUserDataSource
-    val IDispatchers: IDispatchers
+    val dispatchers: IDispatchers
 }

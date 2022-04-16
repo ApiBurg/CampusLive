@@ -13,7 +13,7 @@ import ru.campus.live.discussion.data.repository.IDiscussionRepository
 import ru.campus.live.discussion.domain.usecase.DiscussionTitleUseCase
 import ru.campus.live.discussion.domain.usecase.DiscussionVoteUseCase
 import ru.campus.live.discussion.domain.usecase.UserAvatarUseCase
-import ru.campus.live.feed.data.model.FeedModel
+import ru.campus.live.ribbon.data.model.RibbonModel
 import javax.inject.Inject
 
 class DiscussionInteractor @Inject constructor(
@@ -119,7 +119,7 @@ class DiscussionInteractor @Inject constructor(
         return model
     }
 
-    fun map(publication: FeedModel): DiscussionObject {
+    fun map(publication: RibbonModel): DiscussionObject {
         return DiscussionObject(
             type = DiscussionViewType.PUBLICATION,
             id = publication.id,

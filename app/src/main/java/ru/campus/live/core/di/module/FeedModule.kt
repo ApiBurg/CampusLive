@@ -10,29 +10,12 @@ import ru.campus.live.core.data.repository.IUploadMediaRepository
 import ru.campus.live.core.data.repository.UploadMediaRepository
 import ru.campus.live.core.di.module.viewmodel.FeedVModule
 import ru.campus.live.discussion.domain.usecase.DiscussionTitleUseCase
-import ru.campus.live.feed.data.repository.IWallRepository
-import ru.campus.live.feed.data.repository.WallRepository
-import ru.campus.live.feed.domain.FeedInteractor
+import ru.campus.live.ribbon.data.repository.IRibbonRepository
+import ru.campus.live.ribbon.data.repository.RibbonRepository
+import ru.campus.live.ribbon.domain.RibbonInteractor
 
 @Module(includes = [FeedBindModule::class, FeedVModule::class])
 class FeedModule {
-
-    @Provides
-    fun provideFeedInteractor(
-        iWallRepository: IWallRepository,
-        userDataSource: UserDataSource,
-        uploadMediaRepository: IUploadMediaRepository,
-        displayMetrics: DisplayMetrics,
-        discussionTitleUseCase: DiscussionTitleUseCase
-    ): FeedInteractor {
-        return FeedInteractor(
-            iWallRepository,
-            userDataSource,
-            uploadMediaRepository,
-            displayMetrics,
-            discussionTitleUseCase
-        )
-    }
 
     @Provides
     fun provideDisplayMetrics(context: Context): DisplayMetrics {
@@ -44,7 +27,7 @@ class FeedModule {
 @Module
 interface FeedBindModule {
     @Binds
-    fun bindWallRepository(wallRepository: WallRepository): IWallRepository
+    fun bindWallRepository(ribbonRepository: RibbonRepository): IRibbonRepository
 
     @Binds
     fun bindUploadMediaRepository(uploadMediaRepository: UploadMediaRepository): IUploadMediaRepository

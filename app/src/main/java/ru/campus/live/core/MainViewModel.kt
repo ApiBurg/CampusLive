@@ -18,10 +18,10 @@ class MainViewModel @Inject constructor(
     init { isAuth() }
 
     private fun isAuth() {
-        viewModelScope.launch(dispatcher.io()) {
+        viewModelScope.launch(dispatcher.io) {
             val auth = userDataSource.isAuth()
             if (auth) {
-                withContext(dispatcher.main()) {
+                withContext(dispatcher.main) {
                     _authEvent.value = true
                 }
             }

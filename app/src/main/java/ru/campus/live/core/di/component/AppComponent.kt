@@ -6,9 +6,10 @@ import dagger.Component
 import ru.campus.live.core.data.APIService
 import ru.campus.live.core.data.datasource.IUserDataSource
 import ru.campus.live.core.data.datasource.UserDataSource
+import ru.campus.live.core.di.IDispatchers
 import ru.campus.live.core.di.deps.AppDeps
 import ru.campus.live.core.di.module.AppModule
-import ru.campus.live.feed.data.db.AppDatabase
+import ru.campus.live.ribbon.data.db.AppDatabase
 
 @Component(modules = [AppModule::class])
 interface AppComponent : AppDeps {
@@ -18,6 +19,8 @@ interface AppComponent : AppDeps {
     override var context: Context
     override var userDatabase: UserDataSource
     override val userDataSource: IUserDataSource
+
+
 
     @Component.Builder
     interface Builder {

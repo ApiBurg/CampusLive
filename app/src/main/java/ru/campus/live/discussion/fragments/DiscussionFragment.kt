@@ -23,13 +23,13 @@ import ru.campus.live.databinding.FragmentDiscussionBinding
 import ru.campus.live.discussion.adapter.DiscussionAdapter
 import ru.campus.live.discussion.data.model.DiscussionObject
 import ru.campus.live.discussion.viewmodel.DiscussionViewModel
-import ru.campus.live.feed.data.model.FeedModel
+import ru.campus.live.ribbon.data.model.RibbonModel
 import java.util.concurrent.atomic.AtomicBoolean
 
 
 class DiscussionFragment : BaseFragment<FragmentDiscussionBinding>() {
 
-    private var publicationObject: FeedModel? = null
+    private var publicationObject: RibbonModel? = null
     private val component: DiscussionComponent by lazy {
         DaggerDiscussionComponent.builder()
             .deps(AppDepsProvider.deps)
