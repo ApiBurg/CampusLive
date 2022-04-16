@@ -27,7 +27,10 @@ class RibbonInteractor @Inject constructor(
     fun get(model: ArrayList<RibbonModel>): ArrayList<RibbonModel> {
         when (val result = repository.get(offset = offset(model))) {
             is ResponseObject.Success -> model.addAll(result.data)
-            is ResponseObject.Failure -> model.add(1, error(result.error))
+            is ResponseObject.Failure -> {
+                val index = if(model.size != 0) 1 else 0
+                model.add(index, error(result.error))
+            }
         }
         return model.preparation().header()
     }
