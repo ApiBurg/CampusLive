@@ -28,8 +28,9 @@ class RibbonInteractor @Inject constructor(
         when (val result = repository.get(offset = offset(model))) {
             is ResponseObject.Success -> model.addAll(result.data)
             is ResponseObject.Failure -> {
-                val index = if(model.size != 0) 1 else 0
-                model.add(index, error(result.error))
+                if(model.size != 0 && result.error.code != 404) {
+                    model.add(1, error(result.error))
+                }
             }
         }
         return model.preparation().header()
@@ -88,7 +89,7 @@ class RibbonInteractor @Inject constructor(
 
     private fun ArrayList<RibbonModel>.header(): ArrayList<RibbonModel> {
         val model = this
-        if (model.size != 0 && model[0].viewType == RibbonViewType.HEADING) {
+        if (model.size != 0 && model[0].viewType != RibbonViewType.HEADING) {
             val location = LocationModel(
                 id = userDataSource.location().id,
                 name = userDataSource.location().name,
